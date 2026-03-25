@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Studies — Kirsten</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap');
+
+  :root {
+    --ink: #0f0f0f;
+    --paper: #f5f2ec;
+    --warm-mid: #e8e2d9;
+    --accent: #c84b2f;
+    --accent-soft: #f0e6e2;
+    --muted: #7a7065;
+    --rule: #d4cec6;
+    --tag-bg: #1a1a1a;
+    --tag-text: #f5f2ec;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Instrument Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--rule);
+    padding: 3rem 4rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .header-left h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  .header-left p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .role-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .role-tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  /* NAV */
+  nav {
+    padding: 1rem 4rem;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+  }
+
+  nav a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--accent); }
+
+  /* MAIN */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 4rem 6rem;
+  }
+
+  /* CASE STUDY */
+  .case-study {
+    padding: 5rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .case-study:last-child { border-bottom: none; }
+
+  /* EYEBROW */
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .cs-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .cs-status {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+  }
+
+  /* TITLE */
+  .case-study h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  .case-study h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .cs-subtitle {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  /* META GRID */
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 3rem;
+  }
+
+  .meta-item {
+    padding: 1rem 1.25rem;
+    border-right: 1px solid var(--rule);
+  }
+
+  .meta-item:last-child { border-right: none; }
+
+  .meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+
+  .meta-value {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  /* ROLE LENS TAGS */
+  .role-lens {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .lens-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    padding: 0.3rem 0.7rem;
+    border-radius: 2px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid #e0c0b8;
+  }
+
+  /* CONTENT SECTIONS */
+  .cs-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .cs-section h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .cs-section p {
+    color: #2a2520;
+    font-size: 0.975rem;
+    line-height: 1.8;
+    margin-bottom: 0.75rem;
+  }
+
+  .cs-section p:last-child { margin-bottom: 0; }
+
+  /* TWO COLUMN */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  @media (max-width: 680px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--warm-mid);
+    border-left: 3px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 2.5rem;
+  }
+
+  .callout p {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* OUTCOME METRICS */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+
+  .metric {
+    background: var(--paper);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+
+  .metric-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+
+  .metric-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  /* DESIGN DECISIONS LIST */
+  .decisions {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .decisions li {
+    display: grid;
+    grid-template-columns: 1.5rem 1fr;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #2a2520;
+  }
+
+  .decisions li::before {
+    content: '→';
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    margin-top: 0.1rem;
+  }
+
+  /* ROLE LENS BREAKDOWN */
+  .lens-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .lens-item {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 1rem;
+    align-items: start;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .lens-label-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 2px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid #e0c0b8;
+    text-align: center;
+    letter-spacing: 0.04em;
+    align-self: start;
+    margin-top: 0.15rem;
+  }
+
+  /* NDA BADGE */
+  .nda-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    padding: 0.25rem 0.6rem;
+    border: 1px dashed var(--rule);
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  /* INTERACTIVE ARTIFACT BLOCK */
+  .cs-interactive-block {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--ink);
+    border-radius: 4px;
+    border-left: 3px solid var(--accent);
+  }
+
+  .cs-interactive-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .cs-interactive-desc {
+    font-size: 0.875rem;
+    color: #9a9088;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    max-width: 640px;
+  }
+
+  .cs-interactive-buttons {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .cs-interactive-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    padding: 0.55rem 1rem;
+    border-radius: 2px;
+    text-decoration: none;
+    border: 1px solid #2d2824;
+    color: #9a9088;
+    background: transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .cs-interactive-btn:hover {
+    border-color: var(--accent);
+    color: var(--paper);
+  }
+
+  .cs-interactive-btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--paper);
+  }
+
+  .cs-interactive-btn-primary:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+    color: var(--paper);
+  }
+  @media (max-width: 768px) {
+    header, nav, main { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .meta-grid { grid-template-columns: 1fr 1fr; }
+    .meta-item { border-bottom: 1px solid var(--rule); }
+    .lens-item { grid-template-columns: 1fr; }
+    .role-tags { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- HERO -->
+<!-- ============================================================ -->
+<style>
+  /* HERO STYLES */
+  .hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 5rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0.22rem;
+    height: 100%;
+    background: var(--accent);
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.6rem;
+    color: var(--paper);
+  }
+
+  .hero-title {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: #9a9088;
+    font-weight: 400;
+    margin-bottom: 2.5rem;
+    line-height: 1.5;
+  }
+
+  .hero-title strong {
+    color: var(--paper);
+    font-weight: 500;
+  }
+
+  .hero-bio {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 1rem;
+    color: #7a7065;
+    max-width: 640px;
+    line-height: 1.75;
+    margin-bottom: 3rem;
+    border-left: 2px solid #2d2824;
+    padding-left: 1.25rem;
+  }
+
+  /* CREDENTIAL BAR */
+  .credential-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0;
+    border: 1px solid #2d2824;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 3rem;
+    max-width: 900px;
+  }
+
+  .credential-item {
+    padding: 1rem 1.25rem;
+    border-right: 1px solid #2d2824;
+  }
+
+  .credential-item:last-child { border-right: none; }
+
+  .credential-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.75rem;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .credential-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: #5a5450;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  /* CONTACT ROW */
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 3.5rem;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: #7a7065;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .contact-link:hover { color: var(--accent); }
+
+  .contact-dot {
+    width: 0.3rem;
+    height: 0.3rem;
+    border-radius: 50%;
+    background: #2d2824;
+    display: inline-block;
+  }
+
+  /* ROLE ENTRY NAV */
+  .role-nav {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+  }
+
+  .role-nav-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: #5a5450;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    margin-right: 0.25rem;
+  }
+
+  .role-entry-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    padding: 0.45rem 0.9rem;
+    border-radius: 2px;
+    text-decoration: none;
+    border: 1px solid #2d2824;
+    color: #7a7065;
+    background: transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .role-entry-btn:hover,
+  .role-entry-btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--paper);
+  }
+
+  /* SITE NAV */
+  .site-nav {
+    background: #111;
+    padding: 0.9rem 4rem;
+    border-bottom: 1px solid #1e1e1e;
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .site-nav a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: #5a5450;
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+
+  .site-nav a:hover { color: var(--accent); }
+
+  @media (max-width: 768px) {
+    .hero { padding: 3rem 1.5rem 2.5rem; }
+    .credential-bar { grid-template-columns: 1fr 1fr; }
+    .credential-item { border-bottom: 1px solid #2d2824; }
+    .site-nav { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .role-nav { gap: 0.5rem; }
+  }
+</style>
+
+<section class="hero">
+  <p class="hero-eyebrow">Portfolio — Senior Product Designer & Design Engineer</p>
+
+  <h1 class="hero-name">Kirsten</h1>
+
+  <p class="hero-title">
+    <strong>10+ years</strong> designing and building AI-powered products in
+    <strong>healthtech, legaltech,</strong> and <strong>enterprise SaaS</strong> —
+    fluent in the design, the system, and the code.
+  </p>
+
+  <p class="hero-bio">
+    I've shipped zero-to-one products that secured seed funding, designed decision-support systems
+    for global law firms, built a live AI chronic care app, and developed a production Figma plugin
+    unique on the market — all at the intersection of complex information, human judgment, and AI inference.
+  </p>
+
+  <div class="credential-bar">
+    <div class="credential-item">
+      <div class="credential-value">10+</div>
+      <div class="credential-label">Years Experience</div>
+    </div>
+    <div class="credential-item">
+      <div class="credential-value">~20</div>
+      <div class="credential-label">Shipped Platforms</div>
+    </div>
+    <div class="credential-item">
+      <div class="credential-value">2</div>
+      <div class="credential-label">Funded Startups</div>
+    </div>
+    <div class="credential-item">
+      <div class="credential-value">Live</div>
+      <div class="credential-label">AI App in Production</div>
+    </div>
+    <div class="credential-item">
+      <div class="credential-value">3</div>
+      <div class="credential-label">Verticals: Health · Legal · SaaS</div>
+    </div>
+  </div>
+
+  <div class="contact-row">
+    <a class="contact-link" href="/cdn-cgi/l/email-protection#f992908b8a8d9c97b99e94989095d79a9694">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+      <span class="__cf_email__" data-cfemail="e982809b9a9d8c87a98e84888085c78a8684">[email&#160;protected]</span>
+    </a>
+    <span class="contact-dot"></span>
+    <a class="contact-link" href="https://linkedin.com/in/kirsten" target="_blank">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      linkedin.com/in/kirsten
+    </a>
+    <span class="contact-dot"></span>
+    <a class="contact-link" href="#" target="_blank">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      GitHub (coming soon)
+    </a>
+  </div>
+
+  <div style="margin-bottom: 0.75rem;">
+    <span class="role-nav-label">Jump to work relevant for →</span>
+  </div>
+  <div class="role-nav">
+    <a class="role-entry-btn primary" href="#cs3">Design Engineer — Figma Plugin</a>
+    <a class="role-entry-btn" href="#cs2">Legaltech AI — Billing Intelligence</a>
+    <a class="role-entry-btn" href="#cs5">Healthtech AI — ThyroidTracker</a>
+    <a class="role-entry-btn" href="#cs1">EdTech MVP — Career Matching</a>
+    <a class="role-entry-btn" href="#cs4">Compliance SaaS — IPM Codex</a>
+  </div>
+</section>
+
+<nav class="site-nav">
+  <a href="#cs1">01 — AI Career Matching</a>
+  <a href="#cs2">02 — Billing Intelligence</a>
+  <a href="#cs3">03 — Accessibility Plugin</a>
+  <a href="#cs4">04 — IPM Codex</a>
+  <a href="#cs5">05 — ThyroidTracker</a>
+</nav>
+
+<main>
+
+  <!-- ============================================================ -->
+  <!-- CASE STUDY 1: ASTRUMU -->
+  <!-- ============================================================ -->
+  <section class="case-study" id="cs1">
+
+    <div class="eyebrow">
+      <span class="cs-number">01 / 03</span>
+      <span class="cs-status">Confidential — EdTech</span>
+    </div>
+
+    <h2>Translating an <em>Abstract AI Model</em><br>into an Investor-Ready Product</h2>
+    <p class="cs-subtitle">AI-Driven Career Matching Platform — Seed-Stage EdTech (Confidential)</p>
+
+    <div class="nda-badge">⬡ Client details anonymized per NDA</div>
+
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="meta-label">Role</div>
+        <div class="meta-value">Sole UX Designer</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Phase</div>
+        <div class="meta-value">Zero-to-One MVP</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Team</div>
+        <div class="meta-value">CEO, 2 Data Scientists, Developer</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Tools</div>
+        <div class="meta-value">Figma, User Flow Mapping, Design System</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Outcome</div>
+        <div class="meta-value">Seed Funding Secured</div>
+      </div>
+    </div>
+
+    <div class="role-lens">
+      <span class="lens-tag">Design Engineer</span>
+      <span class="lens-tag">AI Prompt Engineer</span>
+      <span class="lens-tag">Conversation Designer</span>
+      <span class="lens-tag">AI Product Manager</span>
+    </div>
+
+    <div class="cs-section">
+      <h3>The Problem</h3>
+      <p>A seed-stage EdTech startup had built a sophisticated AI model that scored college graduates against job opportunities — weighing skills, credentials, and long-term career trajectory signals. The model worked. The experience didn't exist yet.</p>
+      <p>With investor demos imminent, the team needed a sole designer to translate a technically complex, probabilistic AI system into an interface that felt immediate, trustworthy, and intuitive to three very different user groups: colleges as the primary MVP customer seeking to demonstrate graduate outcomes, enterprise hiring organizations evaluating candidate pools, and students navigating early career decisions.</p>
+    </div>
+
+    <div class="callout">
+      <p>"The hardest design problem wasn't making it beautiful — it was making probabilistic AI output feel deterministic to the user without lying about what the model actually knows."</p>
+    </div>
+
+    <div class="cs-section">
+      <h3>The Core Design Challenge</h3>
+      <p>The AI model returned match scores across multiple dimensions simultaneously — skills alignment, credential weighting, trajectory prediction, employer preference signals. Surfacing this to a user who just wants to know "is this job right for me?" required compressing enormous analytical complexity into a single, legible interface moment.</p>
+      <p>The secondary challenge: the interface had to work with live data from day one. Investor demos used real pilot data, not prototyped placeholders. Filter changes had to return meaningful, real results — not simulated ones.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="cs-section">
+        <h3>Key Design Decisions</h3>
+        <ul class="decisions">
+          <li>Translated user testing data, data scientist algorithms, user and business needs into a clear, appealing interface that conveyed the platform's value to investors</li>
+          <li>Built complete design system with tokens and components transferred directly to the development team; designed live data interface architecture</li>
+          <li>Translated ML model outputs into interface display logic — defining how match scores, confidence levels, and ranking signals surface through search results and filter interactions</li>
+          <li>Designed role-specific views for colleges (outcomes-focused, primary customer), enterprise hiring organizations (candidate pool-focused), and students (opportunity-focused) from a single shared design system</li>
+          <li>Coordinated directly with data scientists to understand model confidence ranges and designed UI states that communicated uncertainty honestly</li>
+        </ul>
+      </div>
+
+      <div class="cs-section">
+        <h3>Areas of Ownership</h3>
+        <div class="lens-breakdown">
+          <div class="lens-item">
+            <span class="lens-label-pill">Design Engineer</span>
+            <span>Built complete design system with tokens and components consumed directly by the development team; designed live data interface architecture</span>
+          </div>
+          <div class="lens-item">
+            <span class="lens-label-pill">AI Prompt Eng.</span>
+            <span>Translated ML model outputs into interface display logic — defining how match scores, confidence levels, and ranking signals surface through search results and filter interactions</span>
+          </div>
+          <div class="lens-item">
+            <span class="lens-label-pill">Conversation</span>
+            <span>Designed the progressive disclosure flow as a conversation between the AI model and the user — match score → reasoning → recommended action</span>
+          </div>
+          <div class="lens-item">
+            <span class="lens-label-pill">AI PM</span>
+            <span>Owned UX strategy end-to-end: designed for three distinct user groups with colleges as primary customer, aligned product decisions with investor narrative, shipped MVP on demo timeline</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-section">
+      <h3>Outcome</h3>
+      <p>The MVP shipped on schedule for investor demos using live pilot data. The platform successfully secured seed funding, validating product-market fit with colleges as the primary customer. The design system established the foundation for future features including skill prediction models, credential analytics, and expanded role-based dashboards for all three user groups. The product subsequently expanded to university and enterprise partners.</p>
+    </div>
+
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-value">Seed</div>
+        <div class="metric-label">Funding Secured Post-MVP</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">3</div>
+        <div class="metric-label">User Groups — Colleges, Hiring Orgs, Students</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">Live</div>
+        <div class="metric-label">Data in Demo Environment Day One</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">0→1</div>
+        <div class="metric-label">Sole Designer, Full Design System</div>
+      </div>
+    </div>
+
+    <div class="cs-interactive-block">
+      <div class="cs-interactive-label">Interactive Portfolio Artifacts</div>
+      <div class="cs-interactive-desc">These tools demonstrate the design system architecture built for this platform — role-based token switching, live ML score display logic, and three-view data model. Built in HTML/CSS/JS as standalone design engineering artifacts.</div>
+      <div class="cs-interactive-buttons">
+        <a class="cs-interactive-btn cs-interactive-btn-primary" href="https://kkd909.github.io/portfolio/internmatch_explorer.html" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Open Design System Explorer →
+        </a>
+        <a class="cs-interactive-btn" href="https://kkd909.github.io/portfolio/internmatch_token_explorer.html" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Open Token Explorer →
+        </a>
+      </div>
+    </div>
+
+  </section>
+  <!-- ============================================================ -->
+  <section class="case-study" id="cs2">
+
+    <div class="eyebrow">
+      <span class="cs-number">02 / 03</span>
+      <span class="cs-status">Confidential — LegalTech Enterprise</span>
+    </div>
+
+    <h2>AI-Assisted <em>Billing Intelligence</em><br>for Global Law Firms</h2>
+    <p class="cs-subtitle">Decision-Support System for Billing Attorneys — Enterprise LegalTech (Confidential)</p>
+
+    <div class="nda-badge">⬡ Client details anonymized per NDA</div>
+
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="meta-label">Role</div>
+        <div class="meta-value">Lead Visual UX Designer</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Duration</div>
+        <div class="meta-value">2.5 Years</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Scale</div>
+        <div class="meta-value">Global Law Firms, 5,000+ Attorneys</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Tools</div>
+        <div class="meta-value">Figma, SharePoint, HTML/CSS, Custom UI</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Platforms</div>
+        <div class="meta-value">~20 Shipped</div>
+      </div>
+    </div>
+
+    <div class="role-lens">
+      <span class="lens-tag">Design Engineer</span>
+      <span class="lens-tag">AI Prompt Engineer</span>
+      <span class="lens-tag">Conversation Designer</span>
+      <span class="lens-tag">AI Product Manager</span>
+    </div>
+
+    <div class="cs-section">
+      <h3>The Problem</h3>
+      <p>At global law firms, billing attorneys are responsible for managing client health, revenue cycles, and timekeeper oversight — often across hundreds of active matters simultaneously. The signals that indicate a client relationship is at risk — delayed payments, escalating communication tone, unusual billing patterns — are buried across disconnected systems: email threads, document libraries, billing tables, matter management platforms.</p>
+      <p>Without surfacing these signals in one place, billing attorneys miss early warning signs until they become expensive problems. The existing SharePoint environments offered no decision-support layer — just raw data in fragmented views.</p>
+    </div>
+
+    <div class="callout">
+      <p>"The design principle that governed every decision: AI should surface what the attorney can't see — not make decisions they shouldn't delegate. Awareness without overreach."</p>
+    </div>
+
+    <div class="cs-section">
+      <h3>The AI Integration Challenge</h3>
+      <p>The core product challenge was designing an interface where AI aggregated signals from multiple disconnected data sources — emails, billing records, document libraries, matter status — and surfaced a coherent client health picture to the billing attorney in seconds, not hours.</p>
+      <p>The restraint principle was equally important: the AI's role was to prepare the attorney for action, not to act on their behalf. Every AI-surfaced insight had to be presented in a way that preserved the attorney's judgment as the final decision point — with drafted communications ready to send, but never sent automatically.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="cs-section">
+        <h3>Key Design Decisions</h3>
+        <ul class="decisions">
+          <li>Designed a signal aggregation dashboard that pulled from 4+ data sources into a single client health view — reducing time-to-judgment from hours to minutes</li>
+          <li>Created role-based views for billing attorneys, business professionals, and paralegals — each surfacing relevant signals for their specific workflow</li>
+          <li>Implemented AI-drafted communication escalations that the attorney reviews and approves — action preparation without commitment</li>
+          <li>Designed threshold-based alert logic: AI intervenes only when signal convergence crosses a defined risk threshold, not on every data point</li>
+          <li>Built and maintained scalable design systems across ~20 custom intranet platforms — component libraries, token structures, and style guides consumed by dev teams</li>
+          <li>Shipped custom HTML/CSS overrides for SharePoint environments where standard components couldn't meet design or usability requirements</li>
+        </ul>
+      </div>
+
+      <div class="cs-section">
+        <h3>Multi-Role Lens</h3>
+        <div class="lens-breakdown">
+          <div class="lens-item">
+            <span class="lens-label-pill">Design Engineer</span>
+            <span>Shipped 20 custom design systems; wrote HTML/CSS production overrides; built component libraries with token structure consumed by dev teams</span>
+          </div>
+          <div class="lens-item">
+            <span class="lens-label-pill">AI Prompt Eng.</span>
+            <span>Designed the prompt architecture for AI signal aggregation — defining what signals surface, in what order, and with what framing for the billing attorney</span>
+          </div>
+          <div class="lens-item">
+            <span class="lens-label-pill">Conversation</span>
+            <span>Designed role-based dialogue flows for each user type; structured AI-drafted communications as conversation artifacts awaiting human approval</span>
+          </div>
+          <div class="lens-item">
+            <span class="lens-label-pill">AI PM</span>
+            <span>Defined AI intervention thresholds, owned stakeholder alignment across IT, legal knowledge teams, and firm leadership; delivered on strict timelines and budgets</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-section">
+      <h3>Governing Design Principles</h3>
+      <p>Three principles emerged from this work that now govern all AI-human interface decisions:</p>
+      <ul class="decisions">
+        <li><strong>Calm defaults preserve trust.</strong> The interface surfaces risk signals without triggering alarm — attorneys remain in control of pace and priority</li>
+        <li><strong>Threshold-based AI intervention.</strong> AI acts when signal convergence crosses a defined risk level — not on every data point, reducing noise and alert fatigue</li>
+        <li><strong>Action preparation without commitment.</strong> AI drafts; humans approve. Every AI output is a starting point for attorney judgment, not a replacement for it</li>
+      </ul>
+    </div>
+
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-value">~20</div>
+        <div class="metric-label">Custom Platforms Shipped</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">5K+</div>
+        <div class="metric-label">Attorneys Per Firm</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">4+</div>
+        <div class="metric-label">Data Sources Aggregated per Dashboard</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">↓</div>
+        <div class="metric-label">Time-to-Judgment Significantly Reduced</div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- CASE STUDY 3: FIGMA PLUGIN -->
+  <!-- ============================================================ -->
+  <section class="case-study" id="cs3">
+
+    <div class="eyebrow">
+      <span class="cs-number">03 / 03</span>
+      <span class="cs-status">Public — Personal Project</span>
+    </div>
+
+    <h2>Building the <em>Accessibility Gap</em><br>No Plugin Had Closed</h2>
+    <p class="cs-subtitle">Figma WCAG Accessibility Checker & Design Token Exporter — Personal Project</p>
+
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="meta-label">Role</div>
+        <div class="meta-value">Sole Designer & Developer</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Built At</div>
+        <div class="meta-value">Into Design Systems Hackathon, SF</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Stack</div>
+        <div class="meta-value">React, TypeScript, Cursor.ai, Claude Code</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Status</div>
+        <div class="meta-value">90% — Beta Ready</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Market</div>
+        <div class="meta-value">Unique on Plugin Market</div>
+      </div>
+    </div>
+
+    <div class="role-lens">
+      <span class="lens-tag">Design Engineer</span>
+      <span class="lens-tag">AI Prompt Engineer</span>
+      <span class="lens-tag">Conversation Designer</span>
+    </div>
+
+    <div class="cs-section">
+      <h3>The Market Gap</h3>
+      <p>Every Figma accessibility plugin on the market either detects problems or suggests fixes — not both. None of them also generate design tokens and export design system documentation in the same workflow. Accessibility checking, remediation guidance, and documentation export existed as three separate manual steps, creating friction and — more critically — human error.</p>
+      <p>For designers working on enterprise-scale design systems where accessibility compliance is a legal and contractual requirement, this gap had real consequences: missed violations, inconsistent token naming, and documentation that didn't reflect actual component states.</p>
+    </div>
+
+    <div class="callout">
+      <p>"The goal wasn't to automate accessibility — it was to make compliance so frictionless that designers stop treating it as a separate step and start treating it as part of the design act itself."</p>
+    </div>
+
+    <div class="cs-section">
+      <h3>The Prompt Engineering Challenge</h3>
+      <p>The plugin's intelligence is driven by a prompt system I designed and continue to refine. The core challenge: prompts needed to detect WCAG violations across multiple categories — contrast ratios, ARIA label presence, screen reader flow, focus order — and for each violation, surface a specific compliant alternative rather than a generic warning.</p>
+      <p>The prompt architecture had to balance two competing requirements: comprehensive coverage (catching every relevant violation category) and zero false positives (not flagging acceptable design decisions as errors). Over hundreds of iterations, I refined the prompt logic to distinguish intentional design overrides from genuine compliance gaps — and to give the user override capability when the AI's suggestion conflicts with a deliberate design choice.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="cs-section">
+        <h3>Key Technical Decisions</h3>
+        <ul class="decisions">
+          <li>Built in React and TypeScript at a hackathon — shipped a working plugin in the event timeframe, then continued refining post-event</li>
+          <li>Designed the prompt system to output structured JSON that maps directly to Figma's API — violations, suggested alternatives, and token values in a single pass</li>
+          <li>Implemented user override capability — the plugin surfaces AI suggestions but the designer retains final decision authority</li>
+          <li>Built token export in standard JSON format compatible with Style Dictionary and major design-to-code pipelines</li>
+          <li>Designed documentation export to auto-generate component usage guidelines from the token structure — reducing documentation time from hours to minutes</li>
+          <li>Iteratively expanding coverage: currently adding ARIA label detection and screen reader flow analysis to the prompt system</li>
+        </ul>
+      </div>
+
+      <div class="cs-section">
+        <h3>Multi-Role Lens</h3>
+        <div class="lens-breakdown">
+          <div class="lens-item">
+            <span class="lens-label-pill">Design Engineer</span>
+            <span>Built production plugin in React/TypeScript; integrated Figma API; designed token export pipeline compatible with Style Dictionary</span>
+          </div>
+          <div class="lens-item">
+            <span class="lens-label-pill">AI Prompt Eng.</span>
+            <span>Designed and iteratively refined the multi-category violation detection prompt system — hundreds of iterations, structured JSON output, false-positive reduction</span>
+          </div>
+          <div class="lens-item">
+            <span class="lens-label-pill">Conversation</span>
+            <span>Designed the violation-to-suggestion dialogue flow — each AI output is a conversation turn: here's the problem, here's a fix, do you want to override?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-section">
+      <h3>What This Demonstrates</h3>
+      <p>This project is the most direct proof of concept for the design engineer profile: it required identifying a real market gap, designing a solution, writing production React/TypeScript, integrating an AI prompt system, and shipping a functional tool — all as sole contributor. The prompt architecture continues to evolve as new accessibility categories are added, making it a living demonstration of iterative AI system design.</p>
+    </div>
+
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-value">1</div>
+        <div class="metric-label">Plugin on Market with Detect + Fix + Export</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">100s</div>
+        <div class="metric-label">Prompt Iterations to Production Logic</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">React</div>
+        <div class="metric-label">TypeScript Production Build</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">↓hrs</div>
+        <div class="metric-label">Documentation Time Reduced to Minutes</div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- CASE STUDY 4: IPM CODEX -->
+  <!-- ============================================================ -->
+  <section class="case-study" id="cs4">
+
+    <div class="eyebrow">
+      <span class="cs-number">04 / 04</span>
+      <span class="cs-status">Public — EdTech / GovTech SaaS</span>
+    </div>
+
+    <h2>From <em>30% to 85%</em><br>Task Completion in a Regulated Workflow</h2>
+    <p class="cs-subtitle">IPM Codex — Integrated Pest Management SaaS for K–12 School Districts</p>
+
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="meta-label">Role</div>
+        <div class="meta-value">UX Designer & Front-End Developer</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Duration</div>
+        <div class="meta-value">4-month build + 2-month redesign</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Phase</div>
+        <div class="meta-value">Zero-to-One + Post-Launch Redesign</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Tools</div>
+        <div class="meta-value">Figma, HTML/CSS/JS/jQuery, Contextual Inquiry</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Regulation</div>
+        <div class="meta-value">Healthy Schools Act of California</div>
+      </div>
+    </div>
+
+    <div class="role-lens">
+      <span class="lens-tag">Design Engineer</span>
+      <span class="lens-tag">AI Conversation Designer</span>
+      <span class="lens-tag">AI Product Manager</span>
+    </div>
+
+    <div class="cs-section">
+      <h3>The Problem</h3>
+      <p>IPM Codex is a zero-to-one SaaS platform built to help K–12 school districts manage integrated pest management workflows in compliance with the Healthy Schools Act of California — a state regulatory framework governing pesticide application, notification, and recordkeeping in school environments. Two distinct user groups depended on the platform: facilities administrators responsible for scheduling and executing pest control treatments, and school administrators responsible for compliance oversight across multiple campuses.</p>
+      <p>Post-launch observation revealed a critical adoption failure: task completion in the Jobs tab — the platform's most operationally critical feature — sat at approximately 30%. Both user groups were struggling, but for different reasons. Facilities administrators couldn't move fluidly through the job lifecycle. School administrators couldn't assess compliance status without drilling through multiple disconnected tabs. The result was abandonment, workarounds, and compliance risk.</p>
+    </div>
+
+    <div class="callout">
+      <p>"By embedding real-world compliance workflows into the interface, I helped make a complex system both usable and trustworthy in a high-stakes environment."</p>
+    </div>
+
+    <div class="cs-section">
+      <h3>Research & Discovery</h3>
+      <p>I conducted contextual inquiry and task modeling with both user groups to understand their real workflows before and after the platform entered their lives. The research revealed three compounding problems: confusing terminology that didn't match how facilities staff actually thought about their work, a fragmented task flow that required too many steps to complete a single job lifecycle, and a compliance dashboard that gave administrators no at-a-glance signal — every assessment required manual investigation.</p>
+      <p>The regulatory dimension added additional design constraints. Under the Healthy Schools Act, pesticide application records must be accurately generated, retained, and accessible for inspection. Any interface friction that caused staff to skip or defer documentation steps created real legal exposure for the districts — not just usability problems.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="cs-section">
+        <h3>UX Solutions Delivered</h3>
+        <ul class="decisions">
+          <li>Redesigned the Jobs tab around a clear linear lifecycle — Scheduled → In Progress → Documented — eliminating ambiguity about where a job stood and what action was needed next</li>
+          <li>Created role-specific views: facilities administrators received a task-focused operational interface; school administrators received a compliance dashboard with at-a-glance status indicators across all campuses and zones</li>
+          <li>Introduced modular job cards with compliance status pills — allowing administrators to triage out-of-compliance situations without drilling into nested tabs</li>
+          <li>Rewrote UX copy throughout to match facilities staff mental models — replacing technical regulatory language with terminology that matched how staff actually described their work</li>
+          <li>Developed a modular component library including job cards, filtering tools, and compliance status indicators designed to scale to additional job types</li>
+        </ul>
+      </div>
+
+      <div class="cs-section">
+        <h3>Frontend Engineering</h3>
+        <ul class="decisions">
+          <li>Built and maintained the full frontend in HTML, CSS, and jQuery across both the original build and the redesign — sole front-end developer throughout</li>
+          <li>Engineered time-sensitive data display for the compliance dashboard: notification deadlines, treatment windows, and status expirations required careful prioritization logic to surface what was most urgent without overwhelming the user</li>
+          <li>Implemented CSS architecture at component level using BEM methodology — buttons, status pills, job cards all built as structured, reusable components with documented variants</li>
+          <li>Designed and developed the filtering system for the Jobs tab to support multi-dimensional filtering by campus, job type, status, and date range with live result updates</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cs-section">
+      <h3>Multi-Role Lens</h3>
+      <div class="lens-breakdown">
+        <div class="lens-item">
+          <span class="lens-label-pill">Design Engineer</span>
+          <span>Sole front-end developer across 6 months — built the full interface in HTML/CSS/jQuery, engineered time-sensitive data prioritization, implemented BEM component architecture consumed by the full product</span>
+        </div>
+        <div class="lens-item">
+          <span class="lens-label-pill">Conversation Designer</span>
+          <span>Redesigned the job lifecycle as a structured conversation between the system and the user — each status state communicates what happened, what's needed next, and what the compliance consequence is if action is deferred</span>
+        </div>
+        <div class="lens-item">
+          <span class="lens-label-pill">AI Product Manager</span>
+          <span>Conducted original user research, defined the redesign scope, owned the role-based view architecture decision, and delivered measurable adoption improvement — a full product iteration cycle without the formal PM title</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-section">
+      <h3>Outcome</h3>
+      <p>Job task completion rose from approximately 30% to over 85% through observed usage following the redesign — a nearly 3x improvement in the platform's most critical workflow. Users reported significantly improved clarity and control. The platform expanded from its initial deployment to 3 school districts with signed contracts, and the modular component system supported expansion to additional job types including irrigation and cleaning protocols.</p>
+      <p>The compliance-first design approach — building the regulatory framework into the interface rather than treating it as a separate documentation step — became the foundation for the platform's credibility with risk-conscious school district administrators operating under state law.</p>
+    </div>
+
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-value">30→85%</div>
+        <div class="metric-label">Task Completion Rate Post-Redesign</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">3</div>
+        <div class="metric-label">School Districts — Signed Contracts</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">2</div>
+        <div class="metric-label">Distinct User Roles Designed For</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">HSA</div>
+        <div class="metric-label">Healthy Schools Act of California Compliance</div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- CASE STUDY 5: THYROIDTRACKER -->
+  <!-- ============================================================ -->
+  <section class="case-study" id="cs5">
+
+    <div class="eyebrow">
+      <span class="cs-number">05 / 05</span>
+      <span class="cs-status">Personal Project — Live Pre-Beta</span>
+    </div>
+
+    <h2><em>This is my life</em><br>in one view</h2>
+    <p class="cs-subtitle">ThyroidTracker — AI-Powered Chronic Care Management for Hypothyroid Patients</p>
+
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="meta-label">Role</div>
+        <div class="meta-value">Sole Designer & Developer</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Status</div>
+        <div class="meta-value">Live — Pre-Beta, Active Users</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Stack</div>
+        <div class="meta-value">Figma Make → Cursor.ai, Supabase, OpenAI</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Domain</div>
+        <div class="meta-value">Hypothyroid / Autoimmune Chronic Care</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Users</div>
+        <div class="meta-value">5 Active Testers</div>
+      </div>
+    </div>
+
+    <div class="role-lens">
+      <span class="lens-tag">Design Engineer</span>
+      <span class="lens-tag">AI Prompt Engineer</span>
+      <span class="lens-tag">Conversation Designer</span>
+      <span class="lens-tag">AI Product Manager</span>
+    </div>
+
+    <div class="cs-section">
+      <h3>The Problem — Personal, Clinical, and Systemic</h3>
+      <p>Hypothyroidism is one of the most common chronic conditions in the United States, yet it remains among the most poorly tracked. Patients manage a complex, shifting constellation of symptoms — fatigue, weight, temperature sensitivity, mood, hair loss, brain fog, heart rate — that interact with medications, lab values, diet, sleep, and life events in ways that are rarely visible to their care team at the time of a 15-minute appointment.</p>
+      <p>The deeper clinical reality is that no two hypothyroid patients track the same metrics. Autoimmune thyroid disease — particularly Hashimoto's thyroiditis — produces highly individual symptom profiles that change over time. Generic symptom trackers fail because they impose fixed categories on a condition that demands flexibility. Patients either under-track because the tool doesn't fit their reality, or over-track in a fragmented way that produces no usable signal.</p>
+      <p>This problem is personal. My background in biopsychology, medical product development at Abbott Laboratories, and close relationships with hypothyroid patients gave me both the clinical grounding and the human urgency to design a better tool.</p>
+    </div>
+
+    <div class="callout">
+      <p>"This is my life in one view." — Patient tester, after first session with the health timeline</p>
+    </div>
+
+    <div class="cs-section">
+      <h3>The AI Design Challenge</h3>
+      <p>The central design challenge was building an AI system flexible enough to accommodate every patient's unique tracking reality while structured enough to surface meaningful patterns over time. Two competing risks had to be balanced: too rigid, and patients would abandon the tool when their symptoms didn't fit the available categories; too open-ended, and the data would fragment into noise with no useful signal for the patient or their provider.</p>
+      <p>The solution was an AI-assisted category creation system. When a patient logs a new symptom or event, the AI suggests a small number of relevant categories based on what they've described — drawing on the patient's own prior entries and common hypothyroid symptom patterns. The patient can accept a suggestion, modify it, or create a completely custom category from scratch. Once created, that category becomes a persistent tracking dimension the patient can log against indefinitely.</p>
+      <p>This approach solves two problems simultaneously: it reduces the cognitive load of starting from a blank field, and it prevents the proliferation of near-duplicate custom categories that makes longitudinal data useless. The AI acts as a gentle organizing intelligence — not a gatekeeper.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="cs-section">
+        <h3>Key Design Decisions</h3>
+        <ul class="decisions">
+          <li>Designed multiple input modalities — sliders, free text, AI-assisted category creation, and photo attachment — so patients can log in the way that fits their energy level and cognitive state at the moment of logging</li>
+          <li>Built the health timeline view as the primary interface: a longitudinal display of symptom and event patterns over time that makes interactions visible that a patient would never notice entry-by-entry</li>
+          <li>Designed AI category suggestions as a conversation — the system offers 2–3 options, the patient responds, and the selected category becomes part of their permanent personal tracking vocabulary</li>
+          <li>Architected the data model in Supabase to support completely flexible per-patient category structures — no two users share the same schema, by design</li>
+          <li>Began building the provider connection layer — allowing patients to share their timeline data with qualified thyroid specialists to bridge the gap between self-tracking and clinical care</li>
+        </ul>
+      </div>
+
+      <div class="cs-section">
+        <h3>Multi-Role Lens</h3>
+        <div class="lens-breakdown">
+          <div class="lens-item">
+            <span class="lens-label-pill">Design Engineer</span>
+            <span>Sole designer and developer — vibecoded MVP in Figma Make, migrated to Cursor.ai for production quality, integrated Supabase backend and OpenAI API, built flexible per-patient data architecture</span>
+          </div>
+          <div class="lens-item">
+            <span class="lens-label-pill">AI Prompt Eng.</span>
+            <span>Designed the category suggestion prompt system — iteratively refined to surface 2–3 relevant options without over-prescribing, balanced between patient's prior entries and clinical symptom patterns</span>
+          </div>
+          <div class="lens-item">
+            <span class="lens-label-pill">Conversation</span>
+            <span>Designed the AI-patient interaction as a genuine dialogue — suggestion → patient response → confirmation → persistent category creation. Each interaction teaches the system the patient's personal tracking language</span>
+          </div>
+          <div class="lens-item">
+            <span class="lens-label-pill">AI PM</span>
+            <span>Defined product strategy, user research, clinical domain constraints, and AI intervention philosophy end-to-end — including the provider connection roadmap as a second-phase value layer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-section">
+      <h3>Domain Expertise Behind the Design</h3>
+      <p>ThyroidTracker is built on a clinical foundation most health app designers don't have. My biopsychology degree from UC Santa Barbara included rigorous clinical psychology research training and experiment design — directly applicable to understanding how to design for symptom variability and longitudinal data collection. My work in medical product development and digital transformation at Abbott Laboratories, which included global health communications and patient-facing content, gave me a working understanding of how health information needs to be structured to be actionable rather than overwhelming.</p>
+      <p>Personal proximity to hypothyroid patients gave me the qualitative signal that no amount of secondary research could replace: the frustration of describing a symptom that doesn't fit any existing category, the anxiety of not knowing whether today's fatigue is the disease or the medication or something else entirely, and the helplessness of arriving at a clinical appointment with months of undocumented experience and 15 minutes to communicate it.</p>
+    </div>
+
+    <div class="cs-section">
+      <h3>Governing Design Principles</h3>
+      <ul class="decisions">
+        <li><strong>Flexibility over structure.</strong> The app accommodates the patient's reality, not the other way around. The AI helps organize; it never imposes</li>
+        <li><strong>Longitudinal signal over point-in-time logging.</strong> Every entry is only valuable in relationship to every other entry — the timeline view is the product, not the log form</li>
+        <li><strong>Patient authority.</strong> AI suggestions are always overridable. The patient's language and categories take precedence over any model inference</li>
+        <li><strong>Bridge to care.</strong> The end goal is not self-tracking — it is a patient arriving at a clinical appointment with a year of organized, legible data their provider can actually use</li>
+      </ul>
+    </div>
+
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-value">5</div>
+        <div class="metric-label">Active Pre-Beta Testers</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">Live</div>
+        <div class="metric-label">App Status — Real Users, Real Data</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">∞</div>
+        <div class="metric-label">Flexible Per-Patient Category Schemas</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">"My life<br>in one view"</div>
+      

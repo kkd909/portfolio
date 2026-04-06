@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meridian Advisory — Wireframe Component Explorer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:         #0f1117;
+  --canvas:      #f4f4f6;
+  --surface:     #ffffff;
+  --rule:        #e2e4e9;
+  --muted:       #6b7280;
+  --muted-light: #9ca3af;
+  --chrome-dark: #16181d;
+  --sidebar-bg:  #1e2028;
+  --rule-dark:   #2e3139;
+  --accent:      #f59e0b;
+  --accent-soft: #fffbeb;
+  --accent-mid:  #fde68a;
+  --accent-text: #92400e;
+  --accent-dark: #451a03;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background: var(--canvas);
+  color: var(--ink);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+}
+
+/* ── HEADER ─────────────────────────────────────── */
+.page-header {
+  background: var(--sidebar-bg);
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--rule-dark);
+}
+.wordmark { font-family: 'DM Serif Display', serif; font-size: 1.35rem; color: #fff; letter-spacing: -0.02em; }
+.wordmark span { color: var(--accent); }
+.page-subtitle { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted-light); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; }
+.back-link { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted-light); text-decoration: none; letter-spacing: 0.06em; padding: 0.4rem 0.85rem; border: 1px solid var(--rule-dark); border-radius: 2px; transition: all 0.2s; }
+.back-link:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── FIDELITY NAV ────────────────────────────────── */
+.fidelity-nav {
+  background: var(--chrome-dark);
+  border-bottom: 1px solid var(--rule-dark);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.fidelity-label { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--muted-light); letter-spacing: 0.1em; text-transform: uppercase; padding: 0 1rem 0 0; border-right: 1px solid var(--rule-dark); margin-right: 0.5rem; white-space: nowrap; line-height: 3rem; }
+.fidelity-btn { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.04em; padding: 0 1.25rem; height: 3rem; border: none; background: transparent; color: var(--muted-light); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+.fidelity-btn:hover { color: #fff; }
+.fidelity-btn.active { color: #fff; border-bottom-color: var(--accent); font-weight: 500; }
+.fidelity-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rule-dark); display: inline-block; margin-right: 0.5rem; transition: background 0.2s; }
+.fidelity-btn.active .fidelity-dot { background: var(--accent); }
+.fidelity-spacer { flex: 1; }
+.fidelity-legend { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--muted-light); letter-spacing: 0.06em; padding-right: 0.5rem; }
+
+/* ── MAIN LAYOUT ─────────────────────────────────── */
+.main { display: grid; grid-template-columns: 220px 1fr; min-height: 0; }
+
+/* ── COMPONENT SIDEBAR ───────────────────────────── */
+.comp-sidebar { background: var(--sidebar-bg); border-right: 1px solid var(--rule-dark); overflow-y: auto; }
+.comp-group-label { font-family: 'DM Mono', monospace; font-size: 0.55rem; color: var(--muted-light); letter-spacing: 0.1em; text-transform: uppercase; padding: 0.85rem 1rem 0.35rem; border-bottom: 1px solid var(--rule-dark); }
+.comp-item { padding: 0.55rem 1rem; cursor: pointer; border-left: 2px solid transparent; transition: all 0.15s; display: flex; align-items: center; gap: 0.5rem; }
+.comp-item:hover { background: #252830; }
+.comp-item.active { background: var(--accent-dark); border-left-color: var(--accent); }
+.comp-icon { font-size: 0.75rem; width: 18px; text-align: center; flex-shrink: 0; }
+.comp-name { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted-light); line-height: 1.3; }
+.comp-item.active .comp-name { color: #fff; }
+.comp-sub { font-size: 0.55rem; color: var(--muted-light); opacity: 0.6; }
+
+/* ── CONTENT AREA ────────────────────────────────── */
+.content { overflow-y: auto; display: flex; flex-direction: column; background: #f0f4f8; }
+.comp-panel { display: none; flex-direction: column; height: 100%; }
+.comp-panel.active { display: flex; }
+
+.panel-header { background: #fff; border-bottom: 1px solid var(--rule); padding: 0.85rem 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; }
+.panel-meta { }
+.panel-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.55rem; color: var(--accent-text); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.15rem; }
+.panel-title { font-family: 'DM Serif Display', serif; font-size: 1.05rem; color: var(--ink); }
+.fidelity-badge { font-family: 'DM Mono', monospace; font-size: 0.6rem; padding: 0.2rem 0.6rem; border-radius: 2px; font-weight: 500; }
+.badge-low { background: #f4f4f6; color: var(--muted); border: 1px solid var(--rule); }
+.badge-mid { background: var(--accent-soft); color: var(--accent-text); border: 1px solid var(--accent-mid); }
+.badge-high { background: var(--accent); color: var(--accent-dark); border: 1px solid var(--accent); }
+
+.panel-body { flex: 1; padding: 1.5rem; display: grid; grid-template-columns: 1fr 280px; gap: 1.5rem; align-items: start; overflow-y: auto; }
+
+/* ── COMPONENT CANVAS ────────────────────────────── */
+.comp-canvas { background: #fff; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.canvas-bar { background: #f4f4f6; padding: 0.4rem 0.75rem; border-bottom: 1px solid var(--rule); display: flex; align-items: center; gap: 0.5rem; }
+.canvas-dots { display: flex; gap: 0.3rem; }
+.canvas-dot { width: 8px; height: 8px; border-radius: 50%; }
+.canvas-inner { padding: 1.25rem; }
+
+/* Lo-fi placeholder styles */
+.lo-block { background: #f0f0f0; border-radius: 3px; }
+.lo-text { background: #e5e7eb; border-radius: 2px; height: 10px; }
+.lo-text.w20 { width: 20%; }
+.lo-text.w30 { width: 30%; }
+.lo-text.w40 { width: 40%; }
+.lo-text.w60 { width: 60%; }
+.lo-text.w80 { width: 80%; }
+.lo-text.w100 { width: 100%; }
+.lo-avatar { width: 32px; height: 32px; border-radius: 50%; background: #d1d5db; flex-shrink: 0; }
+.lo-img { background: #e5e7eb; border-radius: 3px; width: 100%; }
+.lo-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0; border-bottom: 1px solid #f0f0f0; }
+.lo-pill { background: #e5e7eb; border-radius: 10px; height: 16px; width: 56px; }
+.lo-header { background: #e5e7eb; padding: 0.5rem 0.75rem; border-radius: 3px; margin-bottom: 0.5rem; }
+
+/* Status pills */
+.pill { font-family: 'DM Mono', monospace; font-size: 0.5rem; padding: 0.1rem 0.35rem; border-radius: 2px; display: inline-block; white-space: nowrap; }
+.pill-red { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+.pill-amber { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+.pill-green { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+.pill-blue { background: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; }
+.pill-gray { background: #f4f4f6; color: #6b7280; border: 1px solid #e2e4e9; }
+
+/* Table */
+.comp-table { width: 100%; border-collapse: collapse; font-size: 0.72rem; }
+.comp-table th { font-family: 'DM Mono', monospace; font-size: 0.55rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; padding: 0.4rem 0.6rem; background: #f4f4f6; border-bottom: 1px solid var(--rule); text-align: left; }
+.comp-table td { padding: 0.4rem 0.6rem; border-bottom: 1px solid #f0f0f0; color: var(--ink); vertical-align: middle; }
+.comp-table tr:last-child td { border-bottom: none; }
+.comp-table tr:hover td { background: #fafafa; }
+.matter-id { font-family: 'DM Mono', monospace; font-size: 0.55rem; color: var(--muted); }
+.sparkline { display: flex; align-items: flex-end; gap: 1px; height: 16px; }
+.spark-bar { width: 3px; background: var(--accent); border-radius: 1px; }
+
+/* Calendar */
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.cal-day-label { font-family: 'DM Mono', monospace; font-size: 0.5rem; color: var(--muted); text-align: center; padding: 0.2rem 0; }
+.cal-day { aspect-ratio: 1; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 0.6rem; cursor: pointer; transition: all 0.15s; }
+.cal-day.empty { background: transparent; color: transparent; }
+.cal-day.lo { background: #e5e7eb; color: #9ca3af; }
+.cal-day.ok { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+.cal-day.missing { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+.cal-day.today { background: var(--accent); color: var(--accent-dark); font-weight: 700; }
+.cal-day.weekend { background: #f4f4f6; color: #d1d5db; }
+
+/* News card */
+.news-card { border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; margin-bottom: 0.5rem; }
+.news-img { background: #e5e7eb; }
+.news-body { padding: 0.6rem 0.75rem; }
+.news-cat { font-family: 'DM Mono', monospace; font-size: 0.5rem; color: var(--accent-text); background: var(--accent-soft); border-radius: 2px; padding: 0.06rem 0.3rem; display: inline-block; margin-bottom: 0.25rem; }
+.news-title { font-size: 0.78rem; font-weight: 600; color: var(--ink); margin-bottom: 0.2rem; line-height: 1.3; }
+.news-meta { font-family: 'DM Mono', monospace; font-size: 0.52rem; color: var(--muted); }
+
+/* Leadership card */
+.leadership-card { border: 1px solid var(--rule); border-radius: 6px; padding: 0.85rem; }
+.leadership-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem; }
+.ldr-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+.ldr-name { font-size: 0.75rem; font-weight: 600; color: var(--ink); }
+.ldr-title { font-size: 0.62rem; color: var(--muted); }
+.ldr-body { font-size: 0.72rem; color: #374151; line-height: 1.6; margin-bottom: 0.6rem; }
+.ldr-reactions { display: flex; gap: 0.35rem; align-items: center; }
+.reaction { font-size: 0.6rem; padding: 0.12rem 0.4rem; background: #f4f4f6; border: 1px solid var(--rule); border-radius: 10px; cursor: pointer; }
+
+/* Document list */
+.doc-item { display: flex; align-items: center; gap: 0.6rem; padding: 0.45rem 0; border-bottom: 1px solid #f0f0f0; }
+.doc-item:last-child { border-bottom: none; }
+.doc-icon { width: 28px; height: 28px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; flex-shrink: 0; }
+.doc-pdf { background: #fef2f2; color: #dc2626; }
+.doc-word { background: #eff6ff; color: #2563eb; }
+.doc-xls { background: #f0fdf4; color: #16a34a; }
+.doc-name { font-size: 0.7rem; font-weight: 500; color: var(--ink); }
+.doc-meta { font-size: 0.58rem; color: var(--muted); }
+
+/* Contact card */
+.contact-item { display: flex; align-items: center; gap: 0.6rem; padding: 0.4rem 0.5rem; border-radius: 4px; border: 1px solid var(--rule); margin-bottom: 0.35rem; }
+.contact-avatar { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; flex-shrink: 0; }
+.contact-name { font-size: 0.7rem; font-weight: 500; color: var(--ink); }
+.contact-role { font-size: 0.58rem; color: var(--muted); }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; margin-left: auto; flex-shrink: 0; }
+.status-green { background: #22c55e; }
+.status-amber { background: #f59e0b; }
+.status-gray { background: #d1d5db; }
+
+/* Timekeeper mgr view */
+.tkpr-row { display: grid; grid-template-columns: 1fr repeat(5,48px) 56px; gap: 0; align-items: center; padding: 0.3rem 0.5rem; border-bottom: 1px solid #f0f0f0; font-size: 0.65rem; }
+.tkpr-head { font-family: 'DM Mono', monospace; font-size: 0.5rem; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+.tkpr-cell { text-align: center; font-family: 'DM Mono', monospace; font-size: 0.62rem; }
+.tkpr-cell.missing { color: #dc2626; font-weight: 600; }
+.tkpr-cell.ok { color: #16a34a; }
+.tkpr-cell.low { color: #d97706; }
+.alert-badge { font-family: 'DM Mono', monospace; font-size: 0.48rem; padding: 0.06rem 0.3rem; border-radius: 2px; }
+
+/* Filter bar */
+.filter-bar { display: flex; gap: 0.4rem; margin-bottom: 0.6rem; align-items: center; flex-wrap: wrap; }
+.filter-chip { font-family: 'DM Mono', monospace; font-size: 0.55rem; padding: 0.2rem 0.5rem; border-radius: 2px; border: 1px solid var(--rule); background: #fff; color: var(--muted); cursor: pointer; }
+.filter-chip.active { background: var(--accent-soft); border-color: var(--accent-mid); color: var(--accent-text); }
+.search-box { flex: 1; min-width: 120px; border: 1px solid var(--rule); border-radius: 2px; padding: 0.2rem 0.5rem; font-size: 0.62rem; color: var(--muted); font-family: 'DM Mono', monospace; background: #fff; }
+
+/* ── ANNOTATION PANEL ────────────────────────────── */
+.annotation-panel { display: flex; flex-direction: column; gap: 0.75rem; }
+.ann-heading { font-family: 'DM Mono', monospace; font-size: 0.55rem; color: var(--accent-text); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.15rem; }
+.ann-card { background: #fff; border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: 4px; padding: 0.6rem 0.75rem; }
+.ann-tag { font-family: 'DM Mono', monospace; font-size: 0.52rem; color: var(--accent-text); background: var(--accent-soft); border-radius: 2px; padding: 0.06rem 0.28rem; display: inline-block; margin-bottom: 0.25rem; }
+.ann-text { font-size: 0.72rem; color: #374151; line-height: 1.55; }
+.ann-text strong { color: var(--ink); }
+
+.toggle-legend { background: var(--accent-dark); border: 1px solid var(--accent); border-radius: 4px; padding: 0.6rem 0.75rem; }
+.toggle-legend-title { font-family: 'DM Mono', monospace; font-size: 0.52rem; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.35rem; }
+.toggle-row { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.2rem; }
+.toggle-key { font-family: 'DM Mono', monospace; font-size: 0.55rem; color: #fde68a; min-width: 60px; }
+.toggle-val { font-size: 0.62rem; color: #cbd5e1; }
+
+@media (max-width: 900px) {
+  .panel-body { grid-template-columns: 1fr; }
+  .main { grid-template-columns: 1fr; }
+  .comp-sidebar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div>
+    <div class="wordmark">Meridian <span>Advisory</span></div>
+    <div class="page-subtitle">Wireframe Component Explorer · CS6</div>
+  </div>
+  <a href="index.html#cs6" class="back-link">← Back to Case Study</a>
+</header>
+
+<nav class="fidelity-nav">
+  <span class="fidelity-label">Fidelity</span>
+  <button class="fidelity-btn active" onclick="setFidelity('lo')" id="flo"><span class="fidelity-dot"></span>Low — Skeleton</button>
+  <button class="fidelity-btn" onclick="setFidelity('mid')" id="fmid"><span class="fidelity-dot"></span>Mid — Structured</button>
+  <button class="fidelity-btn" onclick="setFidelity('hi')" id="fhi"><span class="fidelity-dot"></span>High — Full Feature</button>
+  <div class="fidelity-spacer"></div>
+  <span class="fidelity-legend">← Toggle layers, not components</span>
+</nav>
+
+<div class="main">
+
+  <!-- COMPONENT LIST -->
+  <aside class="comp-sidebar">
+    <div class="comp-group-label">Matter Management</div>
+    <div class="comp-item active" onclick="showComp('matter')" id="ci-matter">
+      <span class="comp-icon">⊞</span>
+      <div><div class="comp-name">Matter Table</div><div class="comp-sub">Work queue & status</div></div>
+    </div>
+    <div class="comp-item" onclick="showComp('invoice')" id="ci-invoice">
+      <span class="comp-icon">$</span>
+      <div><div class="comp-name">Invoice Table</div><div class="comp-sub">Billing & aging</div></div>
+    </div>
+
+    <div class="comp-group-label">Timekeeping</div>
+    <div class="comp-item" onclick="showComp('calendar')" id="ci-calendar">
+      <span class="comp-icon">◫</span>
+      <div><div class="comp-name">Time Entry Calendar</div><div class="comp-sub">Individual attorney view</div></div>
+    </div>
+    <div class="comp-item" onclick="showComp('timekeeper')" id="ci-timekeeper">
+      <span class="comp-icon">⊙</span>
+      <div><div class="comp-name">Timekeeper Dashboard</div><div class="comp-sub">Managing attorney view</div></div>
+    </div>
+
+    <div class="comp-group-label">Intranet</div>
+    <div class="comp-item" onclick="showComp('news')" id="ci-news">
+      <span class="comp-icon">◈</span>
+      <div><div class="comp-name">News & Announcements</div><div class="comp-sub">Firm-wide updates</div></div>
+    </div>
+    <div class="comp-item" onclick="showComp('leadership')" id="ci-leadership">
+      <span class="comp-icon">◉</span>
+      <div><div class="comp-name">Leadership Message</div><div class="comp-sub">Partner communications</div></div>
+    </div>
+    <div class="comp-item" onclick="showComp('documents')" id="ci-documents">
+      <span class="comp-icon">◧</span>
+      <div><div class="comp-name">Key Documents</div><div class="comp-sub">Quick-access resources</div></div>
+    </div>
+    <div class="comp-item" onclick="showComp('contacts')" id="ci-contacts">
+      <span class="comp-icon">◎</span>
+      <div><div class="comp-name">Key Contacts</div><div class="comp-sub">Directory & favorites</div></div>
+    </div>
+  </aside>
+
+  <!-- COMPONENT PANELS -->
+  <main class="content">
+
+    <!-- ═══ MATTER TABLE ═══════════════════════════════════════ -->
+    <div class="comp-panel active" id="panel-matter">
+      <div class="panel-header">
+        <div class="panel-meta">
+          <div class="panel-eyebrow">Matter Management · Work Queue</div>
+          <div class="panel-title">Matter Table</div>
+        </div>
+        <span class="fidelity-badge badge-lo" id="badge-matter">Low Fidelity</span>
+      </div>
+      <div class="panel-body">
+        <div>
+          <div class="comp-canvas">
+            <div class="canvas-bar"><div class="canvas-dots"><div class="canvas-dot" style="background:#fc5c57"></div><div class="canvas-dot" style="background:#febc2e"></div><div class="canvas-dot" style="background:#28c840"></div></div></div>
+            <div class="canvas-inner" id="matter-lo">
+              <div class="lo-header"><div class="lo-text w30"></div></div>
+              <div style="display:flex;flex-direction:column;gap:0.3rem">
+                <div class="lo-row"><div class="lo-text w20"></div><div class="lo-text w40"></div><div class="lo-text w20"></div><div class="lo-pill"></div></div>
+                <div class="lo-row"><div class="lo-text w20"></div><div class="lo-text w40"></div><div class="lo-text w20"></div><div class="lo-pill"></div></div>
+                <div class="lo-row"><div class="lo-text w20"></div><div class="lo-text w40"></div><div class="lo-text w20"></div><div class="lo-pill"></div></div>
+                <div class="lo-row"><div class="lo-text w20"></div><div class="lo-text w40"></div><div class="lo-text w20"></div><div class="lo-pill"></div></div>
+              </div>
+            </div>
+            <div class="canvas-inner" id="matter-mid" style="display:none">
+              <table class="comp-table">
+                <thead><tr><th>Matter ID</th><th>Matter Name</th><th>Type</th><th>Status</th><th>Due</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="matter-id">M-2024-0892</span></td><td>Richardson v. Apex Holdings</td><td>Contract Review</td><td><span class="pill pill-blue">IN PROGRESS</span></td><td>Jan 28</td></tr>
+                  <tr><td><span class="matter-id">M-2024-0891</span></td><td>Westbrook Acquisition</td><td>Due Diligence</td><td><span class="pill pill-amber">PENDING REVIEW</span></td><td>Jan 29</td></tr>
+                  <tr><td><span class="matter-id">M-2024-0889</span></td><td>IP License — TechCorp</td><td>Contract Draft</td><td><span class="pill pill-blue">IN PROGRESS</span></td><td>Jan 30</td></tr>
+                  <tr><td><span class="matter-id">M-2024-0887</span></td><td>Employment Dispute - Harris</td><td>Litigation</td><td><span class="pill pill-red">ACTION NEEDED</span></td><td>Feb 1</td></tr>
+                  <tr><td><span class="matter-id">M-2024-0885</span></td><td>Vendor MSA Review</td><td>Contract Review</td><td><span class="pill pill-blue">IN PROGRESS</span></td><td>Feb 3</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="canvas-inner" id="matter-hi" style="display:none">
+              <div class="filter-bar">
+                <input class="search-box" placeholder="Search matters, clients…" readonly>
+                <span class="filter-chip active">All Types</span>
+                <span class="filter-chip">Litigation</span>
+                <span class="filter-chip">Contract</span>
+                <span class="filter-chip">Due Diligence</span>
+              </div>
+              <table class="comp-table">
+                <thead><tr><th>Matter ID</th><th>Matter Name</th><th>Type</th><th>Status</th><th>Assigned</th><th>Due</th><th>Invoice Age</th><th>Activity</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="matter-id">M-2024-0892</span></td><td>Richardson v. Apex Holdings</td><td>Contract Review</td><td><span class="pill pill-blue">IN PROGRESS</span></td><td>J. Donovan</td><td>Jan 28</td><td><span class="pill pill-gray">12 days</span></td><td><div class="sparkline"><div class="spark-bar" style="height:8px"></div><div class="spark-bar" style="height:12px"></div><div class="spark-bar" style="height:6px"></div><div class="spark-bar" style="height:14px"></div><div class="spark-bar" style="height:10px"></div></div></td></tr>
+                  <tr><td><span class="matter-id">M-2024-0891</span></td><td>Westbrook Acquisition</td><td>Due Diligence</td><td><span class="pill pill-amber">PENDING REVIEW</span></td><td>S. Patel</td><td>Jan 29</td><td><span class="pill pill-amber">43 days</span></td><td><div class="sparkline"><div class="spark-bar" style="height:14px;background:#d97706"></div><div class="spark-bar" style="height:8px;background:#d97706"></div><div class="spark-bar" style="height:4px;background:#d97706"></div><div class="spark-bar" style="height:2px;background:#d97706"></div><div class="spark-bar" style="height:2px;background:#d97706"></div></div></td></tr>
+                  <tr><td><span class="matter-id">M-2024-0887</span></td><td>Employment Dispute - Harris</td><td>Litigation</td><td><span class="pill pill-red">ACTION NEEDED</span></td><td>J. Donovan</td><td>Feb 1</td><td><span class="pill pill-red">90+ days</span></td><td><div class="sparkline"><div class="spark-bar" style="height:10px;background:#dc2626"></div><div class="spark-bar" style="height:6px;background:#dc2626"></div><div class="spark-bar" style="height:3px;background:#dc2626"></div><div class="spark-bar" style="height:2px;background:#dc2626"></div><div class="spark-bar" style="height:1px;background:#dc2626"></div></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="annotation-panel">
+          <div class="ann-heading">Component Notes</div>
+          <div class="toggle-legend" id="tl-matter">
+            <div class="toggle-legend-title">Toggle State — Low</div>
+            <div class="toggle-row"><span class="toggle-key">Content</span><span class="toggle-val">Lorem / placeholder</span></div>
+            <div class="toggle-row"><span class="toggle-key">Status</span><span class="toggle-val">Off</span></div>
+            <div class="toggle-row"><span class="toggle-key">Filters</span><span class="toggle-val">Off</span></div>
+            <div class="toggle-row"><span class="toggle-key">Activity</span><span class="toggle-val">Off</span></div>
+          </div>
+          <div class="ann-card">
+            <div class="ann-tag">Reuse</div>
+            <div class="ann-text"><strong>Same component as LegalOps billing dashboard.</strong> Matter table rows, status pills, and matter ID formatting are shared across the intranet and the billing attorney product — one component built, consumed in two surfaces.</div>
+          </div>
+          <div class="ann-card">
+            <div class="ann-tag">Fidelity Range</div>
+            <div class="ann-text">Low: consultants frame the table layout. Mid: real matter names surface client asks about data fields. High: filters, invoice aging, and activity sparklines appear when client asks "how would they sort or search?"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ INVOICE TABLE ══════════════════════════════════════ -->
+    <div class="comp-panel" id="panel-invoice">
+      <div class="panel-header">
+        <div class="panel-meta">
+          <div class="panel-eyebrow">Matter Management · Billing</div>
+          <div class="panel-title">Invoice Table</div>
+        </div>
+        <span class="fidelity-badge badge-lo" id="badge-invoice">Low Fidelity</span>
+      </div>
+      <div class="panel-body">
+        <div>
+          <div class="comp-canvas">
+            <div class="canvas-bar"><div class="canvas-dots"><div class="canvas-dot" style="background:#fc5c57"></div><div class="canvas-dot" style="background:#febc2e"></div><div class="canvas-dot" style="background:#28c840"></div></div></div>
+            <div class="canvas-inner" id="invoice-lo">
+              <div class="lo-header"><div class="lo-text w40"></div></div>
+              <div style="display:flex;flex-direction:column;gap:0.3rem">
+                <div class="lo-row"><div class="lo-text w20"></div><div class="lo-text w30"></div><div class="lo-text w15" style="width:15%"></div><div class="lo-pill"></div></div>
+                <div class="lo-row"><div class="lo-text w20"></div><div class="lo-text w30"></div><div class="lo-text w15" style="width:15%"></div><div class="lo-pill"></div></div>
+                <div class="lo-row"><div class="lo-text w20"></div><div class="lo-text w30"></div><div class="lo-text w15" style="width:15%"></div><div class="lo-pill"></div></div>
+              </div>
+            </div>
+            <div class="canvas-inner" id="invoice-mid" style="display:none">
+              <table class="comp-table">
+                <thead><tr><th>Invoice #</th><th>Client</th><th>Amount</th><th>Due Date</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="matter-id">INV-2024-441</span></td><td>Apex Holdings</td><td>$48,200</td><td>Dec 15</td><td><span class="pill pill-red">OVERDUE</span></td></tr>
+                  <tr><td><span class="matter-id">INV-2024-438</span></td><td>Westbrook LLC</td><td>$31,500</td><td>Jan 5</td><td><span class="pill pill-amber">DUE SOON</span></td></tr>
+                  <tr><td><span class="matter-id">INV-2024-435</span></td><td>TechCorp</td><td>$22,800</td><td>Jan 28</td><td><span class="pill pill-blue">SENT</span></td></tr>
+                  <tr><td><span class="matter-id">INV-2024-431</span></td><td>Harris Group</td><td>$15,400</td><td>Feb 10</td><td><span class="pill pill-green">PAID</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="canvas-inner" id="invoice-hi" style="display:none">
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.5rem;margin-bottom:0.75rem">
+                <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:4px;padding:0.5rem;text-align:center"><div style="font-family:'DM Mono',monospace;font-size:1rem;color:#dc2626;font-weight:700">$48K</div><div style="font-size:0.58rem;color:#dc2626">90+ days overdue</div></div>
+                <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:4px;padding:0.5rem;text-align:center"><div style="font-family:'DM Mono',monospace;font-size:1rem;color:#d97706;font-weight:700">$31K</div><div style="font-size:0.58rem;color:#d97706">Due this week</div></div>
+                <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:4px;padding:0.5rem;text-align:center"><div style="font-family:'DM Mono',monospace;font-size:1rem;color:#0369a1;font-weight:700">$22K</div><div style="font-size:0.58rem;color:#0369a1">Sent — pending</div></div>
+                <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:4px;padding:0.5rem;text-align:center"><div style="font-family:'DM Mono',monospace;font-size:1rem;color:#16a34a;font-weight:700">$15K</div><div style="font-size:0.58rem;color:#16a34a">Paid this month</div></div>
+              </div>
+              <table class="comp-table">
+                <thead><tr><th>Invoice #</th><th>Client</th><th>Amount</th><th>Age</th><th>Status</th><th>Action</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="matter-id">INV-2024-441</span></td><td>Apex Holdings</td><td style="font-weight:600">$48,200</td><td><span class="pill pill-red">90+ days</span></td><td><span class="pill pill-red">OVERDUE</span></td><td><span style="font-family:'DM Mono',monospace;font-size:0.5rem;color:#dc2626;cursor:pointer">Prepare comms →</span></td></tr>
+                  <tr><td><span class="matter-id">INV-2024-438</span></td><td>Westbrook LLC</td><td style="font-weight:600">$31,500</td><td><span class="pill pill-amber">31 days</span></td><td><span class="pill pill-amber">DUE SOON</span></td><td><span style="font-family:'DM Mono',monospace;font-size:0.5rem;color:#d97706;cursor:pointer">Send reminder →</span></td></tr>
+                  <tr><td><span class="matter-id">INV-2024-435</span></td><td>TechCorp</td><td>$22,800</td><td><span class="pill pill-gray">12 days</span></td><td><span class="pill pill-blue">SENT</span></td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="annotation-panel">
+          <div class="ann-heading">Component Notes</div>
+          <div class="toggle-legend" id="tl-invoice">
+            <div class="toggle-legend-title">Toggle State — Low</div>
+            <div class="toggle-row"><span class="toggle-key">Amounts</span><span class="toggle-val">Off</span></div>
+            <div class="toggle-row"><span class="toggle-key">Status</span><span class="toggle-val">Off</span></div>
+            <div class="toggle-row"><span class="toggle-key">Summary</span><span class="toggle-val">Off</span></div>
+            <div class="toggle-row"><span class="toggle-key">Actions</span><span class="toggle-val">Off</span></div>
+          </div>
+          <div class="ann-card">
+            <div class="ann-tag">Connection to Billing Intelligence</div>
+            <div class="ann-text"><strong>High fidelity surfaces the "Prepare comms" action.</strong> This is the same interaction pattern as the LegalOps billing attorney product — invoice aging drives a communication trigger. The component demonstrates continuity between the intranet and the billing product at requirement definition time.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ TIME ENTRY CALENDAR ════════════════════════════════ -->
+    <div class="comp-panel" id="panel-calendar">
+      <div class="panel-header">
+        <div class="panel-meta">
+          <div class="panel-eyebrow">Timekeeping · Individual Attorney</div>
+          <div class="panel-title">Time Entry Calendar</div>
+        </div>
+        <span class="fidelity-badge badge-lo" id="badge-calendar">Low Fidelity</span>
+      </div>
+      <div class="panel-body">
+        <div>
+          <div class="comp-canvas">
+            <div class="canvas-bar"><div class="canvas-dots"><div class="canvas-dot" style="background:#fc5c57"></div><div class="canvas-dot" style="background:#febc2e"></div><div class="canvas-dot" style="background:#28c840"></div></div></div>
+            <div class="canvas-inner" id="calendar-lo">
+              <div class="lo-header" style="margin-bottom:0.75rem"><div class="lo-text w30"></div></div>
+              <div class="cal-grid">
+                <div class="cal-day-label">M</div><div class="cal-day-label">T</div><div class="cal-day-label">W</div><div class="cal-day-label">T</div><div class="cal-day-label">F</div><div class="cal-day-label">S</div><div class="cal-day-label">S</div>
+                <div class="cal-day lo">1</div><div class="cal-day lo">2</div><div class="cal-day lo">3</div><div class="cal-day lo">4</div><div class="cal-day lo">5</div><div class="cal-day lo">6</div><div class="cal-day lo">7</div>
+                <div class="cal-day lo">8</div><div class="cal-day lo">9</div><div class="cal-day lo">10</div><div class="cal-day lo">11</div><div class="cal-day lo">12</div><div class="cal-day lo">13</div><div class="cal-day lo">14</div>
+                <div class="cal-day lo">15</div><div class="cal-day lo">16</div><div class="cal-day lo">17</div><div class="cal-day lo">18</div><div class="cal-day lo">19</div><div class="cal-day lo">20</div><div class="cal-day lo">21</div>
+                <div class="cal-day lo">22</div><div class="cal-day lo">23</div><div class="cal-day lo">24</div><div class="cal-day lo">25</div><div class="cal-day lo">26</div><div class="cal-day lo">27</div><div class="cal-day lo">28</div>
+              </div>
+            </div>
+            <div class="canvas-inner" id="calendar-mid" style="display:none">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem">
+                <div style="font-family:'DM Serif Display',serif;font-size:0.95rem;color:var(--ink)">January 2025</div>
+                <div style="display:flex;gap:0.3rem"><span style="font-family:'DM Mono',monospace;font-size:0.55rem;padding:0.15rem 0.4rem;border:1px solid var(--rule);border-radius:2px;color:var(--muted)">← Dec</span><span style="font-family:'DM Mono',monospace;font-size:0.55rem;padding:0.15rem 0.4rem;border:1px solid var(--rule);border-radius:2px;color:var(--muted)">Feb →</span></div>
+              </div>
+              <div class="cal-grid">
+                <div class="cal-day-label">M</div><div class="cal-day-label">T</div><div class="cal-day-label">W</div><div class="cal-day-label">T</div><div class="cal-day-label">F</div><div class="cal-day-label">S</div><div class="cal-day-label">S</div>
+                <div class="cal-day empty"></div><div class="cal-day ok">1</div><div class="cal-day ok">2</div><div class="cal-day ok">3</div><div class="cal-day ok">4</div><div class="cal-day weekend">5</div><div class="cal-day weekend">6</div>
+                <div class="cal-day ok">7</div><div class="cal-day ok">8</div><div class="cal-day missing">9</div><div class="cal-day ok">10</div><div class="cal-day ok">11</div><div class="cal-day weekend">12</div><div class="cal-day weekend">13</div>
+                <div class="cal-day ok">14</div><div class="cal-day ok">15</div><div class="cal-day ok">16</div><div class="cal-day missing">17</div><div class="cal-day ok">18</div><div class="cal-day weekend">19</div><div class="cal-day weekend">20</div>
+                <div class="cal-day ok">21</div><div class="cal-day ok">22</div><div class="cal-day ok">23</div><div class="cal-day ok">24</div><div class="cal-day today">25</div><div class="cal-day weekend">26</div><div class="cal-day weekend">27</div>
+                <div class="cal-day ok">28</div><div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div>
+              </div>
+              <div style="display:flex;gap:0.75rem;margin-top:0.6rem;align-items:center">
+                <div style="display:flex;align-items:center;gap:0.25rem"><div style="width:10px;height:10px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:2px"></div><span style="font-size:0.6rem;color:var(--muted)">Time entered</span></div>
+                <div style="display:flex;align-items:center;gap:0.25rem"><div style="width:10px;height:10px;background:#fef2f2;border:1px solid #fecaca;border-radius:2px"></div><span style="font-size:0.6rem;color:var(--muted)">Missing entry</span></div>
+                <div style="display:flex;align-items:center;gap:0.25rem"><div style="width:10px;height:10px;background:var(--accent);border-radius:2px"></div><span style="font-size:0.6rem;color:var(--muted)">Today</span></div>
+              </div>
+            </div>
+            <div class="canvas-inner" id="calendar-hi" style="display:none">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.6rem">
+                <div style="font-family:'DM Serif Display',serif;font-size:0.95rem;color:var(--ink)">January 2025</div>
+                <div style="display:flex;align-items:center;gap:0.5rem">
+                  <span style="font-family:'DM Mono',monospace;font-size:0.55rem;padding:0.15rem 0.5rem;background:#fef2f2;color:#dc2626;border:1px solid #fecaca;border-radius:2px">2 days missing</span>
+                  <span style="font-family:'DM Mono',monospace;font-size:0.55rem;padding:0.15rem 0.4rem;border:1px solid var(--rule);border-radius:2px;color:var(--muted)">← Dec</span>
+                  <span style="font-family:'DM Mono',monospace;font-size:0.55rem;padding:0.15rem 0.4rem;border:1px solid var(--rule);border-radius:2px;color:var(--muted)">Feb →</span>
+                </div>
+              </div>
+              <div class="cal-grid">
+                <div class="cal-day-label">M</div><div class="cal-day-label">T</div><div class="cal-day-label">W</div><div class="cal-day-label">T</div><div class="cal-day-label">F</div><div class="cal-day-label">S</div><div class="cal-day-label">S</div>
+                <div class="cal-day empty"></div><div class="cal-day ok" title="7.2h">1</div><div class="cal-day ok" title="8.5h">2</div><div class="cal-day ok" title="6.8h">3</div><div class="cal-day ok" title="7.0h">4</div><div class="cal-day weekend">5</div><div class="cal-day weekend">6</div>
+                <div class="cal-day ok" title="8.1h">7</div><div class="cal-day ok" title="7.5h">8</div><div class="cal-day missing" title="Missing!">9</div><div class="cal-day ok" title="8.0h">10</div><div class="cal-day ok" title="7.2h">11</div><div class="cal-day weekend">12</div><div class="cal-day weekend">13</div>
+                <div class="cal-day ok">14</div><div class="cal-day ok">15</div><div class="cal-day ok">16</div><div class="cal-day missing" title="Missing!">17</div><div class="cal-day ok">18</div><div class="cal-day weekend">19</div><div class="cal-day weekend">20</div>
+                <div class="cal-day ok">21</div><div class="cal-day ok">22</div><div class="cal-day ok">23</div><div class="cal-day ok">24</div><div class="cal-day today">25</div><div class="cal-day weekend">26</div><div class="cal-day weekend">27</div>
+                <div class="cal-day ok">28</div>
+              </div>
+              <div style="margin-top:0.6rem;padding:0.5rem 0.6rem;background:#fef2f2;border:1px solid #fecaca;border-radius:4px;display:flex;align-items:center;gap:0.5rem">
+                <span style="color:#dc2626;font-size:0.75rem">⚠</span>
+                <span style="font-size:0.65rem;color:#dc2626">Time entries missing for Jan 9 and Jan 17. Submit before billing close on Jan 31.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="annotation-panel">
+          <div class="ann-heading">Component Notes</div>
+          <div class="toggle-legend" id="tl-calendar">
+            <div class="toggle-legend-title">Toggle State — Low</div>
+            <div class="toggle-row"><span class="toggle-key">Color</span><span class="toggle-val">Off — neutral gray</span></div>
+            <div class="toggle-row"><span class="toggle-key">Status</span><span class="toggle-val">Off</span></div>
+            <div class="toggle-row"><span class="toggle-key">Alert</span><span class="toggle-val">Off</span></div>
+            <div class="toggle-row"><span class="toggle-key">Legend</span><span class="toggle-val">Off</span></div>
+          </div>
+          <div class="ann-card">
+            <div class="ann-tag">Design Decision</div>
+            <div class="ann-text"><strong>Red/green at the day level.</strong> No need to open a record to know if time is missing — the calendar surface carries compliance status. Green means complete, red means missing, no color means weekend or future. The pattern is universally legible without a legend.</div>
+          </div>
+          <div class="ann-card">
+            <div class="ann-tag">Fidelity Range</div>
+            <div class="ann-text">Low: grid layout and interaction model. Mid: real dates with red/green coding — client sees the pattern immediately. High: missing-day alert banner, billing close deadline, hover hours — everything needed to act.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ TIMEKEEPER DASHBOARD ═══════════════════════════════ -->
+    <div class="comp-panel" id="panel-timekeeper">
+      <div class="panel-header">
+        <div class="panel-meta">
+          <div class="panel-eyebrow">Timekeeping · Managing Attorney</div>
+          <div class="panel-title">Timekeeper Dashboard</div>
+        </div>
+        <span class="fidelity-badge badge-lo" id="badge-timekeeper">Low Fidelity</span>
+      </div>
+      <div class="panel-body">
+        <div>
+          <div class="comp-canvas">
+            <div class="canvas-bar"><div class="canvas-dots"><div class="canvas-dot" style="background:#fc5c57"></div><div class="canvas-dot" style="background:#febc2e"></div><div class="canvas-dot" style="background:#28c840"></div></div></div>
+            <div class="canvas-inner" id="timekeeper-lo">
+              <div class="lo-header" style="margin-bottom:0.75rem"><div class="lo-text w40"></div></div>
+              <div style="display:flex;flex-direction:column;gap:0.3rem">
+                <div class="lo-row"><div class="lo-text w20"></div><div class="lo-text w10" style="width:10%"></div><div class="lo-text w10" style="width:10%"></div><div class="lo-text w10" style="width:10%"></div><div class="lo-text w10" style="width:10%"></div><div class="lo-text w10" style="width:10%"></div><div class="lo-pill"></div></div>
+                <div class="lo-row"><div class="lo-text w20"></div><div class="lo-text w10" style="width:10%"></div><div class="lo-text w10" style="width:10%"></div><div class="lo-text w10" style="width:10%"></div><div class="lo-text w10" style="width:10%"></div><div class="lo-text w10" style="width:10%"></div><div class="lo-pill"></div></div>
+                <div class="lo-row"><div class="lo-text w20"></div><div class="lo-text w10" style="width:10%"></div><div class="lo-text w10" style="width:10%"></div><div class="lo-text w10" style="width:10%"></div><div class="lo-text w10" style="width:10%"></div><div class="lo-text w10" style="width:10%"></div><div class="lo-pill"></div></div>
+              </div>
+            </div>
+            <div class="canvas-inner" id="timekeeper-mid" style="display:none">
+              <div style="font-family:'DM Serif Display',serif;font-size:0.95rem;color:var(--ink);margin-bottom:0.6rem">Week of Jan 20 — Timekeeper Overview</div>
+              <div style="background:#f4f4f6;border-radius:3px;overflow:hidden">
+                <div class="tkpr-row">
+                  <div class="tkpr-head">Timekeeper</div>
+                  <div class="tkpr-head tkpr-cell">Mon</div>
+                  <div class="tkpr-head tkpr-cell">Tue</div>
+                  <div class="tkpr-head tkpr-cell">Wed</div>
+                  <div class="tkpr-head tkpr-cell">Thu</div>
+                  <div class="tkpr-head tkpr-cell">Fri</div>
+                  <div class="tkpr-head tkpr-cell">Total</div>
+                </div>
+                <div style="background:#fff">
+                  <div class="tkpr-row"><div style="font-size:0.68rem;font-weight:500">J. Donovan</div><div class="tkpr-cell ok">7.5h</div><div class="tkpr-cell ok">8.0h</div><div class="tkpr-cell ok">7.2h</div><div class="tkpr-cell ok">8.5h</div><div class="tkpr-cell ok">7.0h</div><div class="tkpr-cell ok" style="font-weight:600">38.2h</div></div>
+                  <div class="tkpr-row"><div style="font-size:0.68rem;font-weight:500">S. Patel</div><div class="tkpr-cell ok">6.5h</div><div class="tkpr-cell missing">—</div><div class="tkpr-cell ok">7.8h</div><div class="tkpr-cell ok">6.0h</div><div class="tkpr-cell ok">7.5h</div><div class="tkpr-cell low" style="font-weight:600">27.8h</div></div>
+                  <div class="tkpr-row"><div style="font-size:0.68rem;font-weight:500">M. Torres</div><div class="tkpr-cell ok">8.0h</div><div class="tkpr-cell ok">7.5h</div><div class="tkpr-cell missing">—</div><div class="tkpr-cell missing">—</div><div class="tkpr-cell ok">6.5h</div><div class="tkpr-cell missing" style="font-weight:600">22.0h</div></div>
+                  <div class="tkpr-row"><div style="font-size:0.68rem;font-weight:500">K. Williams</div><div class="tkpr-cell ok">7.0h</div><div class="tkpr-cell ok">8.0h</div><div class="tkpr-cell ok">7.5h</div><div class="tkpr-cell ok">8.0h</div><div class="tkpr-cell ok">7.0h</div><div class="tkpr-cell ok" style="font-weight:600">37.5h</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="canvas-inner" id="timekeeper-hi" style="display:none">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.6rem">
+                <div style="font-family:'DM Serif Display',serif;font-size:0.95rem;color:var(--ink)">Timekeeper Overview — Week of Jan 20</div>
+                <div style="display:flex;gap:0.35rem">
+                  <span class="filter-chip active" style="font-family:'DM Mono',monospace;font-size:0.52rem;padding:0.15rem 0.45rem;border-radius:2px;border:1px solid var(--accent-mid);background:var(--accent-soft);color:var(--accent-text)">All Timekeepers</span>
+                  <span class="filter-chip" style="font-family:'DM Mono',monospace;font-size:0.52rem;padding:0.15rem 0.45rem;border-radius:2px;border:1px solid var(--rule);color:var(--muted)">Missing Only</span>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-bottom:0.75rem">
+                <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:4px;padding:0.4rem 0.6rem;text-align:center"><div style="font-family:'DM Mono',monospace;font-size:0.85rem;color:#16a34a;font-weight:700">2</div><div style="font-size:0.55rem;color:#16a34a">On track</div></div>
+                <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:4px;padding:0.4rem 0.6rem;text-align:center"><div style="font-family:'DM Mono',monospace;font-size:0.85rem;color:#d97706;font-weight:700">1</div><div style="font-size:0.55rem;color:#d97706">Low hours</div></div>
+                <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:4px;padding:0.4rem 0.6rem;text-align:center"><div style="font-family:'DM Mono',monospace;font-size:0.85rem;color:#dc2626;font-weight:700">1</div><div style="font-size:0.55rem;color:#dc2626">Missing entries</div></div>
+              </div>
+              <div style="background:#f4f4f6;border-radius:3px;overflow:hidden">
+                <div class="tkpr-row">
+                  <div class="tkpr-head">Timekeeper</div>
+                  <div class="tkpr-head tkpr-cell">Mon</div>
+                  <div class="tkpr-head tkpr-cell">Tue</div>
+                  <div class="tkpr-head tkpr-cell">Wed</div>
+                  <div class="tkpr-head tkpr-cell">Thu</div>
+                  <div class="tkpr-head tkpr-cell">Fri</div>
+                  <div class="tkpr-head tkpr-cell">Total</div>
+                </div>
+                <div style="background:#fff">
+                  <div class="tkpr-row"><div style="font-size:0.68rem;font-weight:500;display:flex;align-items:center;gap:0.4rem">J. Donovan <span style="font-size:0.5rem;color:#6b7280">Partner</span></div><div class="tkpr-cell ok">7.5h</div><div class="tkpr-cell ok">8.0h</div><div class="tkpr-cell ok">7.2h</div><div class="tkpr-cell ok">8.5h</div><div class="tkpr-cell ok">7.0h</div><div class="tkpr-cell ok" style="font-weight:700">38.2h</div></div>
+                  <div class="tkpr-row" style="background:#fffbeb"><div style="font-size:0.68rem;font-weight:500;display:flex;align-items:center;gap:0.4rem">S. Patel <span class="alert-badge" style="background:#fef2f2;color:#dc2626;border:1px solid #fecaca">1 missing</span></div><div class="tkpr-cell ok">6.5h</div><div class="tkpr-cell missing">✗</div><div class="tkpr-cell ok">7.8h</div><div class="tkpr-cell ok">6.0h</div><div class="tkpr-cell ok">7.5h</div><div class="tkpr-cell low" style="font-weight:700">27.8h</div></div>
+                  <div class="tkpr-row" style="background:#fef9f9"><div style="font-size:0.68rem;font-weight:500;display:flex;align-items:center;gap:0.4rem">M. Torres <span class="alert-badge" style="background:#fef2f2;color:#dc2626;border:1px solid #fecaca">2 missing</span></div><div class="tkpr-cell ok">8.0h</div><div class="tkpr-cell ok">7.5h</div><div class="tkpr-cell missing">✗</div><div class="tkpr-cell missing">✗</div><div class="tkpr-cell ok">6.5h</div><div class="tkpr-cell missing" style="font-weight:700">22.0h ⚠</div></div>
+                  <div class="tkpr-row"><div style="font-size:0.68rem;font-weight:500;display:flex;align-items:center;gap:0.4rem">K. Williams <span style="font-size:0.5rem;color:#6b7280">Associate</span></div><div class="tkpr-cell ok">7.0h</div><div class="tkpr-cell ok">8.0h</div><div class="tkpr-cell ok">7.5h</div><div class="tkpr-cell ok">8.0h</div><div class="tkpr-cell ok">7.0h</div><div class="tkpr-cell ok" style="font-weight:700">37.5h</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="annotation-panel">
+          <div class="ann-heading">Component Notes</div>
+          <div class="toggle-legend" id="tl-timekeeper">
+            <div class="toggle-legend-title">Toggle State — Low</div>
+            <div class="toggle-row"><span class="toggle-key">Names</span><span class="toggle-val">Placeholder</span></div>
+            <div class="toggle-row"><span class="toggle-key">Hours</span><span class="toggle-val">Off</span></div>
+            <div class="toggle-row"><span class="toggle-key">Alerts</span><span class="toggle-val">Off</span></div>
+            <div class="toggle-row"><span class="toggle-key">Summary</span><span class="toggle-val">Off</span></div>
+          </div>
+          <div class="ann-card">
+            <div class="ann-tag">Role Separation</div>
+            <div class="ann-text"><strong>Supervision, not surveillance.</strong> The managing attorney sees pattern and coverage — which timekeepers are missing entries, total weekly hours, alerts. They don't see the content of the time entries, only the compliance signal. Same principle as the billing dashboard: surface what's needed to act, nothing more.</div>
+          </div>
+          <div class="ann-card">
+            <div class="ann-tag">Fidelity Range</div>
+            <div class="ann-text">Low: grid structure and row/column model. Mid: real names, hours, and red highlighting for gaps — client immediately sees the value. High: summary stats, alert badges, row-level highlighting, and filter controls.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ NEWS ═══════════════════════════════════════════════ -->
+    <div class="comp-panel" id="panel-news">
+      <div class="panel-header">
+        <div class="panel-meta">
+          <div class="panel-eyebrow">Intranet · Firm Communications</div>
+          <div class="panel-title">News & Announcements</div>
+        </div>
+        <span class="fidelity-badge badge-lo" id="badge-news">Low Fidelity</span>
+      </div>
+      <div class="panel-body">
+        <div>
+          <div class="comp-canvas">
+            <div class="canvas-bar"><div class="canvas-dots"><div class="canvas-dot" style="background:#fc5c57"></div><div class="canvas-dot" style="background:#febc2e"></div><div class="canvas-dot" style="background:#28c840"></div></div></div>
+            <div class="canvas-inner" id="news-lo">
+              <div class="lo-img" style="height:80px;margin-bottom:0.5rem"></div>
+              <div class="lo-text w30" style="margin-bottom:0.4rem"></div>
+              <div class="lo-text w80" style="margin-bottom:0.25rem"></div>
+              <div class="lo-text w60" style="margin-bottom:0.5rem"></div>
+              <div class="lo-text w40"></div>
+            </div>
+            <div class="canvas-inner" id="news-mid" style="display:none">
+              <div class="news-card">
+                <div style="background:#e5e7eb;height:64px;width:100%"></div>
+                <div class="news-body">
+                  <span class="news-cat">FIRM NEWS</span>
+                  <div class="news-title">Meridian Advisory Expands to Three New Markets in Q1 2025</div>
+                  <div class="news-meta">Jan 22, 2025 · 3 min read</div>
+                </div>
+              </div>
+              <div class="news-card">
+                <div class="news-body">
+                  <span class="news-cat">POLICY UPDATE</span>
+                  <div class="news-title">Updated Billing Guidelines Now in Effect — Review Required</div>
+                  <div class="news-meta">Jan 18, 2025 · 2 min read</div>
+                </div>
+              </div>
+            </div>
+            <div class="canvas-inner" id="news-hi" style="display:none">
+              <div class="news-card" style="border-color:var(--accent)">
+                <div style="background:linear-gradient(135deg,#1e2028,#374151);height:80px;display:flex;align-items:center;justify-content:center;padding:0.75rem">
+                  <span style="font-family:'DM Serif Display',serif;font-size:0.9rem;color:#fff;text-align:center;line-height:1.3">Meridian Advisory Expands to Three New Markets</span>
+                </div>
+                <div class="news-body">
+                  <span class="news-cat">FIRM NEWS</span>
+                  <div class="news-title">Meridian Advisory Expands to Three New Markets in Q1 2025</div>
+                  <div style="font-size:0.68rem;color:#374151;line-height:1.5;margin-bottom:0.4rem">The firm's expansion into Chicago, Miami, and Seattle reflects a strategic commitment to serving mid-market clients in high-growth industries...</div>
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <div class="news-meta">Jan 22 · M. Chen · 3 min read</div>
+                    <span style="font-family:'DM Mono',monospace;font-size:0.52rem;color:var(--accent-text);cursor:pointer">Read more →</span>
+                  </div>
+                </div>
+              </div>
+              <div class="news-card">
+                <div class="news-body">
+                  <span class="news-cat">POLICY UPDATE</span>
+                  <div class="news-title">Updated Billing Guidelines Now in Effect</div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.3rem">
+                    <div class="news-meta">Jan 18 · Required reading</div>
+                    <span style="font-family:'DM Mono',monospace;font-size:0.52rem;padding:0.08rem 0.3rem;background:#fef2f2;color:#dc2626;border-radius:2px;border:1px solid #fecaca">ACTION REQUIRED</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="annotation-panel">
+          <div class="ann-heading">Component Notes</div>
+          <div class="toggle-legend" id="tl-news">
+            <div class="toggle-legend-title">Toggle State — Low</div>
+            <div class="toggle-row"><span class="toggle-key">Image</span><span class="toggle-val">Gray block</span></div>
+            <div class="toggle-row"><span class="toggle-key">Text</span><span class="toggle-val">Lorem</span></div>
+            <div class="toggle-row"><span class="toggle-key">Category</span><span class="toggle-val">Off</span></div>
+            <div class="toggle-row"><span class="toggle-key">Action tag</span><span class="toggle-val">Off</span></div>
+          </div>
+          <div class="ann-card">
+            <div class="ann-tag">Fidelity Range</div>
+            <div class="ann-text">Low: image block + text block proportions. Mid: real headlines + category tags — client can validate information hierarchy. High: image gradient header, author, excerpt, and action-required badge for policy items.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ LEADERSHIP ═════════════════════════════════════════ -->
+    <div class="comp-panel" id="panel-leadership">
+      <div class="panel-header">
+        <div class="panel-meta">
+          <div class="panel-eyebrow">Intranet · Partner Communications</div>
+          <div class="panel-title">Leadership Message</div>
+        </div>
+        <span class="fidelity-badge badge-lo" id="badge-leadership">Low Fidelity</span>
+      </div>
+      <div class="panel-body">
+        <div>
+          <div class="comp-canvas">
+            <div class="canvas-bar"><div class="canvas-dots"><div class="canvas-dot" style="background:#fc5c57"></div><div class="canvas-dot" style="background:#febc2e"></div><div class="canvas-dot" style="background:#28c840"></div></div></div>
+            <div class="canvas-inner" id="leadership-lo">
+              <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.6rem">
+                <div class="lo-avatar"></div>
+                <div style="flex:1"><div class="lo-text w40" style="margin-bottom:0.3rem"></div><div class="lo-text w30"></div></div>
+              </div>
+              <div class="lo-text w100" style="margin-bottom:0.25rem"></div>
+              <div class="lo-text w100" style="margin-bottom:0.25rem"></div>
+              <div class="lo-text w80" style="margin-bottom:0.25rem"></div>
+              <div class="lo-text w60"></div>
+            </div>
+            <div class="canvas-inner" id="leadership-mid" style="display:none">
+              <div class="leadership-card">
+                <div class="leadership-header">
+                  <div class="ldr-avatar" style="background:#1e2028;color:#f59e0b">RH</div>
+                  <div><div class="ldr-name">Robert Harrison</div><div class="ldr-title">Managing Partner</div></div>
+                  <div style="margin-left:auto;font-family:'DM Mono',monospace;font-size:0.52rem;color:var(--muted)">Jan 22</div>
+                </div>
+                <div class="ldr-body">As we enter Q1, I want to share my appreciation for the exceptional work our teams delivered during the holiday period. The Westbrook matter and three new client onboardings reflect the commitment and caliber that define Meridian Advisory.</div>
+              </div>
+            </div>
+            <div class="canvas-inner" id="leadership-hi" style="display:none">
+              <div class="leadership-card">
+                <div class="leadership-header">
+                  <div class="ldr-avatar" style="background:linear-gradient(135deg,#1e2028,#374151);color:#f59e0b;font-size:0.85rem">RH</div>
+                  <div>
+                    <div class="ldr-name">Robert Harrison</div>
+                    <div class="ldr-title">Managing Partner · Meridian Advisory</div>
+                  </div>
+                  <div style="margin-left:auto;text-align:right">
+                    <div style="font-family:'DM Mono',monospace;font-size:0.52rem;color:var(--muted)">Jan 22, 2025</div>
+                    <div style="font-family:'DM Mono',monospace;font-size:0.48rem;color:#16a34a;margin-top:0.1rem">● 142 views</div>
+                  </div>
+                </div>
+                <div class="ldr-body">As we enter Q1, I want to share my appreciation for the exceptional work our teams delivered during the holiday period. The Westbrook matter and three new client onboardings reflect the commitment and caliber that define Meridian Advisory.<br><br>Looking ahead, our expansion into Chicago, Miami, and Seattle opens significant opportunities for growth. I look forward to supporting each team through this transition.</div>
+                <div class="ldr-reactions">
+                  <span class="reaction">👏 24</span>
+                  <span class="reaction">💬 8 comments</span>
+                  <span style="margin-left:auto;font-family:'DM Mono',monospace;font-size:0.52rem;color:var(--accent-text);cursor:pointer">Share →</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="annotation-panel">
+          <div class="ann-heading">Component Notes</div>
+          <div class="toggle-legend" id="tl-leadership">
+            <div class="toggle-legend-title">Toggle State — Low</div>
+            <div class="toggle-row"><span class="toggle-key">Avatar</span><span class="toggle-val">Gray circle</span></div>
+            <div class="toggle-row"><span class="toggle-key">Name</span><span class="toggle-val">Placeholder</span></div>
+            <div class="toggle-row"><span class="toggle-key">Body</span><span class="toggle-val">Lorem</span></div>
+            <div class="toggle-row"><span class="toggle-key">Reactions</span><span class="toggle-val">Off</span></div>
+          </div>
+          <div class="ann-card">
+            <div class="ann-tag">Social-Style Card</div>
+            <div class="ann-text"><strong>High fidelity adds social engagement signals.</strong> View count, reaction counts, and comment thread — clients often didn't anticipate this pattern until they saw it. Surfacing it in the wireframe made the interaction model legible before dev investment.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ DOCUMENTS ══════════════════════════════════════════ -->
+    <div class="comp-panel" id="panel-documents">
+      <div class="panel-header">
+        <div class="panel-meta">
+          <div class="panel-eyebrow">Intranet · Resources</div>
+          <div class="panel-title">Key Documents</div>
+        </div>
+        <span class="fidelity-badge badge-lo" id="badge-documents">Low Fidelity</span>
+      </div>
+      <div class="panel-body">
+        <div>
+          <div class="comp-canvas">
+            <div class="canvas-bar"><div class="canvas-dots"><div class="canvas-dot" style="background:#fc5c57"></div><div class="canvas-dot" style="background:#febc2e"></div><div class="canvas-dot" style="background:#28c840"></div></div></div>
+            <div class="canvas-inner" id="documents-lo">
+              <div class="lo-row"><div class="lo-block" style="width:28px;height:28px;border-radius:4px"></div><div style="flex:1"><div class="lo-text w60" style="margin-bottom:0.25rem"></div><div class="lo-text w30"></div></div></div>
+              <div class="lo-row"><div class="lo-block" style="width:28px;height:28px;border-radius:4px"></div><div style="flex:1"><div class="lo-text w60" style="margin-bottom:0.25rem"></div><div class="lo-text w30"></div></div></div>
+              <div class="lo-row"><div class="lo-block" style="width:28px;height:28px;border-radius:4px"></div><div style="flex:1"><div class="lo-text w60" style="margin-bottom:0.25rem"></div><div class="lo-text w30"></div></div></div>
+            </div>
+            <div class="canvas-inner" id="documents-mid" style="display:none">
+              <div class="doc-item"><div class="doc-icon doc-pdf">PDF</div><div><div class="doc-name">Billing Rate Schedule 2025.pdf</div><div class="doc-meta">Finance · Updated Jan 2025</div></div></div>
+              <div class="doc-item"><div class="doc-icon doc-word">DOC</div><div><div class="doc-name">Client Engagement Letter Template.docx</div><div class="doc-meta">Operations · Updated Dec 2024</div></div></div>
+              <div class="doc-item"><div class="doc-icon doc-xls">XLS</div><div><div class="doc-name">Matter Budget Tracker Q1 2025.xlsx</div><div class="doc-meta">Finance · Updated Jan 2025</div></div></div>
+              <div class="doc-item"><div class="doc-icon doc-pdf">PDF</div><div><div class="doc-name">Conflict of Interest Policy v3.pdf</div><div class="doc-meta">Compliance · Updated Nov 2024</div></div></div>
+            </div>
+            <div class="canvas-inner" id="documents-hi" style="display:none">
+              <div style="display:flex;gap:0.4rem;margin-bottom:0.6rem">
+                <span class="filter-chip active" style="font-family:'DM Mono',monospace;font-size:0.52rem;padding:0.15rem 0.45rem;border-radius:2px;border:1px solid var(--accent-mid);background:var(--accent-soft);color:var(--accent-text)">All</span>
+                <span class="filter-chip" style="font-family:'DM Mono',monospace;font-size:0.52rem;padding:0.15rem 0.45rem;border-radius:2px;border:1px solid var(--rule);color:var(--muted)">Finance</span>
+                <span class="filter-chip" style="font-family:'DM Mono',monospace;font-size:0.52rem;padding:0.15rem 0.45rem;border-radius:2px;border:1px solid var(--rule);color:var(--muted)">Compliance</span>
+                <span class="filter-chip" style="font-family:'DM Mono',monospace;font-size:0.52rem;padding:0.15rem 0.45rem;border-radius:2px;border:1px solid var(--rule);color:var(--muted)">Operations</span>
+              </div>
+              <div class="doc-item"><div class="doc-icon doc-pdf">PDF</div><div style="flex:1"><div class="doc-name">Billing Rate Schedule 2025.pdf</div><div class="doc-meta">Finance · J. Harrison · Jan 15, 2025</div></div><span style="font-family:'DM Mono',monospace;font-size:0.5rem;color:var(--accent-text);cursor:pointer;margin-left:auto">↓ Download</span></div>
+              <div class="doc-item" style="background:var(--accent-soft);border-radius:4px;padding:0.45rem 0.5rem;border:1px solid var(--accent-mid)"><div class="doc-icon doc-word">DOC</div><div style="flex:1"><div class="doc-name">Client Engagement Letter Template.docx</div><div class="doc-meta">Operations · Updated Dec 2024 <span style="color:#16a34a">● New version available</span></div></div><span style="font-family:'DM Mono',monospace;font-size:0.5rem;color:var(--accent-text);cursor:pointer;margin-left:auto">↓ Download</span></div>
+              <div class="doc-item"><div class="doc-icon doc-xls">XLS</div><div style="flex:1"><div class="doc-name">Matter Budget Tracker Q1 2025.xlsx</div><div class="doc-meta">Finance · J. Harrison · Jan 2, 2025</div></div><span style="font-family:'DM Mono',monospace;font-size:0.5rem;color:var(--accent-text);cursor:pointer;margin-left:auto">↓ Download</span></div>
+              <div class="doc-item"><div class="doc-icon doc-pdf">PDF</div><div style="flex:1"><div class="doc-name">Conflict of Interest Policy v3.pdf</div><div class="doc-meta">Compliance · Required reading <span style="color:#dc2626">● Unread</span></div></div><span style="font-family:'DM Mono',monospace;font-size:0.5rem;color:var(--accent-text);cursor:pointer;margin-left:auto">↓ Download</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="annotation-panel">
+          <div class="ann-heading">Component Notes</div>
+          <div class="toggle-legend" id="tl-documents">
+            <div class="toggle-legend-title">Toggle State — Low</div>
+            <div class="toggle-row"><span class="toggle-key">Icons</span><span class="toggle-val">Gray block</span></div>
+            <div class="toggle-row"><span class="toggle-key">Names</span><span class="toggle-val">Placeholder</span></div>
+            <div class="toggle-row"><span class="toggle-key">Filters</span><span class="toggle-val">Off</span></div>
+            <div class="toggle-row"><span class="toggle-key">Actions</span><span class="toggle-val">Off</span></div>
+          </div>
+          <div class="ann-card">
+            <div class="ann-tag">Version & Read States</div>
+            <div class="ann-text"><strong>High fidelity introduces update and unread signals.</strong> "New version available" and "Unread" status badges surfaced a conversation about notification architecture that wouldn't have happened from a static list. The wireframe component generated the requirement.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CONTACTS ═══════════════════════════════════════════ -->
+    <div class="comp-panel" id="panel-contacts">
+      <div class="panel-header">
+        <div class="panel-meta">
+          <div class="panel-eyebrow">Intranet · Directory</div>
+          <div class="panel-title">Key Contacts & Favorites</div>
+        </div>
+        <span class="fidelity-badge badge-lo" id="badge-contacts">Low Fidelity</span>
+      </div>
+      <div class="panel-body">
+        <div>
+          <div class="comp-canvas">
+            <div class="canvas-bar"><div class="canvas-dots"><div class="canvas-dot" style="background:#fc5c57"></div><div class="canvas-dot" style="background:#febc2e"></div><div class="canvas-dot" style="background:#28c840"></div></div></div>
+            <div class="canvas-inner" id="contacts-lo">
+              <div style="display:flex;flex-direction:column;gap:0.4rem">
+                <div style="display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0.5rem;border:1px solid #e5e7eb;border-radius:4px"><div style="width:30px;height:30px;border-radius:50%;background:#e5e7eb;flex-shrink:0"></div><div style="flex:1"><div class="lo-text w40" style="margin-bottom:0.2rem"></div><div class="lo-text w30"></div></div></div>
+                <div style="display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0.5rem;border:1px solid #e5e7eb;border-radius:4px"><div style="width:30px;height:30px;border-radius:50%;background:#e5e7eb;flex-shrink:0"></div><div style="flex:1"><div class="lo-text w40" style="margin-bottom:0.2rem"></div><div class="lo-text w30"></div></div></div>
+                <div style="display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0.5rem;border:1px solid #e5e7eb;border-radius:4px"><div style="width:30px;height:30px;border-radius:50%;background:#e5e7eb;flex-shrink:0"></div><div style="flex:1"><div class="lo-text w40" style="margin-bottom:0.2rem"></div><div class="lo-text w30"></div></div></div>
+              </div>
+            </div>
+            <div class="canvas-inner" id="contacts-mid" style="display:none">
+              <div class="contact-item"><div class="contact-avatar" style="background:#dbeafe;color:#1d4ed8">JD</div><div><div class="contact-name">J. Donovan</div><div class="contact-role">Senior Counsel</div></div></div>
+              <div class="contact-item"><div class="contact-avatar" style="background:#dcfce7;color:#15803d">SP</div><div><div class="contact-name">S. Patel</div><div class="contact-role">Associate</div></div></div>
+              <div class="contact-item"><div class="contact-avatar" style="background:#fef9c3;color:#a16207">MT</div><div><div class="contact-name">M. Torres</div><div class="contact-role">Paralegal</div></div></div>
+              <div class="contact-item"><div class="contact-avatar" style="background:#f3e8ff;color:#7c3aed">KW</div><div><div class="contact-name">K. Williams</div><div class="contact-role">Associate</div></div></div>
+            </div>
+            <div class="canvas-inner" id="contacts-hi" style="display:none">
+              <div style="display:flex;gap:0.35rem;margin-bottom:0.6rem">
+                <span class="filter-chip active" style="font-family:'DM Mono',monospace;font-size:0.52rem;padding:0.15rem 0.45rem;border-radius:2px;border:1px solid var(--accent-mid);background:var(--accent-soft);color:var(--accent-text)">★ Favorites</span>
+                <span class="filter-chip" style="font-family:'DM Mono',monospace;font-size:0.52rem;padding:0.15rem 0.45rem;border-radius:2px;border:1px solid var(--rule);color:var(--muted)">All Staff</span>
+                <span class="filter-chip" style="font-family:'DM Mono',monospace;font-size:0.52rem;padding:0.15rem 0.45rem;border-radius:2px;border:1px solid var(--rule);color:var(--muted)">Partners</span>
+              </div>
+              <div class="contact-item"><div class="contact-avatar" style="background:#dbeafe;color:#1d4ed8">JD</div><div><div class="contact-name">J. Donovan</div><div class="contact-role">Senior Counsel · Corporate</div></div><div style="margin-left:auto;display:flex;gap:0.3rem;align-items:center"><span style="font-size:0.6rem;cursor:pointer" title="Email">✉</span><span style="font-size:0.6rem;cursor:pointer" title="Call">📞</span><div class="status-dot status-green" title="Available"></div></div></div>
+              <div class="contact-item"><div class="contact-avatar" style="background:#dcfce7;color:#15803d">SP</div><div><div class="contact-name">S. Patel</div><div class="contact-role">Associate · Litigation</div></div><div style="margin-left:auto;display:flex;gap:0.3rem;align-items:center"><span style="font-size:0.6rem;cursor:pointer">✉</span><span style="font-size:0.6rem;cursor:pointer">📞</span><div class="status-dot status-amber" title="In a meeting"></div></div></div>
+              <div class="contact-item"><div class="contact-avatar" style="background:#fef9c3;color:#a16207">MT</div><div><div class="contact-name">M. Torres</div><div class="contact-role">Paralegal · IP</div></div><div style="margin-left:auto;display:flex;gap:0.3rem;align-items:center"><span style="font-size:0.6rem;cursor:pointer">✉</span><span style="font-size:0.6rem;cursor:pointer">📞</span><div class="status-dot status-gray" title="Offline"></div></div></div>
+              <div class="contact-item"><div class="contact-avatar" style="background:#f3e8ff;color:#7c3aed">KW</div><div><div class="contact-name">K. Williams</div><div class="contact-role">Associate · Corporate</div></div><div style="margin-left:auto;display:flex;gap:0.3rem;align-items:center"><span style="font-size:0.6rem;cursor:pointer">✉</span><span style="font-size:0.6rem;cursor:pointer">📞</span><div class="status-dot status-green" title="Available"></div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="annotation-panel">
+          <div class="ann-heading">Component Notes</div>
+          <div class="toggle-legend" id="tl-contacts">
+            <div class="toggle-legend-title">Toggle State — Low</div>
+            <div class="toggle-row"><span class="toggle-key">Avatars</span><span class="toggle-val">Gray circles</span></div>
+            <div class="toggle-row"><span class="toggle-key">Names</span><span class="toggle-val">Placeholder</span></div>
+            <div class="toggle-row"><span class="toggle-key">Actions</span><span class="toggle-val">Off</span></div>
+            <div class="toggle-row"><span class="toggle-key">Status</span><span class="toggle-val">Off</span></div>
+          </div>
+          <div class="ann-card">
+            <div class="ann-tag">Availability Status</div>
+            <div class="ann-text"><strong>High fidelity adds presence indicators.</strong> Green / amber / gray availability dots — Available, In a meeting, Offline. This triggered a client conversation about real-time directory integration that wouldn't have surfaced from the card list alone.</div>
+          </div>
+          <div class="ann-card">
+            <div class="ann-tag">Favorites Filter</div>
+            <div class="ann-text">The favorites tab is a personalization layer — each attorney sees their own pinned contacts. Mid fidelity doesn't show this; high fidelity makes the personalization model explicit and prompts the client to define the rules.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+let currentFidelity = 'lo';
+let currentComp = 'matter';
+
+const components = ['matter','invoice','calendar','timekeeper','news','leadership','documents','contacts'];
+
+const badgeText = { lo: 'Low Fidelity', mid: 'Mid Fidelity', hi: 'High Fidelity' };
+const badgeClass = { lo: 'badge-lo', mid: 'badge-mid', hi: 'badge-hi' };
+
+const toggleStates = {
+  lo: {
+    matter:     ['Content\nPlaceholder','Status\nOff','Filters\nOff','Activity\nOff'],
+    invoice:    ['Amounts\nOff','Status\nOff','Summary\nOff','Actions\nOff'],
+    calendar:   ['Color\nOff — neutral','Status\nOff','Alert\nOff','Legend\nOff'],
+    timekeeper: ['Names\nPlaceholder','Hours\nOff','Alerts\nOff','Summary\nOff'],
+    news:       ['Image\nGray block','Text\nLorem','Category\nOff','Action tag\nOff'],
+    leadership: ['Avatar\nGray circle','Name\nPlaceholder','Body\nLorem','Reactions\nOff'],
+    documents:  ['Icons\nGray block','Names\nPlaceholder','Filters\nOff','Actions\nOff'],
+    contacts:   ['Avatars\nGray circles','Names\nPlaceholder','Actions\nOff','Status\nOff'],
+  },
+  mid: {
+    matter:     ['Content\nReal matter names','Status\nOn','Filters\nOff','Activity\nOff'],
+    invoice:    ['Amounts\nOn','Status\nOn','Summary\nOff','Actions\nOff'],
+    calendar:   ['Color\nRed/green active','Status\nOn','Alert\nOff','Legend\nOn'],
+    timekeeper: ['Names\nReal timekeepers','Hours\nOn','Alerts\nOff','Summary\nOff'],
+    news:       ['Image\nGray placeholder','Text\nReal headlines','Category\nOn','Action tag\nOff'],
+    leadership: ['Avatar\nInitials','Name\nReal name','Body\nReal message','Reactions\nOff'],
+    documents:  ['Icons\nFile type','Names\nReal filenames','Filters\nOff','Actions\nOff'],
+    contacts:   ['Avatars\nInitials + color','Names\nReal names','Actions\nOff','Status\nOff'],
+  },
+  hi: {
+    matter:     ['Content\nReal + filtering','Status\nOn + aging','Filters\nOn','Activity\nSparklines'],
+    invoice:    ['Amounts\nOn + aging KPIs','Status\nOn','Summary\nOn','Actions\nOn'],
+    calendar:   ['Color\nRed/green + alert','Status\nOn','Alert\nBilling close','Legend\nOn'],
+    timekeeper: ['Names\nReal + role','Hours\nOn + totals','Alerts\nMissing badges','Summary\nOn'],
+    news:       ['Image\nGradient header','Text\nReal + excerpt','Category\nOn','Action tag\nRequired'],
+    leadership: ['Avatar\nStylized','Name\nFull + title','Body\nFull message','Reactions\nOn'],
+    documents:  ['Icons\nFile type','Names\nReal + owner','Filters\nOn','Actions\nDownload'],
+    contacts:   ['Avatars\nInitials + color','Names\nReal + practice','Actions\nEmail + call','Status\nPresence dot'],
+  }
+};
+
+function setFidelity(f) {
+  currentFidelity = f;
+  ['lo','mid','hi'].forEach(fi => {
+    document.getElementById('f' + fi).classList.toggle('active', fi === f);
+  });
+  updateDisplay();
+}
+
+function showComp(c) {
+  currentComp = c;
+  components.forEach(ci => {
+    document.getElementById('panel-' + ci).classList.toggle('active', ci === c);
+    document.getElementById('ci-' + ci).classList.toggle('active', ci === c);
+  });
+  updateDisplay();
+}
+
+function updateDisplay() {
+  components.forEach(c => {
+    ['lo','mid','hi'].forEach(f => {
+      const el = document.getElementById(c + '-' + f);
+      if (el) el.style.display = (currentComp === c && currentFidelity === f) ? '' : 'none';
+    });
+
+    const badge = document.getElementById('badge-' + c);
+    if (badge) {
+      badge.textContent = badgeText[currentFidelity];
+      badge.className = 'fidelity-badge ' + badgeClass[currentFidelity];
+    }
+
+    // Update toggle legend
+    const tl = document.getElementById('tl-' + c);
+    if (tl && toggleStates[currentFidelity] && toggleStates[currentFidelity][c]) {
+      const state = currentFidelity === 'lo' ? 'Low' : currentFidelity === 'mid' ? 'Mid' : 'High';
+      const rows = toggleStates[currentFidelity][c];
+      tl.innerHTML = `<div class="toggle-legend-title">Toggle State — ${state}</div>` +
+        rows.map(r => {
+          const [k, v] = r.split('\n');
+          return `<div class="toggle-row"><span class="toggle-key">${k}</span><span class="toggle-val">${v}</span></div>`;
+        }).join('');
+    }
+  });
+}
+
+// Init — show all lo panels
+document.addEventListener('DOMContentLoaded', () => {
+  components.forEach(c => {
+    const lo = document.getElementById(c + '-lo');
+    const mid = document.getElementById(c + '-mid');
+    const hi = document.getElementById(c + '-hi');
+    if (lo) lo.style.display = '';
+    if (mid) mid.style.display = 'none';
+    if (hi) hi.style.display = 'none';
+  });
+});
+
+document.addEventListener('keydown', e => {
+  const fi = ['lo','mid','hi'];
+  const ci = currentFidelity;
+  if (e.key === 'ArrowRight') { const n = fi.indexOf(ci); if (n < 2) setFidelity(fi[n+1]); }
+  if (e.key === 'ArrowLeft')  { const n = fi.indexOf(ci); if (n > 0) setFidelity(fi[n-1]); }
+});
+</script>
+</body>
+</html>

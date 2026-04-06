@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GreenCampus — Job Lifecycle Explorer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:         #0f1117;
+  --canvas:      #f4f4f6;
+  --surface:     #ffffff;
+  --rule:        #e2e4e9;
+  --muted:       #6b7280;
+  --muted-light: #9ca3af;
+  --chrome-dark: #16181d;
+  --sidebar-bg:  #1e2028;
+  --rule-dark:   #2e3139;
+  /* CS4 emerald brand */
+  --accent:      #34d399;
+  --accent-soft: #f0fdf9;
+  --accent-mid:  #6ee7c7;
+  --accent-text: #065f46;
+  --accent-dark: #022c22;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background: var(--canvas);
+  color: var(--ink);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+}
+
+/* HEADER */
+.page-header {
+  background: var(--sidebar-bg);
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--rule-dark);
+}
+.wordmark { font-family: 'DM Serif Display', serif; font-size: 1.35rem; color: #fff; letter-spacing: -0.02em; }
+.wordmark span { color: var(--accent); }
+.page-subtitle { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted-light); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; }
+.back-link { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted-light); text-decoration: none; letter-spacing: 0.06em; padding: 0.4rem 0.85rem; border: 1px solid var(--rule-dark); border-radius: 2px; transition: all 0.2s; }
+.back-link:hover { color: var(--accent); border-color: var(--accent); }
+
+/* PROGRESS */
+.progress-bar { height: 2px; background: var(--rule-dark); }
+.progress-fill { height: 100%; background: var(--accent); transition: width 0.4s ease; }
+
+/* ROLE NAV */
+.role-nav {
+  background: var(--chrome-dark);
+  border-bottom: 1px solid var(--rule-dark);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.role-label { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--muted-light); letter-spacing: 0.1em; text-transform: uppercase; padding: 0 1rem 0 0; border-right: 1px solid var(--rule-dark); margin-right: 0.5rem; white-space: nowrap; line-height: 3rem; }
+.role-btn { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.04em; padding: 0 1.25rem; height: 3rem; border: none; background: transparent; color: var(--muted-light); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+.role-btn:hover { color: #fff; }
+.role-btn.active { color: #fff; border-bottom-color: var(--accent); font-weight: 500; }
+.role-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rule-dark); display: inline-block; margin-right: 0.5rem; transition: background 0.2s; }
+.role-btn.active .role-dot { background: var(--accent); }
+
+/* MAIN */
+.main { display: grid; grid-template-columns: 260px 1fr; min-height: 0; }
+
+/* SIDEBAR */
+.sidebar { background: var(--sidebar-bg); border-right: 1px solid var(--rule-dark); padding: 1.5rem 1.25rem; overflow-y: auto; }
+.sidebar-heading { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--muted-light); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--rule-dark); }
+.sidebar-section { margin-bottom: 1.75rem; }
+
+.lifecycle-diagram { display: flex; flex-direction: column; gap: 0; }
+.lc-step { display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 0.6rem; border-radius: 4px; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; }
+.lc-step:hover { background: #252830; }
+.lc-step.active { background: var(--accent-dark); border-color: var(--accent); }
+.lc-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--rule-dark); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted-light); transition: all 0.2s; }
+.lc-step.active .lc-icon { background: var(--accent); color: var(--accent-dark); }
+.lc-name { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted-light); }
+.lc-step.active .lc-name { color: #fff; }
+.lc-connector { width: 1px; height: 14px; background: var(--rule-dark); margin-left: 13px; }
+
+.stat-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.3rem 0; border-bottom: 1px solid var(--rule-dark); }
+.stat-label { font-size: 0.65rem; color: var(--muted-light); }
+.stat-val { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: #fff; }
+.stat-val.accent { color: var(--accent); }
+
+.gov-card { background: var(--accent-dark); border: 1px solid var(--accent); border-radius: 4px; padding: 0.75rem; margin-bottom: 0.5rem; }
+.gov-label { font-family: 'DM Mono', monospace; font-size: 0.55rem; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.3rem; }
+.gov-text { font-size: 0.7rem; color: #cbd5e1; line-height: 1.5; }
+
+/* CONTENT */
+.content { overflow-y: auto; background: #f0f4f8; display: flex; flex-direction: column; }
+.role-panel { display: none; flex-direction: column; height: 100%; }
+.role-panel.active { display: flex; }
+
+.panel-header { background: #fff; border-bottom: 1px solid var(--rule); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.panel-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--accent-text); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.2rem; }
+.panel-title { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--ink); }
+.panel-nav { display: flex; gap: 0.5rem; }
+.nav-btn { font-family: 'DM Mono', monospace; font-size: 0.62rem; padding: 0.35rem 0.85rem; border-radius: 2px; border: 1px solid var(--rule); background: #fff; color: var(--muted); cursor: pointer; transition: all 0.2s; }
+.nav-btn:hover { border-color: var(--accent); color: var(--accent-text); }
+.nav-btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-dark); font-weight: 500; }
+.nav-btn.primary:hover { background: var(--accent-mid); }
+
+.panel-body { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+
+/* Lifecycle stages row */
+.stages-row { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 0; align-items: stretch; }
+.stage-card { background: #fff; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; cursor: pointer; transition: all 0.2s; }
+.stage-card:hover { border-color: var(--accent); box-shadow: 0 2px 8px rgba(52,211,153,0.15); }
+.stage-card.active-stage { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(52,211,153,0.2); }
+.stage-header { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--rule); display: flex; align-items: center; justify-content: space-between; }
+.stage-name { font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 600; color: var(--ink); }
+.stage-badge { font-family: 'DM Mono', monospace; font-size: 0.5rem; padding: 0.1rem 0.35rem; border-radius: 2px; }
+.badge-scheduled { background: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; }
+.badge-inprogress { background: #fefce8; color: #a16207; border: 1px solid #fde68a; }
+.badge-documented { background: var(--accent-soft); color: var(--accent-text); border: 1px solid var(--accent-mid); }
+.stage-body { padding: 0.75rem; }
+
+.stage-arrow { display: flex; align-items: center; justify-content: center; padding: 0 0.5rem; color: var(--accent); font-size: 1rem; }
+
+/* Job card */
+.job-card { background: #f8fafc; border: 1px solid var(--rule); border-radius: 4px; padding: 0.6rem 0.7rem; margin-bottom: 0.4rem; border-left: 3px solid var(--rule); transition: border-color 0.2s; }
+.job-card.highlighted { border-left-color: var(--accent); background: var(--accent-soft); }
+.job-card-title { font-size: 0.7rem; font-weight: 600; color: var(--ink); margin-bottom: 0.15rem; }
+.job-card-meta { font-family: 'DM Mono', monospace; font-size: 0.55rem; color: var(--muted); margin-bottom: 0.2rem; }
+.compliance-pill { font-family: 'DM Mono', monospace; font-size: 0.48rem; padding: 0.08rem 0.3rem; border-radius: 2px; display: inline-block; }
+.pill-ok { background: var(--accent-soft); color: var(--accent-text); border: 1px solid var(--accent-mid); }
+.pill-pending { background: #fefce8; color: #a16207; border: 1px solid #fde68a; }
+.pill-overdue { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+
+/* Detail section */
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.detail-card { background: #fff; border: 1px solid var(--rule); border-radius: 6px; padding: 0.85rem; }
+.detail-heading { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--accent-text); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.6rem; }
+.detail-row { display: flex; justify-content: space-between; align-items: center; padding: 0.25rem 0; border-bottom: 1px solid var(--rule); font-size: 0.7rem; }
+.detail-row:last-child { border-bottom: none; }
+.detail-key { color: var(--muted); }
+.detail-val { font-weight: 500; color: var(--ink); font-family: 'DM Mono', monospace; font-size: 0.65rem; }
+.detail-val.ok { color: var(--accent-text); }
+.detail-val.warn { color: #d97706; }
+.detail-val.err { color: #dc2626; }
+
+/* Annotation */
+.annotation { background: #fff; border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: 4px; padding: 0.65rem 0.85rem; }
+.annotation-tag { font-family: 'DM Mono', monospace; font-size: 0.55rem; color: var(--accent-text); background: var(--accent-soft); border-radius: 2px; padding: 0.08rem 0.3rem; display: inline-block; margin-bottom: 0.3rem; }
+.annotation-text { font-size: 0.75rem; color: #374151; line-height: 1.55; }
+.annotation-text strong { color: var(--ink); }
+
+/* Compliance dashboard (school admin view) */
+.campus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.campus-card { background: #fff; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+.campus-header { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--rule); display: flex; align-items: center; justify-content: space-between; }
+.campus-name { font-size: 0.72rem; font-weight: 600; color: var(--ink); }
+.campus-status { font-family: 'DM Mono', monospace; font-size: 0.5rem; }
+.campus-body { padding: 0.6rem 0.75rem; display: flex; flex-direction: column; gap: 0.3rem; }
+.campus-row { display: flex; align-items: center; justify-content: space-between; font-size: 0.65rem; }
+.campus-row-label { color: var(--muted); }
+
+.summary-bar { background: var(--accent-dark); border: 1px solid var(--accent); border-radius: 4px; padding: 0.75rem 1rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+.summary-stat { text-align: center; }
+.summary-val { font-family: 'DM Serif Display', serif; font-size: 1.25rem; color: var(--accent); display: block; }
+.summary-label { font-family: 'DM Mono', monospace; font-size: 0.52rem; color: #6ee7c7; letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div>
+    <div class="wordmark">Green<span>Campus</span></div>
+    <div class="page-subtitle">Job Lifecycle Explorer · CS4</div>
+  </div>
+  <a href="index.html#cs4" class="back-link">← Back to Case Study</a>
+</header>
+
+<div class="progress-bar">
+  <div class="progress-fill" id="progressFill" style="width:50%"></div>
+</div>
+
+<nav class="role-nav">
+  <span class="role-label">Role View</span>
+  <button class="role-btn active" onclick="switchRole('facilities')" id="navFacilities">
+    <span class="role-dot"></span>Facilities Administrator
+  </button>
+  <button class="role-btn" onclick="switchRole('school')" id="navSchool">
+    <span class="role-dot"></span>School Administrator
+  </button>
+</nav>
+
+<div class="main">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Job Lifecycle</div>
+      <div class="lifecycle-diagram">
+        <div class="lc-step active" id="lc0" onclick="selectStage(0)">
+          <div class="lc-icon">S</div>
+          <div class="lc-name">Scheduled</div>
+        </div>
+        <div class="lc-connector"></div>
+        <div class="lc-step" id="lc1" onclick="selectStage(1)">
+          <div class="lc-icon">P</div>
+          <div class="lc-name">In Progress</div>
+        </div>
+        <div class="lc-connector"></div>
+        <div class="lc-step" id="lc2" onclick="selectStage(2)">
+          <div class="lc-icon">D</div>
+          <div class="lc-name">Documented</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Before → After</div>
+      <div style="display:flex;flex-direction:column;gap:0.3rem">
+        <div class="stat-row"><span class="stat-label">Task completion</span><span class="stat-val accent">30% → 85%</span></div>
+        <div class="stat-row"><span class="stat-label">Districts signed</span><span class="stat-val">3</span></div>
+        <div class="stat-row"><span class="stat-label">User roles</span><span class="stat-val">2</span></div>
+        <div class="stat-row"><span class="stat-label">Compliance</span><span class="stat-val">HSA California</span></div>
+        <div class="stat-row" style="border:none"><span class="stat-label">Stack</span><span class="stat-val">HTML/CSS/jQuery</span></div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Design Decision</div>
+      <div class="gov-card">
+        <div class="gov-label">Compliance built in — not bolted on</div>
+        <div class="gov-text">The regulatory framework is embedded in the interface. Every job state carries its compliance status — staff never have to navigate away to check if they're compliant. Documentation isn't a separate step; it's the completion condition.</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- FACILITIES ADMIN PANEL -->
+    <div class="role-panel active" id="panelFacilities">
+      <div class="panel-header">
+        <div>
+          <div class="panel-eyebrow">Facilities Administrator · Operational View</div>
+          <div class="panel-title">Job Lifecycle — Task-Focused Interface</div>
+        </div>
+        <div class="panel-nav">
+          <button class="nav-btn" onclick="switchRole('school')">School Admin View →</button>
+        </div>
+      </div>
+      <div class="panel-body">
+
+        <!-- Summary bar -->
+        <div class="summary-bar">
+          <div class="summary-stat"><span class="summary-val">12</span><span class="summary-label">Jobs This Week</span></div>
+          <div class="summary-stat"><span class="summary-val">3</span><span class="summary-label">Scheduled</span></div>
+          <div class="summary-stat"><span class="summary-val">2</span><span class="summary-label">In Progress</span></div>
+          <div class="summary-stat"><span class="summary-val">7</span><span class="summary-label">Documented</span></div>
+        </div>
+
+        <!-- Lifecycle stages -->
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--muted-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.6rem">Job Lifecycle — Click a stage to explore</div>
+          <div class="stages-row">
+
+            <div class="stage-card active-stage" id="stage0" onclick="selectStage(0)">
+              <div class="stage-header">
+                <span class="stage-name">Scheduled</span>
+                <span class="stage-badge badge-scheduled">3 jobs</span>
+              </div>
+              <div class="stage-body">
+                <div class="job-card highlighted">
+                  <div class="job-card-title">Building A — Ant Treatment</div>
+                  <div class="job-card-meta">Mar 15 · North Campus · J. Martinez</div>
+                  <span class="compliance-pill pill-ok">HSA Notified ✓</span>
+                </div>
+                <div class="job-card">
+                  <div class="job-card-title">Cafeteria — Rodent Prevention</div>
+                  <div class="job-card-meta">Mar 17 · Main Campus · T. Chen</div>
+                  <span class="compliance-pill pill-pending">Notification Pending</span>
+                </div>
+                <div class="job-card">
+                  <div class="job-card-title">Gym — Wasp Nest</div>
+                  <div class="job-card-meta">Mar 19 · East Campus · J. Martinez</div>
+                  <span class="compliance-pill pill-pending">Notification Pending</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-arrow">→</div>
+
+            <div class="stage-card" id="stage1" onclick="selectStage(1)">
+              <div class="stage-header">
+                <span class="stage-name">In Progress</span>
+                <span class="stage-badge badge-inprogress">2 jobs</span>
+              </div>
+              <div class="stage-body">
+                <div class="job-card">
+                  <div class="job-card-title">Library — Termite Treatment</div>
+                  <div class="job-card-meta">Started Mar 14 · Main Campus</div>
+                  <span class="compliance-pill pill-ok">Treatment Active ✓</span>
+                </div>
+                <div class="job-card">
+                  <div class="job-card-title">Classroom 12B — Spider</div>
+                  <div class="job-card-meta">Started Mar 14 · North Campus</div>
+                  <span class="compliance-pill pill-pending">Docs Required</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-arrow">→</div>
+
+            <div class="stage-card" id="stage2" onclick="selectStage(2)">
+              <div class="stage-header">
+                <span class="stage-name">Documented</span>
+                <span class="stage-badge badge-documented">7 jobs</span>
+              </div>
+              <div class="stage-body">
+                <div class="job-card">
+                  <div class="job-card-title">Office Wing — Cockroach</div>
+                  <div class="job-card-meta">Completed Mar 12</div>
+                  <span class="compliance-pill pill-ok">HSA Record Generated ✓</span>
+                </div>
+                <div class="job-card">
+                  <div class="job-card-title">Storage Room — Mice</div>
+                  <div class="job-card-meta">Completed Mar 10</div>
+                  <span class="compliance-pill pill-ok">HSA Record Generated ✓</span>
+                </div>
+                <div style="font-family:'DM Mono',monospace;font-size:0.55rem;color:var(--muted-light);margin-top:0.3rem;text-align:center">+ 5 more</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Stage detail -->
+        <div id="stageDetail">
+          <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--muted-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.6rem">Stage Detail — Scheduled</div>
+          <div class="detail-grid">
+            <div class="detail-card">
+              <div class="detail-heading">Job: Building A — Ant Treatment</div>
+              <div class="detail-row"><span class="detail-key">Scheduled date</span><span class="detail-val">Mar 15, 2025</span></div>
+              <div class="detail-row"><span class="detail-key">Campus</span><span class="detail-val">North</span></div>
+              <div class="detail-row"><span class="detail-key">Technician</span><span class="detail-val">J. Martinez</span></div>
+              <div class="detail-row"><span class="detail-key">Treatment type</span><span class="detail-val">Ant — Bait Station</span></div>
+              <div class="detail-row"><span class="detail-key">HSA notification</span><span class="detail-val ok">Sent ✓</span></div>
+            </div>
+            <div class="detail-card">
+              <div class="detail-heading">Compliance Checklist</div>
+              <div class="detail-row"><span class="detail-key">72-hr parent notice</span><span class="detail-val ok">Complete ✓</span></div>
+              <div class="detail-row"><span class="detail-key">Product registry</span><span class="detail-val ok">Filed ✓</span></div>
+              <div class="detail-row"><span class="detail-key">Pesticide approved</span><span class="detail-val ok">Yes — HSA List</span></div>
+              <div class="detail-row"><span class="detail-key">Record on file</span><span class="detail-val warn">Pending treatment</span></div>
+              <div class="detail-row"><span class="detail-key">Next action</span><span class="detail-val">Complete job → auto-document</span></div>
+            </div>
+          </div>
+          <div class="annotation" style="margin-top:0.75rem">
+            <div class="annotation-tag">Design Decision</div>
+            <div class="annotation-text"><strong>Every stage carries its compliance status.</strong> The facilities admin never has to navigate away to check if the job is HSA-compliant. Notification status, checklist completion, and documentation state are visible at the card level — and detailed on drill-in. Compliance is the completion condition, not an afterthought.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SCHOOL ADMIN PANEL -->
+    <div class="role-panel" id="panelSchool">
+      <div class="panel-header">
+        <div>
+          <div class="panel-eyebrow">School Administrator · Compliance View</div>
+          <div class="panel-title">Compliance Dashboard — At-a-Glance Status</div>
+        </div>
+        <div class="panel-nav">
+          <button class="nav-btn primary" onclick="switchRole('facilities')">← Facilities View</button>
+        </div>
+      </div>
+      <div class="panel-body">
+
+        <!-- Summary bar -->
+        <div class="summary-bar">
+          <div class="summary-stat"><span class="summary-val">4</span><span class="summary-label">Campuses</span></div>
+          <div class="summary-stat"><span class="summary-val">3</span><span class="summary-label">Fully Compliant</span></div>
+          <div class="summary-stat"><span class="summary-val">1</span><span class="summary-label">Needs Attention</span></div>
+          <div class="summary-stat"><span class="summary-val">HSA</span><span class="summary-label">CA Current</span></div>
+        </div>
+
+        <!-- Campus grid -->
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--muted-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.6rem">Campus Compliance Overview</div>
+          <div class="campus-grid">
+
+            <div class="campus-card">
+              <div class="campus-header">
+                <span class="campus-name">Main Campus</span>
+                <span class="campus-status" style="color:#065f46;background:#f0fdf9;padding:0.1rem 0.35rem;border-radius:2px;border:1px solid #6ee7c7">COMPLIANT</span>
+              </div>
+              <div class="campus-body">
+                <div class="campus-row"><span class="campus-row-label">Active jobs</span><span class="compliance-pill pill-ok">2 in progress</span></div>
+                <div class="campus-row"><span class="campus-row-label">Pending docs</span><span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#065f46">None</span></div>
+                <div class="campus-row"><span class="campus-row-label">Last inspection ready</span><span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#065f46">Mar 12 ✓</span></div>
+              </div>
+            </div>
+
+            <div class="campus-card" style="border-color:#fde68a">
+              <div class="campus-header">
+                <span class="campus-name">North Campus</span>
+                <span class="campus-status" style="color:#a16207;background:#fefce8;padding:0.1rem 0.35rem;border-radius:2px;border:1px solid #fde68a">ATTENTION</span>
+              </div>
+              <div class="campus-body">
+                <div class="campus-row"><span class="campus-row-label">Active jobs</span><span class="compliance-pill pill-pending">1 pending docs</span></div>
+                <div class="campus-row"><span class="campus-row-label">Pending docs</span><span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#d97706">Classroom 12B</span></div>
+                <div class="campus-row"><span class="campus-row-label">Due date</span><span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#dc2626">Today</span></div>
+              </div>
+            </div>
+
+            <div class="campus-card">
+              <div class="campus-header">
+                <span class="campus-name">East Campus</span>
+                <span class="campus-status" style="color:#065f46;background:#f0fdf9;padding:0.1rem 0.35rem;border-radius:2px;border:1px solid #6ee7c7">COMPLIANT</span>
+              </div>
+              <div class="campus-body">
+                <div class="campus-row"><span class="campus-row-label">Active jobs</span><span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#065f46">None</span></div>
+                <div class="campus-row"><span class="campus-row-label">Pending docs</span><span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#065f46">None</span></div>
+                <div class="campus-row"><span class="campus-row-label">Last inspection ready</span><span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#065f46">Mar 10 ✓</span></div>
+              </div>
+            </div>
+
+            <div class="campus-card">
+              <div class="campus-header">
+                <span class="campus-name">West Campus</span>
+                <span class="campus-status" style="color:#065f46;background:#f0fdf9;padding:0.1rem 0.35rem;border-radius:2px;border:1px solid #6ee7c7">COMPLIANT</span>
+              </div>
+              <div class="campus-body">
+                <div class="campus-row"><span class="campus-row-label">Active jobs</span><span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#065f46">None</span></div>
+                <div class="campus-row"><span class="campus-row-label">Pending docs</span><span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#065f46">None</span></div>
+                <div class="campus-row"><span class="campus-row-label">Last inspection ready</span><span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#065f46">Mar 8 ✓</span></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Annotation -->
+        <div class="annotation">
+          <div class="annotation-tag">Design Decision</div>
+          <div class="annotation-text"><strong>At-a-glance compliance without drilling.</strong> Before the redesign, school administrators had to open each campus, each job, and each record to determine compliance status. The redesigned dashboard surfaces the compliance signal at the campus level — administrators see what needs attention immediately, and only drill in when action is required.</div>
+        </div>
+
+        <div class="annotation">
+          <div class="annotation-tag">Same Data — Different Lens</div>
+          <div class="annotation-text"><strong>Both views run on the same underlying data model.</strong> The facilities admin sees jobs as tasks to execute. The school admin sees the same jobs as compliance obligations to verify. Role-specific views from a single shared system — the same architecture decision made in InternMatch, applied here to regulatory workflows.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+let currentRole = 'facilities';
+let currentStage = 0;
+
+function switchRole(role) {
+  currentRole = role;
+  document.getElementById('panelFacilities').classList.toggle('active', role === 'facilities');
+  document.getElementById('panelSchool').classList.toggle('active', role === 'school');
+  document.getElementById('navFacilities').classList.toggle('active', role === 'facilities');
+  document.getElementById('navSchool').classList.toggle('active', role === 'school');
+  document.getElementById('progressFill').style.width = role === 'facilities' ? '50%' : '100%';
+  document.querySelector('.content').scrollTop = 0;
+}
+
+function selectStage(n) {
+  currentStage = n;
+  for (let i = 0; i < 3; i++) {
+    const lc = document.getElementById('lc' + i);
+    const st = document.getElementById('stage' + i);
+    if (lc) lc.classList.toggle('active', i === n);
+    if (st) st.classList.toggle('active-stage', i === n);
+  }
+
+  const stages = ['Scheduled', 'In Progress', 'Documented'];
+  const details = [
+    {
+      heading: 'Job: Building A — Ant Treatment',
+      rows: [
+        ['Scheduled date', 'Mar 15, 2025', ''],
+        ['Campus', 'North', ''],
+        ['Technician', 'J. Martinez', ''],
+        ['Treatment type', 'Ant — Bait Station', ''],
+        ['HSA notification', 'Sent ✓', 'ok'],
+      ],
+      check: [
+        ['72-hr parent notice', 'Complete ✓', 'ok'],
+        ['Product registry', 'Filed ✓', 'ok'],
+        ['Pesticide approved', 'Yes — HSA List', 'ok'],
+        ['Record on file', 'Pending treatment', 'warn'],
+        ['Next action', 'Complete job → auto-document', ''],
+      ],
+      note: 'Every stage carries its compliance status. The facilities admin never has to navigate away to check if the job is HSA-compliant. Notification status, checklist completion, and documentation state are visible at the card level.'
+    },
+    {
+      heading: 'Job: Library — Termite Treatment',
+      rows: [
+        ['Started', 'Mar 14, 2025', ''],
+        ['Campus', 'Main', ''],
+        ['Technician', 'K. Williams', ''],
+        ['Treatment type', 'Termite — Baiting System', ''],
+        ['HSA notification', 'Sent ✓', 'ok'],
+      ],
+      check: [
+        ['72-hr parent notice', 'Complete ✓', 'ok'],
+        ['Product registry', 'Filed ✓', 'ok'],
+        ['Treatment active', 'Yes ✓', 'ok'],
+        ['Documentation', 'Auto-generated on complete', 'warn'],
+        ['Next action', 'Complete treatment to document', ''],
+      ],
+      note: 'In-progress jobs surface what documentation will be auto-generated upon completion — reducing the cognitive load of tracking compliance obligations manually during active treatment.'
+    },
+    {
+      heading: 'Job: Office Wing — Cockroach',
+      rows: [
+        ['Completed', 'Mar 12, 2025', ''],
+        ['Campus', 'Main', ''],
+        ['Technician', 'J. Martinez', ''],
+        ['Treatment type', 'Cockroach — Gel Bait', ''],
+        ['HSA record', 'Generated ✓', 'ok'],
+      ],
+      check: [
+        ['HSA record filed', 'Complete ✓', 'ok'],
+        ['Inspection-ready', 'Yes ✓', 'ok'],
+        ['Retention period', '3 years from date', 'ok'],
+        ['Parent notice sent', 'Complete ✓', 'ok'],
+        ['Audit trail', 'Available for download', 'ok'],
+      ],
+      note: 'Documented jobs auto-generate the HSA-compliant record. The compliance record is the completion signal — the interface makes it clear the job is truly done only when documentation is filed, not when treatment ends.'
+    }
+  ];
+
+  const d = details[n];
+  const el = document.getElementById('stageDetail');
+  el.innerHTML = `
+    <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--muted-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.6rem">Stage Detail — ${stages[n]}</div>
+    <div class="detail-grid">
+      <div class="detail-card">
+        <div class="detail-heading">${d.heading}</div>
+        ${d.rows.map(([k,v,c]) => `<div class="detail-row"><span class="detail-key">${k}</span><span class="detail-val ${c}">${v}</span></div>`).join('')}
+      </div>
+      <div class="detail-card">
+        <div class="detail-heading">Compliance Checklist</div>
+        ${d.check.map(([k,v,c]) => `<div class="detail-row"><span class="detail-key">${k}</span><span class="detail-val ${c}">${v}</span></div>`).join('')}
+      </div>
+    </div>
+    <div class="annotation" style="margin-top:0.75rem">
+      <div class="annotation-tag">Design Decision</div>
+      <div class="annotation-text">${d.note}</div>
+    </div>
+  `;
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') switchRole('school');
+  if (e.key === 'ArrowLeft') switchRole('facilities');
+});
+</script>
+</body>
+</html>

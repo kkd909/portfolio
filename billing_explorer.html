@@ -398,6 +398,9 @@ body {
   <button class="step-btn" onclick="goToStep(3)" id="nav3">
     <span class="step-dot"></span>04 — Draft Surfaced
   </button>
+  <button class="step-btn" onclick="goToStep(4)" id="nav4">
+    <span class="step-dot"></span>05 — Motion System
+  </button>
 </nav>
 
 <!-- MAIN -->
@@ -617,25 +620,6 @@ body {
           <div class="panel-title">Token-Driven State Transitions</div>
         </div>
         <div class="panel-nav">
-          <button class="panel-nav-btn" onclick="goToStep(3)">← Draft Surfaced</button>
-          <button class="panel-nav-btn" onclick="goToStep(0)" style="border-color:#38bdf8;color:#0369a1">↺ Restart Flow</button>
-        </div>
-      </div>
-      <div style="flex:1;overflow:auto;padding:0;">
-        <iframe
-          src="https://stackblitz.com/edit/billing-signal-state?embed=1&hideNavigation=1&view=preview"
-          style="width:100%;height:100%;border:none;min-height:600px;"
-          title="Billing Signal State — Motion System"
-        ></iframe>
-      </div>
-    </div>
-    <div class="step-panel" id="panel4">
-      <div class="panel-header">
-        <div class="panel-header-left">
-          <div class="panel-eyebrow">Billing Intelligence — Motion &amp; State</div>
-          <div class="panel-title">Token-Driven State Transitions</div>
-        </div>
-        <div class="panel-nav">
           <button class="panel-nav-btn" onclick="goToStep(3)">&#8592; Draft Surfaced</button>
           <button class="panel-nav-btn" onclick="goToStep(0)" style="border-color:#38bdf8;color:#0369a1">&#8635; Restart Flow</button>
         </div>
@@ -794,6 +778,7 @@ const BSS_ANN = {
 function bssSetState(state) {
   bssState = state;
   const dash=document.getElementById('bss-dash');
+  if(!dash) return;
   const rr=document.getElementById('bss-risk-row');
   const rc=document.getElementById('bss-risk-client');
   const ra=document.getElementById('bss-risk-amount');

@@ -504,6 +504,71 @@ body {
   .main { grid-template-columns: 1fr; }
   .sidebar { display: none; }
 }
+
+/* ── Hotspot highlight overlay ───────────────────────────────────────────── */
+.img-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+}
+.img-wrap img {
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06);
+  display: block;
+}
+.hotspot-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.hotspot-overlay.visible { opacity: 1; }
+
+/* The vignette is a radial gradient — transparent in the hotspot, dark outside */
+.hotspot-highlight {
+  position: absolute;
+  border: 2px solid rgba(56,189,248,0.8);
+  border-radius: 4px;
+  box-shadow: 0 0 0 2000px rgba(15,23,42,0.55);
+  transition: all 0.5s ease;
+  pointer-events: none;
+}
+/* Callout bubble positioned next to hotspot */
+.hotspot-callout {
+  position: absolute;
+  background: rgba(15,23,42,0.96);
+  border: 1px solid #38bdf8;
+  border-radius: 6px;
+  padding: 10px 14px;
+  max-width: 240px;
+  min-width: 200px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+  z-index: 20;
+}
+.hotspot-callout.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.hotspot-callout-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  color: #38bdf8;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.hotspot-callout-text {
+  font-size: 0.68rem;
+  color: #e2e8f0;
+  line-height: 1.55;
+}
+.hotspot-callout-text strong { color: #fff; }
 </style>
 </head>
 <body>
@@ -645,7 +710,10 @@ body {
         </div>
       </div>
       <div class="screenshot-wrap">
+        <div class="img-wrap">
         <img src="assets/images/billing-dashboard-calm.png" alt="LegalOps billing dashboard in calm default state — work queue visible, no alerts surfaced">
+        <div class="hotspot-overlay" id="overlay-0"><div class="hotspot-highlight" id="highlight-0"></div><div class="hotspot-callout" id="callout-0"></div></div>
+      </div>
         <div class="annotation-strip">
           <div class="annotation">
             <span class="annotation-icon">Design</span>
@@ -672,7 +740,10 @@ body {
         </div>
       </div>
       <div class="screenshot-wrap">
+        <div class="img-wrap">
         <img src="assets/images/billing-dashboard-alert.png" alt="LegalOps dashboard with AI alert surfaced — 3 matters require attention, invoices aging, communication gap">
+        <div class="hotspot-overlay" id="overlay-1"><div class="hotspot-highlight" id="highlight-1"></div><div class="hotspot-callout" id="callout-1"></div></div>
+      </div>
         <div class="annotation-strip">
           <div class="annotation">
             <span class="annotation-icon">Design</span>
@@ -703,7 +774,10 @@ body {
         </div>
       </div>
       <div class="screenshot-wrap">
+        <div class="img-wrap">
         <img src="assets/images/billing-matter-panel.png" alt="LegalOps matter detail panel — billing trend, invoice aging, communication gap, Prepare Communication CTA">
+        <div class="hotspot-overlay" id="overlay-2"><div class="hotspot-highlight" id="highlight-2"></div><div class="hotspot-callout" id="callout-2"></div></div>
+      </div>
         <div class="annotation-strip">
           <div class="annotation">
             <span class="annotation-icon">Design</span>
@@ -734,7 +808,10 @@ body {
         </div>
       </div>
       <div class="screenshot-wrap">
+        <div class="img-wrap">
         <img src="assets/images/billing-draft.png" alt="LegalOps draft communication view — AI-prepared email, tone controls, Dismiss / Remind Later / Edit Draft / Send options">
+        <div class="hotspot-overlay" id="overlay-3"><div class="hotspot-highlight" id="highlight-3"></div><div class="hotspot-callout" id="callout-3"></div></div>
+      </div>
         <div class="annotation-strip">
           <div class="annotation">
             <span class="annotation-icon">Governance</span>
@@ -974,9 +1051,164 @@ function bssToggleAuto(){
 }
 
 
-// ── Guided insight tour ───────────────────────────────────────────────────
+
+// ── Hotspot tour system ───────────────────────────────────────────────────
+
+const HOTSPOTS = {
+  0: [ // Tab 1: Calm Default
+    { top: 0,  left: 0,  h: 55, w: 100, side: 'bottom', label: 'Design',  text: '<strong>Calm by default.</strong> The dashboard surfaces the work queue and billing metrics without urgency signals. No alerts until threshold is crossed.' },
+    { top: 40, left: 0,  h: 60, w: 100, side: 'bottom', label: 'System',  text: '<strong>Continuous monitoring, silent aggregation.</strong> Signals are being watched — but the interface stays quiet. The AI earns the right to interrupt.' },
+  ],
+  1: [ // Tab 2: Signal Detected
+    { top: 0,  left: 0,  h: 22, w: 100, side: 'bottom', label: 'Design',     text: '<strong>Threshold-based intervention.</strong> The AI surfaces the alert only when signals converge — not on every data point. The attorney decides what to do next.' },
+    { top: 20, left: 0,  h: 75, w: 100, side: 'top',    label: 'Hierarchy',  text: '<strong>Calm-by-default hierarchy preserved.</strong> The alert sits above the work queue without displacing it. Urgency is legible without being coercive.' },
+    { top: 0,  left: 0,  h: 100,w: 100, side: 'bottom', label: 'Governance', text: '<strong>No automatic action.</strong> The system flagged 3 matters. It did not escalate, reassign, or send any communication. It surfaced context for the attorney.' },
+  ],
+  2: [ // Tab 3: Matter Detail
+    { top: 0,  left: 0,  h: 50, w: 100, side: 'bottom', label: 'Design',    text: '<strong>Compressed context in one view.</strong> Billing trend, invoice aging, communication gap, and matter timeline — previously requiring four systems.' },
+    { top: 60, left: 30, h: 25, w: 70,  side: 'left',   label: 'Action',    text: '<strong>"Prepare Communication" — not "Send."</strong> The CTA initiates draft preparation, not delivery. A human step remains before any client-facing action.' },
+    { top: 0,  left: 0,  h: 100,w: 55,  side: 'right',  label: 'Hierarchy', text: '<strong>Progressive disclosure.</strong> The detail panel opens alongside the work queue — the attorney never loses their place in the dashboard.' },
+  ],
+  3: [ // Tab 4: Draft Surfaced
+    { top: 55, left: 0,  h: 20, w: 100, side: 'top',    label: 'Governance', text: '<strong>Four equal paths.</strong> Dismiss · Remind Later · Edit Draft · Send. No path is visually privileged. The attorney retains full authority.' },
+    { top: 30, left: 0,  h: 25, w: 70,  side: 'bottom', label: 'Design',     text: '<strong>Tone controls without autonomy.</strong> More Formal / Add Urgency / Softer Tone — but the system cannot select tone on its own. Tone is a human judgment.' },
+    { top: 80, left: 0,  h: 15, w: 100, side: 'top',    label: 'System',     text: '<strong>The footer says it plainly.</strong> "AI prepares a draft, but never sends it." This is the governance model made visible — not buried in documentation.' },
+  ],
+};
 
 let tourTimers = [];
+let currentHotspotIndex = 0;
+let currentPanelIndex = 0;
+
+function clearTourTimers() {
+  tourTimers.forEach(t => clearTimeout(t));
+  tourTimers = [];
+}
+
+function hideHotspot(panelIndex) {
+  const overlay = document.getElementById('overlay-' + panelIndex);
+  const callout = document.getElementById('callout-' + panelIndex);
+  if (overlay) overlay.classList.remove('visible');
+  if (callout) callout.classList.remove('visible');
+}
+
+function showHotspot(panelIndex, hotspotIndex) {
+  const spots = HOTSPOTS[panelIndex];
+  if (!spots || hotspotIndex >= spots.length) return;
+  const spot = spots[hotspotIndex];
+
+  const overlay = document.getElementById('overlay-' + panelIndex);
+  const highlight = document.getElementById('highlight-' + panelIndex);
+  const callout = document.getElementById('callout-' + panelIndex);
+  if (!overlay || !highlight || !callout) return;
+
+  // Position highlight
+  highlight.style.top = spot.top + '%';
+  highlight.style.left = spot.left + '%';
+  highlight.style.height = spot.h + '%';
+  highlight.style.width = spot.w + '%';
+
+  // Position callout
+  callout.innerHTML = '<div class="hotspot-callout-label">' + spot.label + '</div><div class="hotspot-callout-text">' + spot.text + '</div>';
+
+  if (spot.side === 'bottom') {
+    callout.style.top = (spot.top + spot.h + 1) + '%';
+    callout.style.left = Math.min(spot.left, 60) + '%';
+    callout.style.bottom = 'auto';
+    callout.style.right = 'auto';
+  } else if (spot.side === 'top') {
+    callout.style.bottom = (100 - spot.top + 1) + '%';
+    callout.style.left = Math.min(spot.left, 60) + '%';
+    callout.style.top = 'auto';
+    callout.style.right = 'auto';
+  } else if (spot.side === 'right') {
+    callout.style.top = spot.top + '%';
+    callout.style.left = (spot.left + spot.w + 1) + '%';
+    callout.style.bottom = 'auto';
+    callout.style.right = 'auto';
+  } else if (spot.side === 'left') {
+    callout.style.top = spot.top + '%';
+    callout.style.right = (100 - spot.left + 1) + '%';
+    callout.style.left = 'auto';
+    callout.style.bottom = 'auto';
+  }
+
+  // Show overlay and callout
+  overlay.classList.add('visible');
+  callout.classList.remove('visible');
+  setTimeout(() => callout.classList.add('visible'), 300);
+
+  // Also highlight corresponding annotation card
+  const panel = document.getElementById('panel' + panelIndex);
+  if (panel) {
+    const annotations = panel.querySelectorAll('.annotation');
+    annotations.forEach((a, i) => {
+      a.classList.remove('active-insight');
+      if (i === hotspotIndex) {
+        a.classList.add('revealed', 'active-insight');
+        a.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  }
+}
+
+function initInsightTour(panelIndex) {
+  clearTourTimers();
+  currentPanelIndex = panelIndex;
+  currentHotspotIndex = 0;
+
+  // Hide all overlays
+  for (let i = 0; i < 4; i++) hideHotspot(i);
+
+  // Reset annotation cards
+  const panel = document.getElementById('panel' + panelIndex);
+  if (panel) {
+    panel.querySelectorAll('.annotation').forEach(a => {
+      a.classList.remove('revealed', 'active-insight');
+    });
+  }
+
+  const spots = HOTSPOTS[panelIndex];
+  if (!spots) return;
+
+  // Sequence through hotspots
+  spots.forEach((spot, i) => {
+    const delay = 600 + (i * 2800);
+    tourTimers.push(setTimeout(() => {
+      currentHotspotIndex = i;
+      showHotspot(panelIndex, i);
+
+      // Show scroll hint before last hotspot if needed
+      if (i === 0 && spots.length > 1) {
+        const hint = document.getElementById('tour-scroll-hint');
+        if (hint) {
+          hint.classList.add('visible');
+          setTimeout(() => hint.classList.remove('visible'), 5000);
+        }
+      }
+    }, delay));
+  });
+
+  // After all hotspots shown, fade overlay but keep cards revealed
+  const finalDelay = 600 + (spots.length * 2800);
+  tourTimers.push(setTimeout(() => {
+    hideHotspot(panelIndex);
+  }, finalDelay));
+}
+
+// Patch goToStep
+const _origGoToStep = goToStep;
+goToStep = function(n) {
+  _origGoToStep(n);
+  clearTourTimers();
+  for (let i = 0; i < 4; i++) hideHotspot(i);
+  setTimeout(() => initInsightTour(n), 300);
+};
+
+// Init on load
+tourTimers.push(setTimeout(() => initInsightTour(0), 500));
+
+// ── end hotspot tour
 
 function clearTourTimers() {
   tourTimers.forEach(t => clearTimeout(t));

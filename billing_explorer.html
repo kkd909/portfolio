@@ -981,6 +981,13 @@ function goToStep(n) {
 
   // Scroll content to top
   document.querySelector('.content').scrollTop = 0;
+
+  // Reset and replay insight tour
+  if (typeof clearTourTimers === 'function') {
+    clearTourTimers();
+    for (let i = 0; i < 4; i++) { if (typeof hideHotspot === 'function') hideHotspot(i); }
+    setTimeout(() => { if (typeof initInsightTour === 'function') initInsightTour(n); }, 300);
+  }
 }
 
 
@@ -1057,22 +1064,22 @@ function bssToggleAuto(){
 const HOTSPOTS = {
   0: [ // Tab 1: Calm Default
     { top: 0,  left: 0,  h: 55, w: 100, side: 'bottom', label: 'Design',  text: '<strong>Calm by default.</strong> The dashboard surfaces the work queue and billing metrics without urgency signals. No alerts until threshold is crossed.' },
-    { top: 40, left: 0,  h: 60, w: 100, side: 'bottom', label: 'System',  text: '<strong>Continuous monitoring, silent aggregation.</strong> Signals are being watched — but the interface stays quiet. The AI earns the right to interrupt.' },
+    { top: 40, left: 0,  h: 60, w: 100, side: 'bottom', label: 'System',  text: '<strong>Continuous monitoring, silent aggregation.</strong> Signals are being watched &#8212; but the interface stays quiet. The AI earns the right to interrupt.' },
   ],
   1: [ // Tab 2: Signal Detected
-    { top: 0,  left: 0,  h: 22, w: 100, side: 'bottom', label: 'Design',     text: '<strong>Threshold-based intervention.</strong> The AI surfaces the alert only when signals converge — not on every data point. The attorney decides what to do next.' },
+    { top: 0,  left: 0,  h: 22, w: 100, side: 'bottom', label: 'Design',     text: '<strong>Threshold-based intervention.</strong> The AI surfaces the alert only when signals converge &#8212; not on every data point. The attorney decides what to do next.' },
     { top: 20, left: 0,  h: 75, w: 100, side: 'top',    label: 'Hierarchy',  text: '<strong>Calm-by-default hierarchy preserved.</strong> The alert sits above the work queue without displacing it. Urgency is legible without being coercive.' },
     { top: 0,  left: 0,  h: 100,w: 100, side: 'bottom', label: 'Governance', text: '<strong>No automatic action.</strong> The system flagged 3 matters. It did not escalate, reassign, or send any communication. It surfaced context for the attorney.' },
   ],
   2: [ // Tab 3: Matter Detail
-    { top: 0,  left: 0,  h: 50, w: 100, side: 'bottom', label: 'Design',    text: '<strong>Compressed context in one view.</strong> Billing trend, invoice aging, communication gap, and matter timeline — previously requiring four systems.' },
-    { top: 60, left: 30, h: 25, w: 70,  side: 'left',   label: 'Action',    text: '<strong>"Prepare Communication" — not "Send."</strong> The CTA initiates draft preparation, not delivery. A human step remains before any client-facing action.' },
-    { top: 0,  left: 0,  h: 100,w: 55,  side: 'right',  label: 'Hierarchy', text: '<strong>Progressive disclosure.</strong> The detail panel opens alongside the work queue — the attorney never loses their place in the dashboard.' },
+    { top: 0,  left: 0,  h: 50, w: 100, side: 'bottom', label: 'Design',    text: '<strong>Compressed context in one view.</strong> Billing trend, invoice aging, communication gap, and matter timeline &#8212; previously requiring four systems.' },
+    { top: 60, left: 30, h: 25, w: 70,  side: 'left',   label: 'Action',    text: '<strong>"Prepare Communication" &#8212; not "Send."</strong> The CTA initiates draft preparation, not delivery. A human step remains before any client-facing action.' },
+    { top: 0,  left: 0,  h: 100,w: 55,  side: 'right',  label: 'Hierarchy', text: '<strong>Progressive disclosure.</strong> The detail panel opens alongside the work queue &#8212; the attorney never loses their place in the dashboard.' },
   ],
   3: [ // Tab 4: Draft Surfaced
-    { top: 55, left: 0,  h: 20, w: 100, side: 'top',    label: 'Governance', text: '<strong>Four equal paths.</strong> Dismiss · Remind Later · Edit Draft · Send. No path is visually privileged. The attorney retains full authority.' },
-    { top: 30, left: 0,  h: 25, w: 70,  side: 'bottom', label: 'Design',     text: '<strong>Tone controls without autonomy.</strong> More Formal / Add Urgency / Softer Tone — but the system cannot select tone on its own. Tone is a human judgment.' },
-    { top: 80, left: 0,  h: 15, w: 100, side: 'top',    label: 'System',     text: '<strong>The footer says it plainly.</strong> "AI prepares a draft, but never sends it." This is the governance model made visible — not buried in documentation.' },
+    { top: 55, left: 0,  h: 20, w: 100, side: 'top',    label: 'Governance', text: '<strong>Four equal paths.</strong> Dismiss &#183; Remind Later &#183; Edit Draft &#183; Send. No path is visually privileged. The attorney retains full authority.' },
+    { top: 30, left: 0,  h: 25, w: 70,  side: 'bottom', label: 'Design',     text: '<strong>Tone controls without autonomy.</strong> More Formal / Add Urgency / Softer Tone &#8212; but the system cannot select tone on its own. Tone is a human judgment.' },
+    { top: 80, left: 0,  h: 15, w: 100, side: 'top',    label: 'System',     text: '<strong>The footer says it plainly.</strong> "AI prepares a draft, but never sends it." This is the governance model made visible &#8212; not buried in documentation.' },
   ],
 };
 
@@ -1195,15 +1202,6 @@ function initInsightTour(panelIndex) {
     hideHotspot(panelIndex);
   }, finalDelay));
 }
-
-// Patch goToStep
-const _origGoToStep = goToStep;
-goToStep = function(n) {
-  _origGoToStep(n);
-  clearTourTimers();
-  for (let i = 0; i < 4; i++) hideHotspot(i);
-  setTimeout(() => initInsightTour(n), 300);
-};
 
 // Init on load
 tourTimers.push(setTimeout(() => initInsightTour(0), 500));

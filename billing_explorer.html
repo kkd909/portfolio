@@ -975,99 +975,89 @@ function bssToggleAuto(){
 
 // ── Guided insight tour ───────────────────────────────────────────────────
 
-// Create scroll hint element
-const scrollHint = document.createElement('div');
-scrollHint.className = 'scroll-hint';
-scrollHint.innerHTML = '<span class="scroll-hint-label">More insights</span><div class="scroll-hint-arrow"></div>';
-document.body.appendChild(scrollHint);
+let tourTimers = [];
+
+function clearTourTimers() {
+  tourTimers.forEach(t => clearTimeout(t));
+  tourTimers = [];
+}
 
 function initInsightTour(panelIndex) {
+  clearTourTimers();
+
   const panel = document.getElementById('panel' + panelIndex);
   if (!panel) return;
 
   const annotations = panel.querySelectorAll('.annotation');
   if (!annotations.length) return;
 
-  // Reset all annotations in this panel
-  annotations.forEach(a => {
-    a.classList.remove('revealed', 'active-insight');
-  });
+  // Reset all
+  annotations.forEach(a => a.classList.remove('revealed', 'active-insight'));
 
-  // Show callout overlay from first annotation text
-  const firstAnnotation = annotations[0];
-  const label = firstAnnotation.querySelector('.annotation-icon').textContent;
-  const text = firstAnnotation.querySelector('.annotation-text').innerHTML;
+  // Remove any existing callout
+  panel.querySelectorAll('.insight-callout').forEach(c => c.remove());
 
-  // Remove existing callout if any
-  const existingCallout = panel.querySelector('.insight-callout');
-  if (existingCallout) existingCallout.remove();
-
-  const callout = document.createElement('div');
-  callout.className = 'insight-callout';
-  callout.innerHTML = '<span class="insight-callout-label">' + label + '</span><div class="insight-callout-text">' + text + '</div>';
+  // Build callout from first annotation
+  const first = annotations[0];
+  const label = first.querySelector('.annotation-icon').textContent.trim();
+  const text = first.querySelector('.annotation-text').innerHTML;
   const wrap = panel.querySelector('.screenshot-wrap');
-  if (wrap) wrap.appendChild(callout);
 
-  // Animate callout in after 600ms
-  setTimeout(() => {
-    callout.classList.add('visible');
-  }, 600);
-
-  // Set up intersection observer for scroll-reveal
-  const content = document.querySelector('.content');
-
-  function checkVisibility() {
-    let anyBelow = false;
-    annotations.forEach((ann, i) => {
-      const rect = ann.getBoundingClientRect();
-      const contentRect = content.getBoundingClientRect();
-
-      // Reveal if in viewport
-      if (rect.top < contentRect.bottom - 40) {
-        ann.classList.add('revealed');
-        // Make active if most visible
-        if (rect.top >= contentRect.top && rect.top < contentRect.bottom - 80) {
-          annotations.forEach(a => a.classList.remove('active-insight'));
-          ann.classList.add('active-insight');
-        }
-      }
-
-      // Check if any annotation is below fold
-      if (rect.top > contentRect.bottom - 40) {
-        anyBelow = true;
-      }
-    });
-
-    // Show/hide scroll hint
-    if (anyBelow) {
-      scrollHint.classList.add('visible');
-    } else {
-      scrollHint.classList.remove('visible');
-    }
+  if (wrap) {
+    const callout = document.createElement('div');
+    callout.className = 'insight-callout';
+    callout.innerHTML = '<span class="insight-callout-label">' + label + '</span><div class="insight-callout-text">' + text + '</div>';
+    wrap.style.position = 'relative';
+    wrap.appendChild(callout);
+    tourTimers.push(setTimeout(() => callout.classList.add('visible'), 500));
   }
 
-  // Reveal first annotation after 1.2s (after callout)
-  setTimeout(() => {
-    annotations[0].classList.add('revealed', 'active-insight');
-    checkVisibility();
-  }, 1200);
+  // Reveal cards one by one with staggered delay
+  // Each card: reveal (fade in) then mark active (pulse border)
+  annotations.forEach((ann, i) => {
+    const revealDelay = 1000 + (i * 800);
+    const activeDelay = revealDelay + 100;
 
-  // Listen to scroll
-  content.addEventListener('scroll', checkVisibility);
+    tourTimers.push(setTimeout(() => {
+      ann.classList.add('revealed');
+      // Scroll card into view smoothly
+      ann.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, revealDelay));
+
+    tourTimers.push(setTimeout(() => {
+      annotations.forEach(a => a.classList.remove('active-insight'));
+      ann.classList.add('active-insight');
+    }, activeDelay));
+  });
+
+  // Scroll hint — show between card 1 reveal and card 2 reveal if multiple cards
+  if (annotations.length > 1) {
+    tourTimers.push(setTimeout(() => {
+      const hint = document.getElementById('tour-scroll-hint');
+      if (hint) hint.classList.add('visible');
+    }, 1200));
+
+    tourTimers.push(setTimeout(() => {
+      const hint = document.getElementById('tour-scroll-hint');
+      if (hint) hint.classList.remove('visible');
+    }, 1800 + (annotations.length * 800)));
+  }
 }
 
 // Patch goToStep to init tour
 const _origGoToStep = goToStep;
 goToStep = function(n) {
   _origGoToStep(n);
-  // Hide scroll hint on step change
-  scrollHint.classList.remove('visible');
-  // Reset scroll position then init tour
-  setTimeout(() => initInsightTour(n), 100);
+  clearTourTimers();
+  document.querySelectorAll('.insight-callout').forEach(c => {
+    c.classList.remove('visible');
+    setTimeout(() => c.remove(), 400);
+  });
+  setTimeout(() => initInsightTour(n), 200);
 };
 
 // Init on load
-setTimeout(() => initInsightTour(0), 300);
+tourTimers.push(setTimeout(() => initInsightTour(0), 400));
 
 // Keyboard navigation
 document.addEventListener('keydown', e => {
@@ -1075,5 +1065,9 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft' && current > 0) goToStep(current - 1);
 });
 </script>
+<div id="tour-scroll-hint" class="scroll-hint">
+  <span class="scroll-hint-label">More insights below</span>
+  <div class="scroll-hint-arrow"></div>
+</div>
 </body>
 </html>

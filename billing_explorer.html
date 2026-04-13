@@ -315,13 +315,14 @@ body {
   transform: translateY(0);
 }
 .annotation.active-insight {
-  border-left-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(56,189,248,0.15), 0 1px 3px rgba(0,0,0,0.06);
-  animation: pulseInsight 2s ease-in-out infinite;
+  border-left-color: #38bdf8 !important;
+  box-shadow: 0 0 0 2px rgba(56,189,248,0.2), 0 1px 3px rgba(0,0,0,0.06) !important;
+  animation: pulseInsight 2s ease-in-out infinite !important;
+  outline: none;
 }
 @keyframes pulseInsight {
-  0%, 100% { box-shadow: 0 0 0 2px rgba(56,189,248,0.15), 0 1px 3px rgba(0,0,0,0.06); }
-  50% { box-shadow: 0 0 0 4px rgba(56,189,248,0.25), 0 1px 3px rgba(0,0,0,0.06); }
+  0%, 100% { box-shadow: 0 0 0 2px rgba(56,189,248,0.2), 0 1px 3px rgba(0,0,0,0.06); border-left-color: #38bdf8; }
+  50% { box-shadow: 0 0 0 5px rgba(56,189,248,0.35), 0 1px 3px rgba(0,0,0,0.06); border-left-color: #7dd3fc; }
 }
 .annotation-icon {
   font-family: 'DM Mono', monospace;
@@ -1037,10 +1038,19 @@ function initInsightTour(panelIndex) {
       if (hint) hint.classList.add('visible');
     }, 1200));
 
+    // Hide scroll hint when user scrolls or after 8s
+    const contentEl = document.querySelector('.content');
+    function hideHintOnScroll() {
+      const hint = document.getElementById('tour-scroll-hint');
+      if (hint) hint.classList.remove('visible');
+      contentEl.removeEventListener('scroll', hideHintOnScroll);
+    }
+    contentEl.addEventListener('scroll', hideHintOnScroll);
     tourTimers.push(setTimeout(() => {
       const hint = document.getElementById('tour-scroll-hint');
       if (hint) hint.classList.remove('visible');
-    }, 1800 + (annotations.length * 800)));
+      contentEl.removeEventListener('scroll', hideHintOnScroll);
+    }, 8000));
   }
 }
 

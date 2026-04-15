@@ -555,13 +555,26 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+.hotspot-callout-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  gap: 8px;
+}
 .hotspot-callout-label {
   font-family: 'DM Mono', monospace;
   font-size: 0.55rem;
   color: #38bdf8;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  margin-bottom: 5px;
+}
+.hotspot-callout-progress {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  color: rgba(56,189,248,0.6);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
 }
 .hotspot-callout-text {
   font-size: 0.68rem;
@@ -1240,7 +1253,14 @@ function showHotspot(panelIndex, hotspotIndex) {
   highlight.style.width = spot.w + '%';
 
   // Position callout
-  callout.innerHTML = '<div class="hotspot-callout-label">' + spot.label + '</div><div class="hotspot-callout-text">' + spot.text + '</div>';
+  const total = HOTSPOTS[panelIndex].length;
+  const progress = hotspotIndex + 1;
+  callout.innerHTML = 
+    '<div class="hotspot-callout-header">' +
+      '<div class="hotspot-callout-label">' + spot.label + '</div>' +
+      '<div class="hotspot-callout-progress">' + progress + ' of ' + total + '</div>' +
+    '</div>' +
+    '<div class="hotspot-callout-text">' + spot.text + '</div>';
 
   if (spot.side === 'bottom') {
     callout.style.top = (spot.top + spot.h + 1) + '%';
@@ -1327,17 +1347,11 @@ function initInsightTour(panelIndex) {
       });
       if (counter) counter.textContent = (i + 1) + ' of ' + total;
 
-      // Show scroll hint only if annotation cards are below the fold
+      // Show scroll hint if content area is scrollable (more content below)
       if (i === 0 && spots.length > 1) {
         const contentEl = document.querySelector('.content');
-        const panel = document.getElementById('panel' + panelIndex);
-        const annotations = panel ? panel.querySelectorAll('.annotation') : [];
-        const contentRect = contentEl.getBoundingClientRect();
-        const anyBelow = Array.from(annotations).some(a => {
-          const r = a.getBoundingClientRect();
-          return r.top > contentRect.bottom - 60;
-        });
-        if (anyBelow) {
+        const isScrollable = contentEl.scrollHeight > contentEl.clientHeight + 40;
+        if (isScrollable) {
           const hint = document.getElementById('tour-scroll-hint');
           if (hint) {
             hint.classList.add('visible');

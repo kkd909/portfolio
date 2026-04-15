@@ -1327,21 +1327,30 @@ function initInsightTour(panelIndex) {
       });
       if (counter) counter.textContent = (i + 1) + ' of ' + total;
 
-      // Show scroll hint on first insight if multiple
+      // Show scroll hint only if annotation cards are below the fold
       if (i === 0 && spots.length > 1) {
-        const hint = document.getElementById('tour-scroll-hint');
-        if (hint) {
-          hint.classList.add('visible');
-          const contentEl = document.querySelector('.content');
-          function hideOnScroll() {
-            hint.classList.remove('visible');
-            contentEl.removeEventListener('scroll', hideOnScroll);
+        const contentEl = document.querySelector('.content');
+        const panel = document.getElementById('panel' + panelIndex);
+        const annotations = panel ? panel.querySelectorAll('.annotation') : [];
+        const contentRect = contentEl.getBoundingClientRect();
+        const anyBelow = Array.from(annotations).some(a => {
+          const r = a.getBoundingClientRect();
+          return r.top > contentRect.bottom - 60;
+        });
+        if (anyBelow) {
+          const hint = document.getElementById('tour-scroll-hint');
+          if (hint) {
+            hint.classList.add('visible');
+            function hideOnScroll() {
+              hint.classList.remove('visible');
+              contentEl.removeEventListener('scroll', hideOnScroll);
+            }
+            contentEl.addEventListener('scroll', hideOnScroll);
+            setTimeout(() => {
+              hint.classList.remove('visible');
+              contentEl.removeEventListener('scroll', hideOnScroll);
+            }, 8000);
           }
-          contentEl.addEventListener('scroll', hideOnScroll);
-          setTimeout(() => {
-            hint.classList.remove('visible');
-            contentEl.removeEventListener('scroll', hideOnScroll);
-          }, 8000);
         }
       }
     }, delay));

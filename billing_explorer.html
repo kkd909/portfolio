@@ -569,6 +569,91 @@ body {
   line-height: 1.55;
 }
 .hotspot-callout-text strong { color: #fff; }
+
+/* ── Insight legend bar ──────────────────────────────────────────────────── */
+.insight-legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 1.5rem;
+  background: #fff;
+  border-bottom: 1px solid var(--rule);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+.legend-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: 4px;
+  white-space: nowrap;
+}
+.legend-items {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  border: 1px solid var(--rule);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: #f8fafc;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+.legend-item.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(56,189,248,0.06);
+}
+.legend-item.done {
+  border-color: #94a3b8;
+  color: #64748b;
+  background: #f1f5f9;
+}
+.legend-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+.legend-counter {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  margin-left: auto;
+  white-space: nowrap;
+}
+.replay-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  padding: 3px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.replay-btn:hover {
+  background: rgba(56,189,248,0.08);
+}
 </style>
 </head>
 <body>
@@ -709,7 +794,16 @@ body {
           <button class="panel-nav-btn primary" onclick="goToStep(1)">Signal Detected →</button>
         </div>
       </div>
-      <div class="screenshot-wrap">
+      <div class="insight-legend" id="legend-bar-0">
+        <span class="legend-label">Insights</span>
+        <div class="legend-items">
+      <div class="legend-item" id="legend-0-0"><span class="legend-dot"></span>Design</div>
+      <div class="legend-item" id="legend-0-1"><span class="legend-dot"></span>System</div>
+        </div>
+        <span class="legend-counter" id="legend-counter-0">1 of 2</span>
+        <button class="replay-btn" onclick="replayFromStart()">&#8635; Replay All</button>
+      </div>
+            <div class="screenshot-wrap">
         <div class="img-wrap">
         <img src="assets/images/billing-draft.png" alt="LegalOps billing dashboard in calm default state — work queue visible, no alerts surfaced">
         <div class="hotspot-overlay" id="overlay-0"><div class="hotspot-highlight" id="highlight-0"></div><div class="hotspot-callout" id="callout-0"></div></div>
@@ -739,7 +833,17 @@ body {
           <button class="panel-nav-btn primary" onclick="goToStep(2)">Matter Detail →</button>
         </div>
       </div>
-      <div class="screenshot-wrap">
+      <div class="insight-legend" id="legend-bar-1">
+        <span class="legend-label">Insights</span>
+        <div class="legend-items">
+      <div class="legend-item" id="legend-1-0"><span class="legend-dot"></span>Design</div>
+      <div class="legend-item" id="legend-1-1"><span class="legend-dot"></span>Hierarchy</div>
+      <div class="legend-item" id="legend-1-2"><span class="legend-dot"></span>Governance</div>
+        </div>
+        <span class="legend-counter" id="legend-counter-1">1 of 3</span>
+        <button class="replay-btn" onclick="replayFromStart()">&#8635; Replay All</button>
+      </div>
+            <div class="screenshot-wrap">
         <div class="img-wrap">
         <img src="assets/images/billing-dashboard-alert.png" alt="LegalOps dashboard with AI alert surfaced — 3 matters require attention, invoices aging, communication gap">
         <div class="hotspot-overlay" id="overlay-1"><div class="hotspot-highlight" id="highlight-1"></div><div class="hotspot-callout" id="callout-1"></div></div>
@@ -773,7 +877,17 @@ body {
           <button class="panel-nav-btn primary" onclick="goToStep(3)">Draft Surfaced →</button>
         </div>
       </div>
-      <div class="screenshot-wrap">
+      <div class="insight-legend" id="legend-bar-2">
+        <span class="legend-label">Insights</span>
+        <div class="legend-items">
+      <div class="legend-item" id="legend-2-0"><span class="legend-dot"></span>Design</div>
+      <div class="legend-item" id="legend-2-1"><span class="legend-dot"></span>Action</div>
+      <div class="legend-item" id="legend-2-2"><span class="legend-dot"></span>Hierarchy</div>
+        </div>
+        <span class="legend-counter" id="legend-counter-2">1 of 3</span>
+        <button class="replay-btn" onclick="replayFromStart()">&#8635; Replay All</button>
+      </div>
+            <div class="screenshot-wrap">
         <div class="img-wrap">
         <img src="assets/images/billing-matter-panel.png" alt="LegalOps matter detail panel — billing trend, invoice aging, communication gap, Prepare Communication CTA">
         <div class="hotspot-overlay" id="overlay-2"><div class="hotspot-highlight" id="highlight-2"></div><div class="hotspot-callout" id="callout-2"></div></div>
@@ -807,7 +921,17 @@ body {
           <button class="panel-nav-btn" onclick="goToStep(0)" style="border-color:#38bdf8;color:#0369a1">↺ Restart Flow</button>
         </div>
       </div>
-      <div class="screenshot-wrap">
+      <div class="insight-legend" id="legend-bar-3">
+        <span class="legend-label">Insights</span>
+        <div class="legend-items">
+      <div class="legend-item" id="legend-3-0"><span class="legend-dot"></span>Governance</div>
+      <div class="legend-item" id="legend-3-1"><span class="legend-dot"></span>Design</div>
+      <div class="legend-item" id="legend-3-2"><span class="legend-dot"></span>System</div>
+        </div>
+        <span class="legend-counter" id="legend-counter-3">1 of 3</span>
+        <button class="replay-btn" onclick="replayFromStart()">&#8635; Replay All</button>
+      </div>
+            <div class="screenshot-wrap">
         <div class="img-wrap">
         <img src="assets/images/billing-dashboard-calm.png" alt="LegalOps draft communication view — AI-prepared email, tone controls, Dismiss / Remind Later / Edit Draft / Send options">
         <div class="hotspot-overlay" id="overlay-3"><div class="hotspot-highlight" id="highlight-3"></div><div class="hotspot-callout" id="callout-3"></div></div>
@@ -1178,29 +1302,65 @@ function initInsightTour(panelIndex) {
   const spots = HOTSPOTS[panelIndex];
   if (!spots) return;
 
-  // Sequence through hotspots
+  // Update legend — reset all items
+  const total = spots.length;
+  spots.forEach((_, i) => {
+    const item = document.getElementById('legend-' + panelIndex + '-' + i);
+    if (item) { item.classList.remove('active', 'done'); }
+  });
+  const counter = document.getElementById('legend-counter-' + panelIndex);
+
+  // Sequence through hotspots — 5s per insight
   spots.forEach((spot, i) => {
-    const delay = 600 + (i * 2800);
+    const delay = 800 + (i * 5000);
     tourTimers.push(setTimeout(() => {
       currentHotspotIndex = i;
       showHotspot(panelIndex, i);
 
-      // Show scroll hint before last hotspot if needed
+      // Update legend
+      spots.forEach((_, j) => {
+        const item = document.getElementById('legend-' + panelIndex + '-' + j);
+        if (!item) return;
+        item.classList.remove('active', 'done');
+        if (j < i) item.classList.add('done');
+        if (j === i) item.classList.add('active');
+      });
+      if (counter) counter.textContent = (i + 1) + ' of ' + total;
+
+      // Show scroll hint on first insight if multiple
       if (i === 0 && spots.length > 1) {
         const hint = document.getElementById('tour-scroll-hint');
         if (hint) {
           hint.classList.add('visible');
-          setTimeout(() => hint.classList.remove('visible'), 5000);
+          const contentEl = document.querySelector('.content');
+          function hideOnScroll() {
+            hint.classList.remove('visible');
+            contentEl.removeEventListener('scroll', hideOnScroll);
+          }
+          contentEl.addEventListener('scroll', hideOnScroll);
+          setTimeout(() => {
+            hint.classList.remove('visible');
+            contentEl.removeEventListener('scroll', hideOnScroll);
+          }, 8000);
         }
       }
     }, delay));
   });
 
-  // After all hotspots shown, fade overlay but keep cards revealed
-  const finalDelay = 600 + (spots.length * 2800);
+  // After all shown — fade overlay, mark all done
+  const finalDelay = 800 + (spots.length * 5000);
   tourTimers.push(setTimeout(() => {
     hideHotspot(panelIndex);
+    spots.forEach((_, i) => {
+      const item = document.getElementById('legend-' + panelIndex + '-' + i);
+      if (item) { item.classList.remove('active'); item.classList.add('done'); }
+    });
   }, finalDelay));
+}
+
+
+function replayFromStart() {
+  goToStep(0);
 }
 
 // Init on load

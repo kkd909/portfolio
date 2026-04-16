@@ -816,23 +816,25 @@ body {
         <span class="legend-counter" id="legend-counter-0">1 of 2</span>
         <button class="replay-btn" onclick="replayFromStart()">&#8635; Replay All</button>
       </div>
-            <div class="screenshot-wrap">
-        <div class="img-wrap">
-        <img src="assets/images/billing-draft.png" alt="LegalOps billing dashboard in calm default state — work queue visible, no alerts surfaced">
-        <div class="hotspot-overlay" id="overlay-0"><div class="hotspot-highlight" id="highlight-0"></div><div class="hotspot-callout" id="callout-0"></div></div>
-      </div>
+                  <div class="screenshot-wrap">
         <div class="annotation-strip">
-          <div class="annotation">
+          <div class="annotation" id="ann-0-0">
             <span class="annotation-icon">Design</span>
             <div class="annotation-text"><strong>Calm by default.</strong> The dashboard surfaces the work queue and billing metrics without urgency signals. Attorneys can orient to their caseload without the system demanding attention. No alerts until threshold is crossed.</div>
           </div>
-          <div class="annotation">
+          <div class="annotation" id="ann-0-1">
             <span class="annotation-icon">System</span>
             <div class="annotation-text"><strong>Continuous monitoring, silent aggregation.</strong> Signals from email threads, billing records, documents, and matter status are being watched — but the interface stays quiet. The AI earns the right to interrupt.</div>
           </div>
         </div>
+        <div class="img-wrap">
+          <img src="assets/images/billing-draft.png" alt="LegalOps billing dashboard in calm default state — work queue visible, no alerts surfaced">
+          <div class="hotspot-overlay" id="overlay-0">
+            <div class="hotspot-highlight" id="highlight-0"></div>
+            <div class="hotspot-callout" id="callout-0"></div>
+          </div>
+        </div>
       </div>
-    </div>
 
     <!-- STEP 1: Signal Detected -->
     <div class="step-panel" id="panel1">
@@ -856,27 +858,29 @@ body {
         <span class="legend-counter" id="legend-counter-1">1 of 3</span>
         <button class="replay-btn" onclick="replayFromStart()">&#8635; Replay All</button>
       </div>
-            <div class="screenshot-wrap">
-        <div class="img-wrap">
-        <img src="assets/images/billing-dashboard-alert.png" alt="LegalOps dashboard with AI alert surfaced — 3 matters require attention, invoices aging, communication gap">
-        <div class="hotspot-overlay" id="overlay-1"><div class="hotspot-highlight" id="highlight-1"></div><div class="hotspot-callout" id="callout-1"></div></div>
-      </div>
+                  <div class="screenshot-wrap">
         <div class="annotation-strip">
-          <div class="annotation">
+          <div class="annotation" id="ann-1-0">
             <span class="annotation-icon">Design</span>
             <div class="annotation-text"><strong>Threshold-based intervention.</strong> The AI surfaces the alert only when signals converge — not on every data point. The banner reads as informational, not alarming. The attorney decides what to do next.</div>
           </div>
-          <div class="annotation">
+          <div class="annotation" id="ann-1-1">
             <span class="annotation-icon">Hierarchy</span>
             <div class="annotation-text"><strong>Calm-by-default hierarchy preserved.</strong> The alert sits above the work queue without displacing it. Urgency is legible without being coercive — the attorney's mental model of their caseload isn't disrupted.</div>
           </div>
-          <div class="annotation">
+          <div class="annotation" id="ann-1-2">
             <span class="annotation-icon">Governance</span>
             <div class="annotation-text"><strong>No automatic action.</strong> The system flagged 3 matters. It did not escalate them, reassign them, or send any communication. It surfaced context for the attorney to act on.</div>
           </div>
         </div>
+        <div class="img-wrap">
+          <img src="assets/images/billing-dashboard-alert.png" alt="LegalOps dashboard with AI alert surfaced — 3 matters require attention, invoices aging, communication gap">
+          <div class="hotspot-overlay" id="overlay-1">
+            <div class="hotspot-highlight" id="highlight-1"></div>
+            <div class="hotspot-callout" id="callout-1"></div>
+          </div>
+        </div>
       </div>
-    </div>
 
     <!-- STEP 2: Matter Detail -->
     <div class="step-panel" id="panel2">
@@ -900,27 +904,29 @@ body {
         <span class="legend-counter" id="legend-counter-2">1 of 3</span>
         <button class="replay-btn" onclick="replayFromStart()">&#8635; Replay All</button>
       </div>
-            <div class="screenshot-wrap">
-        <div class="img-wrap">
-        <img src="assets/images/billing-matter-panel.png" alt="LegalOps matter detail panel — billing trend, invoice aging, communication gap, Prepare Communication CTA">
-        <div class="hotspot-overlay" id="overlay-2"><div class="hotspot-highlight" id="highlight-2"></div><div class="hotspot-callout" id="callout-2"></div></div>
-      </div>
+                  <div class="screenshot-wrap">
         <div class="annotation-strip">
-          <div class="annotation">
+          <div class="annotation" id="ann-2-0">
             <span class="annotation-icon">Design</span>
-            <div class="annotation-text"><strong>Compressed context in one view.</strong> The panel surfaces billing trend, invoice aging (90+ days, $48K outstanding), communication gap (43 days vs. 12-day average), and a full matter timeline — information that previously required cross-referencing four systems.</div>
+            <div class="annotation-text"><strong>Compressed context in one view.</strong> The panel surfaces billing trend, invoice aging (90+ days, $48K outstanding), communication gap (43 days vs. 12-day average), and a full matter timeline — previously requiring cross-referencing four systems.</div>
           </div>
-          <div class="annotation">
+          <div class="annotation" id="ann-2-1">
             <span class="annotation-icon">Action</span>
             <div class="annotation-text"><strong>"Prepare Communication" — not "Send."</strong> The primary CTA initiates AI draft preparation, not delivery. The word choice is deliberate — it signals that a human step remains between this moment and any client-facing action.</div>
           </div>
-          <div class="annotation">
+          <div class="annotation" id="ann-2-2">
             <span class="annotation-icon">Hierarchy</span>
             <div class="annotation-text"><strong>Progressive disclosure.</strong> The detail panel opens alongside the work queue — the attorney never loses their place in the dashboard. Context surfaces without navigation away from the primary workflow.</div>
           </div>
         </div>
+        <div class="img-wrap">
+          <img src="assets/images/billing-matter-panel.png" alt="LegalOps matter detail panel — billing trend, invoice aging, communication gap, Prepare Communication CTA">
+          <div class="hotspot-overlay" id="overlay-2">
+            <div class="hotspot-highlight" id="highlight-2"></div>
+            <div class="hotspot-callout" id="callout-2"></div>
+          </div>
+        </div>
       </div>
-    </div>
 
     <!-- STEP 3: Draft Surfaced -->
     <div class="step-panel" id="panel3">
@@ -944,27 +950,29 @@ body {
         <span class="legend-counter" id="legend-counter-3">1 of 3</span>
         <button class="replay-btn" onclick="replayFromStart()">&#8635; Replay All</button>
       </div>
-            <div class="screenshot-wrap">
-        <div class="img-wrap">
-        <img src="assets/images/billing-dashboard-calm.png" alt="LegalOps draft communication view — AI-prepared email, tone controls, Dismiss / Remind Later / Edit Draft / Send options">
-        <div class="hotspot-overlay" id="overlay-3"><div class="hotspot-highlight" id="highlight-3"></div><div class="hotspot-callout" id="callout-3"></div></div>
-      </div>
+                  <div class="screenshot-wrap">
         <div class="annotation-strip">
-          <div class="annotation">
+          <div class="annotation" id="ann-3-0">
             <span class="annotation-icon">Governance</span>
-            <div class="annotation-text"><strong>Four equal paths.</strong> Dismiss · Remind Later · Edit Draft · Send. No path is visually privileged over another. The attorney is not nudged toward sending — they are presented with options and retain full authority over timing, tone, and intent.</div>
+            <div class="annotation-text"><strong>Four equal paths.</strong> Dismiss · Remind Later · Edit Draft · Send. No path is visually privileged over another. The attorney retains full authority over timing, tone, and intent.</div>
           </div>
-          <div class="annotation">
+          <div class="annotation" id="ann-3-1">
             <span class="annotation-icon">Design</span>
             <div class="annotation-text"><strong>Tone controls without autonomy.</strong> "More Formal / Add Urgency / Softer Tone" let the attorney adjust register — but the system cannot select tone on its own. Tone is a relational judgment that stays human-owned.</div>
           </div>
-          <div class="annotation">
+          <div class="annotation" id="ann-3-2">
             <span class="annotation-icon">System</span>
-            <div class="annotation-text"><strong>The footer says it plainly.</strong> "AI prepares a draft communication, but never sends it. Attorneys retain full control over timing, tone, and intent." This is the governance model made visible to the user — not buried in documentation.</div>
+            <div class="annotation-text"><strong>The footer says it plainly.</strong> "AI prepares a draft communication, but never sends it. Attorneys retain full control over timing, tone, and intent." The governance model made visible — not buried in documentation.</div>
+          </div>
+        </div>
+        <div class="img-wrap">
+          <img src="assets/images/billing-dashboard-calm.png" alt="LegalOps draft communication view — AI-prepared email, tone controls, Dismiss / Remind Later / Edit Draft / Send options">
+          <div class="hotspot-overlay" id="overlay-3">
+            <div class="hotspot-highlight" id="highlight-3"></div>
+            <div class="hotspot-callout" id="callout-3"></div>
           </div>
         </div>
       </div>
-    </div>
 
     <div class="step-panel" id="panel4">
       <div class="panel-header">
@@ -1370,7 +1378,7 @@ function initInsightTour(panelIndex) {
     }, delay));
   });
 
-  // After all shown — fade overlay, mark all done
+  // After all shown — fade overlay, mark all done, scroll to top
   const finalDelay = 800 + (spots.length * 5000);
   tourTimers.push(setTimeout(() => {
     hideHotspot(panelIndex);
@@ -1378,6 +1386,9 @@ function initInsightTour(panelIndex) {
       const item = document.getElementById('legend-' + panelIndex + '-' + i);
       if (item) { item.classList.remove('active'); item.classList.add('done'); }
     });
+    // Scroll content area back to top
+    const contentEl = document.querySelector('.content');
+    if (contentEl) contentEl.scrollTo({ top: 0, behavior: 'smooth' });
   }, finalDelay));
 }
 

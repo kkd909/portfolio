@@ -306,9 +306,9 @@ body {
   border-radius: 6px;
   border-left: 3px solid transparent;
   box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  opacity: 1;
+  transform: translateY(0);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .annotation.revealed {
   opacity: 1;
@@ -998,7 +998,7 @@ body {
         </div>
         <div class="panel-nav">
           <button class="panel-nav-btn" onclick="goToStep(3)">&#8592; Draft Surfaced</button>
-          <button class="panel-nav-btn" onclick="goToStep(0)" style="border-color:#38bdf8;color:#0369a1">&#8635; Restart Flow</button>
+          <button class="panel-nav-btn" onclick="bssSetState('calm')" style="border-color:#38bdf8;color:#0369a1">&#8635; Reset Demo</button>
         </div>
       </div>
       <div style="flex:1;overflow:auto;background:#16181d;padding:24px;">
@@ -1223,24 +1223,24 @@ function bssToggleAuto(){
 // ── Hotspot tour system ───────────────────────────────────────────────────
 
 const HOTSPOTS = {
-  0: [ // Tab 1: Calm Default
-    { top: 0,  left: 0,  h: 55, w: 100, side: 'bottom', label: 'Design',  text: '<strong>Calm by default.</strong> The dashboard surfaces the work queue and billing metrics without urgency signals. No alerts until threshold is crossed.' },
-    { top: 40, left: 0,  h: 60, w: 100, side: 'bottom', label: 'System',  text: '<strong>Continuous monitoring, silent aggregation.</strong> Signals are being watched &#8212; but the interface stays quiet. The AI earns the right to interrupt.' },
+  0: [ // Tab 1: Calm Default (billing-draft.png) — sidebar ends ~17%
+    { top: 10, left: 17, h: 7,  w: 82, side: 'bottom', label: 'Design', text: '<strong>Calm by default.</strong> The dashboard surfaces the work queue and billing metrics without urgency signals. Attorneys can orient to their caseload without the system demanding attention.' },
+    { top: 46, left: 17, h: 24, w: 82, side: 'top',    label: 'System', text: '<strong>Continuous monitoring, silent aggregation.</strong> Signals from email threads, billing records, and matter status are being watched &#8212; but the interface stays quiet. The AI earns the right to interrupt.' },
   ],
-  1: [ // Tab 2: Signal Detected
-    { top: 0,  left: 0,  h: 22, w: 100, side: 'bottom', label: 'Design',     text: '<strong>Threshold-based intervention.</strong> The AI surfaces the alert only when signals converge &#8212; not on every data point. The attorney decides what to do next.' },
-    { top: 20, left: 0,  h: 75, w: 100, side: 'top',    label: 'Hierarchy',  text: '<strong>Calm-by-default hierarchy preserved.</strong> The alert sits above the work queue without displacing it. Urgency is legible without being coercive.' },
-    { top: 0,  left: 0,  h: 100,w: 100, side: 'bottom', label: 'Governance', text: '<strong>No automatic action.</strong> The system flagged 3 matters. It did not escalate, reassign, or send any communication. It surfaced context for the attorney.' },
+  1: [ // Tab 2: Signal Detected (billing-dashboard-alert.png) — sidebar ends ~16%
+    { top: 5,  left: 16, h: 15, w: 82, side: 'bottom', label: 'Design',     text: '<strong>Threshold-based intervention.</strong> The AI surfaces the alert only when signals converge &#8212; not on every data point. The banner reads as informational, not alarming. The attorney decides what to do next.' },
+    { top: 23, left: 16, h: 3,  w: 82, side: 'bottom', label: 'Hierarchy',  text: '<strong>Calm-by-default hierarchy preserved.</strong> The alert sits above the work queue without displacing it. Urgency is legible without being coercive &#8212; the attorney&#8217;s mental model of their caseload isn&#8217;t disrupted.' },
+    { top: 75, left: 16, h: 3,  w: 82, side: 'top',    label: 'Governance', text: '<strong>No automatic action.</strong> The system flagged 3 matters. It did not escalate them, reassign them, or send any communication. It surfaced context for the attorney to act on.' },
   ],
-  2: [ // Tab 3: Matter Detail
-    { top: 0,  left: 0,  h: 50, w: 100, side: 'bottom', label: 'Design',    text: '<strong>Compressed context in one view.</strong> Billing trend, invoice aging, communication gap, and matter timeline &#8212; previously requiring four systems.' },
-    { top: 60, left: 30, h: 25, w: 70,  side: 'left',   label: 'Action',    text: '<strong>"Prepare Communication" &#8212; not "Send."</strong> The CTA initiates draft preparation, not delivery. A human step remains before any client-facing action.' },
-    { top: 0,  left: 0,  h: 100,w: 55,  side: 'right',  label: 'Hierarchy', text: '<strong>Progressive disclosure.</strong> The detail panel opens alongside the work queue &#8212; the attorney never loses their place in the dashboard.' },
+  2: [ // Tab 3: Matter Detail (billing-matter-panel.png) — sidebar ~15%, right panel starts ~72%
+    { top: 17, left: 72, h: 32, w: 26, side: 'left',  label: 'Design',    text: '<strong>Compressed context in one view.</strong> Billing trend, invoice aging, communication gap, and matter timeline &#8212; previously requiring four separate systems to piece together.' },
+    { top: 93, left: 72, h: 8,  w: 26, side: 'top',   label: 'Action',    text: '<strong>&#8220;Prepare Communication&#8221; &#8212; not &#8220;Send.&#8221;</strong> The CTA initiates draft preparation, not delivery. A human step remains before any client-facing action.' },
+    { top: 47, left: 15, h: 9,  w: 57, side: 'right', label: 'Hierarchy', text: '<strong>Progressive disclosure.</strong> The detail panel opens alongside the work queue &#8212; the attorney never loses their place in the dashboard.' },
   ],
-  3: [ // Tab 4: Draft Surfaced
-    { top: 55, left: 0,  h: 20, w: 100, side: 'top',    label: 'Governance', text: '<strong>Four equal paths.</strong> Dismiss &#183; Remind Later &#183; Edit Draft &#183; Send. No path is visually privileged. The attorney retains full authority.' },
-    { top: 30, left: 0,  h: 25, w: 70,  side: 'bottom', label: 'Design',     text: '<strong>Tone controls without autonomy.</strong> More Formal / Add Urgency / Softer Tone &#8212; but the system cannot select tone on its own. Tone is a human judgment.' },
-    { top: 80, left: 0,  h: 15, w: 100, side: 'top',    label: 'System',     text: '<strong>The footer says it plainly.</strong> "AI prepares a draft, but never sends it." This is the governance model made visible &#8212; not buried in documentation.' },
+  3: [ // Tab 4: Draft Surfaced (billing-dashboard-calm.png) — sidebar ~15%
+    { top: 65, left: 15, h: 8,  w: 82, side: 'top', label: 'Governance', text: '<strong>Four equal paths.</strong> Dismiss &#183; Remind Later &#183; Edit Draft &#183; Send. No path is visually privileged. The attorney retains full authority over timing and delivery.' },
+    { top: 59, left: 15, h: 7,  w: 82, side: 'top', label: 'Design',     text: '<strong>Tone controls without autonomy.</strong> More Formal / Add Urgency / Softer Tone &#8212; but the system cannot select tone on its own. Tone is a human judgment.' },
+    { top: 73, left: 15, h: 6,  w: 82, side: 'top', label: 'System',     text: '<strong>The footer says it plainly.</strong> &#8220;AI prepares a draft, but never sends it.&#8221; This is the governance model made visible &#8212; not buried in documentation.' },
   ],
 };
 
@@ -1313,7 +1313,16 @@ function showHotspot(panelIndex, hotspotIndex) {
   callout.classList.remove('visible');
   setTimeout(() => callout.classList.add('visible'), 300);
 
-  // Also highlight corresponding annotation card
+  // Scroll hotspot center into view — works regardless of which ancestor scrolls
+  setTimeout(() => {
+    const marker = document.createElement('div');
+    marker.style.cssText = 'position:absolute;top:' + (spot.top + spot.h * 0.5) + '%;left:0;width:1px;height:1px;pointer-events:none;';
+    overlay.appendChild(marker);
+    marker.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => { if (overlay.contains(marker)) overlay.removeChild(marker); }, 800);
+  }, 450);
+
+  // Highlight corresponding annotation card
   const panel = document.getElementById('panel' + panelIndex);
   if (panel) {
     const annotations = panel.querySelectorAll('.annotation');
@@ -1321,7 +1330,6 @@ function showHotspot(panelIndex, hotspotIndex) {
       a.classList.remove('active-insight');
       if (i === hotspotIndex) {
         a.classList.add('revealed', 'active-insight');
-        a.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
     });
   }
@@ -1335,11 +1343,11 @@ function initInsightTour(panelIndex) {
   // Hide all overlays
   for (let i = 0; i < 4; i++) hideHotspot(i);
 
-  // Reset annotation cards
+  // Clear active highlight from previous tour
   const panel = document.getElementById('panel' + panelIndex);
   if (panel) {
     panel.querySelectorAll('.annotation').forEach(a => {
-      a.classList.remove('revealed', 'active-insight');
+      a.classList.remove('active-insight');
     });
   }
 
@@ -1410,7 +1418,7 @@ function initInsightTour(panelIndex) {
 
 
 function replayFromStart() {
-  goToStep(0);
+  initInsightTour(current);
 }
 
 // Init on load

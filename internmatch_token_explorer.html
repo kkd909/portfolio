@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>InternMatch — Live Design System Token Explorer</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 /* ── DESIGN TOKENS ─────────────────────────────────────────── */
 :root {
   /* Role accent primitives */
-  --college-600:  #a3e635;
+  --college-600:  #1D4ED8;
   --college-100:  #d9f99d;
   --college-50:   #f7fee7;
   --employer-600: #a78bfa;
@@ -44,7 +44,7 @@
 html, body { height: 100%; overflow: hidden; }
 
 body {
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   background: #f4f4f6;
   color: var(--ink);
   display: grid;
@@ -65,7 +65,7 @@ body {
 }
 
 .wordmark {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 1.15rem;
   color: #fff;
   letter-spacing: -0.02em;
@@ -73,7 +73,7 @@ body {
 .wordmark span { color: var(--role-primary); transition: color 0.3s; }
 
 .top-meta {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.62rem;
   color: #3d4049;
   letter-spacing: 0.1em;
@@ -93,7 +93,7 @@ body {
 }
 
 .role-label-text {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.6rem;
   color: #3d4049;
   letter-spacing: 0.1em;
@@ -106,14 +106,14 @@ body {
 }
 
 .role-btn {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.7rem;
   letter-spacing: 0.04em;
   padding: 0 1rem;
   height: 2.75rem;
   border: none;
   background: transparent;
-  color: #6b7280;
+  color: #9CA3AF;
   cursor: pointer;
   border-bottom: 2px solid transparent;
   transition: all 0.2s;
@@ -139,7 +139,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.6rem;
   color: #3d4049;
   letter-spacing: 0.06em;
@@ -182,14 +182,14 @@ body {
 }
 
 .token-panel-title {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 1rem;
   color: #fff;
   margin-bottom: 0.2rem;
 }
 
 .token-panel-subtitle {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.6rem;
   color: #3d4049;
   letter-spacing: 0.08em;
@@ -210,7 +210,7 @@ body {
 }
 
 .role-col-header {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.58rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -229,7 +229,7 @@ body {
 }
 
 .token-group-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.58rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -248,9 +248,9 @@ body {
 .token-row:hover { background: #252830; }
 
 .token-name {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.65rem;
-  color: #6b7280;
+  color: #9CA3AF;
   padding-right: 0.5rem;
   line-height: 1.4;
 }
@@ -274,14 +274,14 @@ body {
 }
 
 .swatch-text {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.55rem;
-  color: #6b7280;
+  color: #9CA3AF;
   display: none;
 }
 
 /* Active role column highlight */
-.token-row .token-cell.active-cell .swatch-text { display: block; color: #9ca3af; }
+.token-row .token-cell.active-cell .swatch-text { display: block; color: #D1D5DB; }
 
 /* Legend */
 .token-legend {
@@ -304,7 +304,7 @@ body {
 }
 
 .legend-text {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.6rem;
   color: #3d4049;
   letter-spacing: 0.04em;
@@ -335,7 +335,7 @@ body {
 .role-banner-left { display: flex; align-items: center; gap: 0.75rem; }
 
 .role-banner-pill {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.62rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -344,7 +344,7 @@ body {
   font-weight: 500;
   transition: all 0.3s;
 }
-.pill-college  { background: var(--college-100);  color: #3a7a00; }
+.pill-college  { background: var(--college-100);  color: #1E3A8A; }
 .pill-employer { background: var(--employer-100); color: #5b21b6; }
 .pill-student  { background: var(--student-100);  color: #0369a1; }
 
@@ -355,12 +355,12 @@ body {
 }
 
 .role-banner-stat {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.65rem;
   color: var(--muted);
 }
 .role-banner-stat strong {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 1.35rem;
   display: block;
   line-height: 1;
@@ -381,7 +381,7 @@ body {
 }
 
 .filter-chip {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.62rem;
   padding: 0.22rem 0.55rem;
   border-radius: 2px;
@@ -415,13 +415,13 @@ body {
 }
 
 .table-title {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 1rem;
   color: var(--ink);
 }
 
 .table-subtitle {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.62rem;
   color: var(--muted);
   letter-spacing: 0.04em;
@@ -438,7 +438,7 @@ body {
 }
 
 .results-table th {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.6rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -472,7 +472,7 @@ body {
 
 /* Rank */
 .rank {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.7rem;
   color: var(--muted);
   width: 1.5rem;
@@ -486,7 +486,7 @@ body {
 }
 .fit-svg { width: 34px; height: 34px; flex-shrink: 0; }
 .fit-pct {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.72rem;
   font-weight: 500;
   transition: color 0.3s;
@@ -509,7 +509,7 @@ body {
 
 /* Tags */
 .tag {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.58rem;
   padding: 0.18rem 0.4rem;
   border-radius: 2px;
@@ -556,7 +556,7 @@ body {
 }
 
 .detail-score-number {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 2.5rem;
   color: var(--role-primary);
   line-height: 1;
@@ -564,7 +564,7 @@ body {
 }
 
 .detail-score-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.58rem;
   color: var(--muted);
   letter-spacing: 0.06em;
@@ -573,7 +573,7 @@ body {
 }
 
 .detail-section-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.58rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -588,7 +588,7 @@ body {
 .dim-labels {
   display: flex;
   justify-content: space-between;
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.58rem;
   color: var(--muted);
 }
@@ -633,13 +633,36 @@ body[data-role="college"]  .token-cell.tc-college  .swatch { transform: scale(1.
 body[data-role="employer"] .token-cell.tc-employer .swatch { transform: scale(1.25); box-shadow: 0 0 0 1.5px #fff4; }
 body[data-role="student"]  .token-cell.tc-student  .swatch { transform: scale(1.25); box-shadow: 0 0 0 1.5px #fff4; }
 
-body[data-role="college"]  .token-cell.tc-college  .swatch-text { display: block; color: #9ca3af; }
-body[data-role="employer"] .token-cell.tc-employer .swatch-text { display: block; color: #9ca3af; }
-body[data-role="student"]  .token-cell.tc-student  .swatch-text { display: block; color: #9ca3af; }
+body[data-role="college"]  .token-cell.tc-college  .swatch-text { display: block; color: #D1D5DB; }
+body[data-role="employer"] .token-cell.tc-employer .swatch-text { display: block; color: #D1D5DB; }
+body[data-role="student"]  .token-cell.tc-student  .swatch-text { display: block; color: #D1D5DB; }
 
 body[data-role="college"]  .role-col-college  { color: var(--college-600);  font-weight: 600; }
 body[data-role="employer"] .role-col-employer { color: var(--employer-600); font-weight: 600; }
 body[data-role="student"]  .role-col-student  { color: var(--student-600);  font-weight: 600; }
+
+/* ═══════════════════════════════════════════════════════════════
+   WCAG AA+ COMPLIANCE OVERRIDES - CRITICAL
+   ═══════════════════════════════════════════════════════════════ */
+
+.cs-interactive-btn-primary,
+.btn-primary {
+  background-color: #1D4ED8 !important;
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+}
+
+.cs-interactive-btn-primary:hover,
+.btn-primary:hover {
+  background-color: #1E40AF !important;
+  color: #FFFFFF !important;
+}
+
+p[style*="color:#9ca3af"],
+p[style*="color: #9ca3af"] {
+  color: #D1D5DB !important;
+}
+
 </style>
 </head>
 <body data-role="college">
@@ -651,7 +674,7 @@ body[data-role="student"]  .role-col-student  { color: var(--student-600);  font
     <div class="top-meta">Live Design System — Role Token Explorer</div>
   </div>
   <div class="top-meta">Portfolio artifact · Illustrative · NDA-safe</div>
-  <a href="https://kkd909.github.io/portfolio/index.html" style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#6b7280;text-decoration:none;letter-spacing:0.06em;transition:color 0.2s" onmouseover="this.style.color='#9ca3af'" onmouseout="this.style.color='#6b7280'">← Portfolio</a>
+  <a href="https://kkd909.github.io/portfolio/index.html" style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#9CA3AF;text-decoration:none;letter-spacing:0.06em;transition:color 0.2s" onmouseover="this.style.color='#9ca3af'" onmouseout="this.style.color='#6b7280'">← Portfolio</a>
 </header>
 
 <!-- ROLE SWITCHER -->
@@ -696,7 +719,7 @@ body[data-role="student"]  .role-col-student  { color: var(--student-600);  font
 
       <div class="token-row">
         <div class="token-name">--role-primary</div>
-        <div class="token-cell tc-college"><div class="swatch" style="background:#a3e635"></div><span class="swatch-text">#a3e635</span></div>
+        <div class="token-cell tc-college"><div class="swatch" style="background:#1D4ED8"></div><span class="swatch-text">#1D4ED8</span></div>
         <div class="token-cell tc-employer"><div class="swatch" style="background:#a78bfa"></div><span class="swatch-text">#a78bfa</span></div>
         <div class="token-cell tc-student"><div class="swatch" style="background:#38bdf8"></div><span class="swatch-text">#38bdf8</span></div>
       </div>
@@ -721,7 +744,7 @@ body[data-role="student"]  .role-col-student  { color: var(--student-600);  font
 
       <div class="token-row">
         <div class="token-name">--ring-fill-color</div>
-        <div class="token-cell tc-college"><div class="swatch" style="background:#a3e635"></div><span class="swatch-text">→ primary</span></div>
+        <div class="token-cell tc-college"><div class="swatch" style="background:#1D4ED8"></div><span class="swatch-text">→ primary</span></div>
         <div class="token-cell tc-employer"><div class="swatch" style="background:#a78bfa"></div><span class="swatch-text">→ primary</span></div>
         <div class="token-cell tc-student"><div class="swatch" style="background:#38bdf8"></div><span class="swatch-text">→ primary</span></div>
       </div>
@@ -735,9 +758,9 @@ body[data-role="student"]  .role-col-student  { color: var(--student-600);  font
 
       <div class="token-row">
         <div class="token-name">--ring-size</div>
-        <div class="token-cell tc-college"><span class="swatch-text" style="display:block;color:#6b7280;font-family:'DM Mono',monospace;font-size:0.58rem">34px</span></div>
-        <div class="token-cell tc-employer"><span class="swatch-text" style="display:block;color:#6b7280;font-family:'DM Mono',monospace;font-size:0.58rem">34px</span></div>
-        <div class="token-cell tc-student"><span class="swatch-text" style="display:block;color:#6b7280;font-family:'DM Mono',monospace;font-size:0.58rem">34px</span></div>
+        <div class="token-cell tc-college"><span class="swatch-text" style="display:block;color:#9CA3AF;font-family:'DM Mono',monospace;font-size:0.58rem">34px</span></div>
+        <div class="token-cell tc-employer"><span class="swatch-text" style="display:block;color:#9CA3AF;font-family:'DM Mono',monospace;font-size:0.58rem">34px</span></div>
+        <div class="token-cell tc-student"><span class="swatch-text" style="display:block;color:#9CA3AF;font-family:'DM Mono',monospace;font-size:0.58rem">34px</span></div>
       </div>
     </div>
 
@@ -771,7 +794,7 @@ body[data-role="student"]  .role-col-student  { color: var(--student-600);  font
 
       <div class="token-row">
         <div class="token-name">--chip-active-border</div>
-        <div class="token-cell tc-college"><div class="swatch" style="background:#a3e635"></div><span class="swatch-text">→ primary</span></div>
+        <div class="token-cell tc-college"><div class="swatch" style="background:#1D4ED8"></div><span class="swatch-text">→ primary</span></div>
         <div class="token-cell tc-employer"><div class="swatch" style="background:#a78bfa"></div><span class="swatch-text">→ primary</span></div>
         <div class="token-cell tc-student"><div class="swatch" style="background:#38bdf8"></div><span class="swatch-text">→ primary</span></div>
       </div>
@@ -789,7 +812,7 @@ body[data-role="student"]  .role-col-student  { color: var(--student-600);  font
 
       <div class="token-row">
         <div class="token-name">--tag-major-color</div>
-        <div class="token-cell tc-college"><div class="swatch" style="background:#a3e635"></div><span class="swatch-text">→ primary</span></div>
+        <div class="token-cell tc-college"><div class="swatch" style="background:#1D4ED8"></div><span class="swatch-text">→ primary</span></div>
         <div class="token-cell tc-employer"><div class="swatch" style="background:#a78bfa"></div><span class="swatch-text">→ primary</span></div>
         <div class="token-cell tc-student"><div class="swatch" style="background:#38bdf8"></div><span class="swatch-text">→ primary</span></div>
       </div>
@@ -800,7 +823,7 @@ body[data-role="student"]  .role-col-student  { color: var(--student-600);  font
 
       <div class="token-row">
         <div class="token-name">--dim-fill-color</div>
-        <div class="token-cell tc-college"><div class="swatch" style="background:#a3e635"></div><span class="swatch-text">→ primary</span></div>
+        <div class="token-cell tc-college"><div class="swatch" style="background:#1D4ED8"></div><span class="swatch-text">→ primary</span></div>
         <div class="token-cell tc-employer"><div class="swatch" style="background:#a78bfa"></div><span class="swatch-text">→ primary</span></div>
         <div class="token-cell tc-student"><div class="swatch" style="background:#38bdf8"></div><span class="swatch-text">→ primary</span></div>
       </div>
@@ -904,7 +927,7 @@ body[data-role="student"]  .role-col-student  { color: var(--student-600);  font
 // ── TOKEN MAPS ──────────────────────────────────────────────
 const ROLE_TOKENS = {
   college: {
-    primary:     '#a3e635',
+    primary:     '#1D4ED8',
     primary100:  '#d9f99d',
     primary50:   '#f7fee7',
     label:       'College View',

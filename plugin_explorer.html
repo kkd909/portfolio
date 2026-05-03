@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Figma Compliance Plugin — Interactive Workflow Explorer</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root {
   --ink:         #0f1117;
@@ -28,7 +28,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   background: var(--canvas);
   color: var(--ink);
   min-height: 100vh;
@@ -48,14 +48,14 @@ body {
   border-bottom: 1px solid var(--rule-dark);
 }
 .wordmark {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 1.35rem;
   color: #fff;
   letter-spacing: -0.02em;
 }
 .wordmark span { color: var(--accent); }
 .page-subtitle {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.65rem;
   color: var(--muted-light);
   letter-spacing: 0.1em;
@@ -63,7 +63,7 @@ body {
   margin-top: 0.2rem;
 }
 .back-link {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.65rem;
   color: var(--muted-light);
   text-decoration: none;
@@ -90,7 +90,7 @@ body {
   overflow-x: auto;
 }
 .step-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.62rem;
   color: var(--muted-light);
   letter-spacing: 0.1em;
@@ -102,7 +102,7 @@ body {
   line-height: 3rem;
 }
 .step-btn {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.72rem;
   letter-spacing: 0.04em;
   padding: 0 1.25rem;
@@ -142,7 +142,7 @@ body {
   overflow-y: auto;
 }
 .sidebar-heading {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.58rem;
   color: var(--muted-light);
   letter-spacing: 0.1em;
@@ -168,7 +168,7 @@ body {
 .step-item:hover { background: #252830; }
 .step-item.active { background: var(--accent-dark); border-color: var(--accent); }
 .step-num {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.6rem;
   color: var(--muted-light);
   padding-top: 0.1rem;
@@ -176,7 +176,7 @@ body {
 }
 .step-item.active .step-num { color: var(--accent); }
 .step-name {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.68rem;
   color: var(--muted-light);
   margin-bottom: 0.1rem;
@@ -193,7 +193,7 @@ body {
   margin-bottom: 0.5rem;
 }
 .gov-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.55rem;
   color: var(--accent);
   letter-spacing: 0.08em;
@@ -219,7 +219,7 @@ body {
 }
 .pipe-step.active { background: #252830; }
 .pipe-num {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.55rem;
   width: 18px; height: 18px;
   border-radius: 50%;
@@ -230,7 +230,7 @@ body {
   transition: all 0.2s;
 }
 .pipe-step.active .pipe-num { background: var(--accent); color: var(--accent-dark); }
-.pipe-name { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--muted-light); }
+.pipe-name { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: var(--muted-light); }
 .pipe-step.active .pipe-name { color: #fff; }
 .pipe-connector {
   width: 1px; height: 12px;
@@ -253,7 +253,7 @@ body {
   flex-shrink: 0;
 }
 .panel-eyebrow {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.58rem;
   color: var(--accent-text);
   letter-spacing: 0.08em;
@@ -261,13 +261,13 @@ body {
   margin-bottom: 0.2rem;
 }
 .panel-title {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 1.15rem;
   color: var(--ink);
 }
 .panel-nav { display: flex; gap: 0.5rem; }
 .nav-btn {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.62rem;
   padding: 0.35rem 0.85rem;
   border-radius: 2px;
@@ -310,13 +310,13 @@ body {
   border-bottom: 1px solid var(--rule-dark);
 }
 .plugin-title {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.62rem;
   color: var(--muted-light);
   letter-spacing: 0.06em;
 }
 .plugin-badge {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.5rem;
   padding: 0.1rem 0.35rem;
   background: var(--accent-dark);
@@ -337,7 +337,7 @@ body {
   gap: 0.85rem;
 }
 .annotation-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.6rem;
   color: var(--accent-text);
   letter-spacing: 0.08em;
@@ -348,7 +348,7 @@ body {
   margin-bottom: 0.5rem;
 }
 .step-h2 {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 1.25rem;
   color: var(--ink);
   margin-bottom: 0.3rem;
@@ -367,7 +367,7 @@ body {
   padding: 0.65rem 0.85rem;
 }
 .annotation-tag {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.55rem;
   color: var(--accent-text);
   background: var(--accent-soft);
@@ -385,7 +385,7 @@ body {
   background: #0f1117;
   border-radius: 4px;
   padding: 0.85rem;
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.62rem;
   color: #a78bfa;
   line-height: 1.7;
@@ -395,7 +395,7 @@ body {
 .code-key { color: #38bdf8; }
 .code-val { color: #34d399; }
 .code-str { color: #fbbf24; }
-.code-comment { color: #6b7280; }
+.code-comment { color: #9CA3AF; }
 
 /* AI vs Designer indicator */
 .ownership-row {
@@ -410,7 +410,7 @@ body {
   padding: 0.55rem 0.65rem;
 }
 .ownership-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.52rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -419,6 +419,29 @@ body {
 .ownership-card.ai .ownership-label { color: var(--accent-text); }
 .ownership-card.human .ownership-label { color: #065f46; }
 .ownership-text { font-size: 0.67rem; color: #374151; line-height: 1.45; }
+
+/* ═══════════════════════════════════════════════════════════════
+   WCAG AA+ COMPLIANCE OVERRIDES - CRITICAL
+   ═══════════════════════════════════════════════════════════════ */
+
+.cs-interactive-btn-primary,
+.btn-primary {
+  background-color: #1D4ED8 !important;
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+}
+
+.cs-interactive-btn-primary:hover,
+.btn-primary:hover {
+  background-color: #1E40AF !important;
+  color: #FFFFFF !important;
+}
+
+p[style*="color:#9ca3af"],
+p[style*="color: #9ca3af"] {
+  color: #D1D5DB !important;
+}
+
 </style>
 </head>
 <body>

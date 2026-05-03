@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>InternMatch — Interactive Design System Explorer</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root {
   --ink:          #0f1117;
@@ -24,7 +24,7 @@
   --token-bg:     #f4f4f6;
 
   /* Role accents */
-  --accent:       #a3e635;
+  --accent:       #1D4ED8;
   --accent-soft:  #f7fee7;
   --accent-mid:   #bef264;
   --gold:         #a78bfa;
@@ -43,7 +43,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   background: #f4f4f6;
   color: var(--ink);
   min-height: 100vh;
@@ -70,7 +70,7 @@ body {
 }
 
 .wordmark {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 1.35rem;
   color: #fff;
   letter-spacing: -0.02em;
@@ -79,9 +79,9 @@ body {
 .wordmark span { color: #bef264; }
 
 .page-subtitle {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.65rem;
-  color: #9ca3af;
+  color: #D1D5DB;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -97,9 +97,9 @@ body {
 }
 
 .role-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.62rem;
-  color: #9ca3af;
+  color: #D1D5DB;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 0 1rem 0 0;
@@ -110,14 +110,14 @@ body {
 }
 
 .role-btn {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.72rem;
   letter-spacing: 0.05em;
   padding: 0 1.25rem;
   height: 3rem;
   border: none;
   background: transparent;
-  color: #9ca3af;
+  color: #D1D5DB;
   cursor: pointer;
   border-bottom: 2px solid transparent;
   transition: all 0.2s;
@@ -128,8 +128,8 @@ body {
 }
 
 .role-btn:hover { color: #e2e4e9; }
-.role-btn.active { color: #ffffff; border-bottom-color: #a3e635; font-weight: 600; }
-.role-btn.active[data-role="college"] { border-bottom-color: #a3e635; }
+.role-btn.active { color: #ffffff; border-bottom-color: #1D4ED8; font-weight: 600; }
+.role-btn.active[data-role="college"] { border-bottom-color: #1D4ED8; }
 .role-btn.active[data-role="employer"] { border-bottom-color: #a78bfa; }
 .role-btn.active[data-role="student"] { border-bottom-color: #38bdf8; }
 
@@ -138,20 +138,20 @@ body {
   border-radius: 50%;
   display: inline-block;
 }
-[data-role="college"] .role-dot { background: #a3e635; }
+[data-role="college"] .role-dot { background: #1D4ED8; color: #FFFFFF; }
 [data-role="employer"] .role-dot { background: #a78bfa; }
 [data-role="student"] .role-dot { background: #38bdf8; }
 
 .view-badge {
   margin-left: auto;
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.62rem;
   letter-spacing: 0.08em;
   padding: 0.25rem 0.6rem;
   border-radius: 2px;
   text-transform: uppercase;
 }
-.badge-college { background: #f7fee7; color: #3a7a00; }
+.badge-college { background: #f7fee7; color: #1E3A8A; }
 .badge-employer { background: #f5f3ff; color: #5b21b6; }
 .badge-student { background: #f0f9ff; color: #0369a1; }
 
@@ -176,10 +176,10 @@ body {
 }
 
 .sidebar-section-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.6rem;
   letter-spacing: 0.12em;
-  color: #6b7280;
+  color: #9CA3AF;
   text-transform: uppercase;
   padding: 0.5rem 1.25rem 0.35rem;
 }
@@ -189,9 +189,9 @@ body {
   align-items: center;
   gap: 0.6rem;
   padding: 0.45rem 1.25rem;
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.72rem;
-  color: #9ca3af;
+  color: #D1D5DB;
   cursor: pointer;
   transition: all 0.15s;
   border-left: 2px solid transparent;
@@ -201,7 +201,7 @@ body {
 .component-item.active {
   color: #fff;
   background: #252830;
-  border-left-color: #a3e635;
+  border-left-color: #1D4ED8;
 }
 .component-item.active[data-active-role="employer"] { border-left-color: #a78bfa; }
 .component-item.active[data-active-role="student"] { border-left-color: #38bdf8; }
@@ -217,7 +217,7 @@ body {
   font-size: 0.55rem;
   padding: 0.1rem 0.35rem;
   border-radius: 2px;
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   letter-spacing: 0.04em;
 }
 .comp-badge-primary { background: #1a2e05; color: #bef264; }
@@ -245,14 +245,14 @@ body {
 .role-intro-student { background: #f0f9ff; border-color: #bae6fd; }
 
 .role-intro-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.65rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 500;
   margin-bottom: 0.2rem;
 }
-.role-intro-college .role-intro-label { color: #3a7a00; }
+.role-intro-college .role-intro-label { color: #1E3A8A; }
 .role-intro-employer .role-intro-label { color: #5b21b6; }
 .role-intro-student .role-intro-label { color: #0369a1; }
 
@@ -273,13 +273,13 @@ body {
 }
 
 .section-title {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 1.1rem;
   color: var(--ink);
 }
 
 .section-meta {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.62rem;
   color: var(--muted);
   letter-spacing: 0.06em;
@@ -304,19 +304,19 @@ body {
   border: 1px solid var(--rule);
   border-radius: 3px;
   padding: 0.4rem 0.75rem;
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 0.85rem;
   color: var(--ink);
   background: #f4f4f6;
   outline: none;
 }
-.filter-search:focus { border-color: #a3e635; }
+.filter-search:focus { border-color: #1D4ED8; }
 
 .filter-select {
   border: 1px solid var(--rule);
   border-radius: 3px;
   padding: 0.4rem 0.65rem;
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.72rem;
   color: var(--ink);
   background: #f4f4f6;
@@ -332,7 +332,7 @@ body {
 }
 
 .filter-chip {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.65rem;
   padding: 0.25rem 0.6rem;
   border-radius: 2px;
@@ -343,13 +343,13 @@ body {
   transition: all 0.15s;
   white-space: nowrap;
 }
-.filter-chip:hover { border-color: #a3e635; color: #a3e635; }
-.filter-chip.active-college { background: #f7fee7; border-color: #a3e635; color: #3a7a00; }
+.filter-chip:hover { border-color: #1D4ED8; color: #1D4ED8; }
+.filter-chip.active-college { background: #f7fee7; border-color: #1D4ED8; color: #1E3A8A; }
 .filter-chip.active-employer { background: #f5f3ff; border-color: #a78bfa; color: #a78bfa; }
 .filter-chip.active-student { background: #f0f9ff; border-color: #38bdf8; color: #38bdf8; }
 
 .result-count {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.65rem;
   color: #4b5563;
   margin-left: auto;
@@ -370,7 +370,7 @@ body {
 }
 
 .results-table th {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -402,7 +402,7 @@ body {
 
 /* Rank cell */
 .rank-cell {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.72rem;
   color: var(--muted);
   width: 2.5rem;
@@ -422,7 +422,7 @@ body {
 }
 
 .fit-pct {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.75rem;
   font-weight: 500;
 }
@@ -451,13 +451,13 @@ body {
 }
 
 .tag {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.6rem;
   padding: 0.2rem 0.45rem;
   border-radius: 2px;
   white-space: nowrap;
 }
-.tag-major { background: #f7fee7; color: #3a7a00; }
+.tag-major { background: #f7fee7; color: #1E3A8A; }
 .tag-avail { background: #f0fdf4; color: #16a34a; }
 .tag-hours { background: var(--warm); color: #4b5563; }
 .tag-location { background: #f3f0ff; color: #7c3aed; }
@@ -482,7 +482,7 @@ body {
 }
 
 .inspector-title {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.65rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -491,7 +491,7 @@ body {
 }
 
 .inspector-component-name {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 1.1rem;
   color: var(--ink);
 }
@@ -503,7 +503,7 @@ body {
 }
 
 .token-group-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.6rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -523,13 +523,13 @@ body {
 }
 
 .token-name {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.67rem;
   color: #4b5563;
 }
 
 .token-value {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.67rem;
   color: var(--ink);
   font-weight: 500;
@@ -552,7 +552,7 @@ body {
 }
 
 .candidate-detail-name {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 1.35rem;
   color: var(--ink);
   margin-bottom: 0.2rem;
@@ -577,16 +577,16 @@ body {
 .fit-score-large-student { background: #f0f9ff; }
 
 .fit-score-number {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 2.25rem;
   line-height: 1;
 }
-.fit-score-large-college .fit-score-number { color: #3a7a00; }
+.fit-score-large-college .fit-score-number { color: #1E3A8A; }
 .fit-score-large-employer .fit-score-number { color: #6d28d9; }
 .fit-score-large-student .fit-score-number { color: #0369a1; }
 
 .fit-score-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.65rem;
   letter-spacing: 0.06em;
   color: #4b5563;
@@ -598,7 +598,7 @@ body {
 }
 
 .detail-section-label {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.6rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -619,7 +619,7 @@ body {
 .dim-bar-label {
   display: flex;
   justify-content: space-between;
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.65rem;
   color: var(--muted);
 }
@@ -655,7 +655,7 @@ body {
 }
 
 .empty-text {
-  font-family: 'DM Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.72rem;
   letter-spacing: 0.06em;
   line-height: 1.6;
@@ -676,6 +676,29 @@ body {
 .animate-in { animation: fadeIn 0.25s ease forwards; }
 
 .hidden { display: none !important; }
+
+/* ═══════════════════════════════════════════════════════════════
+   WCAG AA+ COMPLIANCE OVERRIDES - CRITICAL
+   ═══════════════════════════════════════════════════════════════ */
+
+.cs-interactive-btn-primary,
+.btn-primary {
+  background-color: #1D4ED8 !important;
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+}
+
+.cs-interactive-btn-primary:hover,
+.btn-primary:hover {
+  background-color: #1E40AF !important;
+  color: #FFFFFF !important;
+}
+
+p[style*="color:#9ca3af"],
+p[style*="color: #9ca3af"] {
+  color: #D1D5DB !important;
+}
+
 </style>
 </head>
 <body class="role-college">
@@ -687,7 +710,7 @@ body {
     <div class="page-subtitle">Internship Matching — Design System Explorer — Illustrative Portfolio Artifact</div>
   </div>
   <div id="viewBadge" class="view-badge badge-college">UW Career Center View</div>
-  <a href="https://kkd909.github.io/portfolio/index.html" style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#6b7280;text-decoration:none;letter-spacing:0.06em;transition:color 0.2s" onmouseover="this.style.color='#9ca3af'" onmouseout="this.style.color='#6b7280'">← Portfolio</a>
+  <a href="https://kkd909.github.io/portfolio/index.html" style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#9CA3AF;text-decoration:none;letter-spacing:0.06em;transition:color 0.2s" onmouseover="this.style.color='#9ca3af'" onmouseout="this.style.color='#6b7280'">← Portfolio</a>
 </header>
 
 <!-- ROLE SWITCHER -->
@@ -808,7 +831,7 @@ body {
       <div id="summaryDetail" style="
         font-family:'DM Mono',monospace;
         font-size:0.65rem;
-        color:#9ca3af;
+        color:#D1D5DB;
         letter-spacing:0.06em;
         padding-left:1.25rem;
         border-left:1px solid #4b5563;
@@ -816,10 +839,10 @@ body {
       <div id="summaryTags" style="margin-left:auto;display:flex;gap:0.4rem;flex-wrap:wrap;align-items:center"></div>
       <!-- Device toggle — student view only -->
       <div id="deviceToggle" style="display:none;background:#16181d;border:1px solid #2e3139;border-radius:3px;overflow:hidden;flex-shrink:0">
-        <button id="btnDesktop" onclick="setDeviceView('desktop')" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.04em;padding:0.3rem 0.75rem;border:none;cursor:pointer;background:#a3e635;color:#1a2000;transition:all 0.2s">
+        <button id="btnDesktop" onclick="setDeviceView('desktop')" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.04em;padding:0.3rem 0.75rem;border:none;cursor:pointer;background:#1D4ED8;color:#1a2000;transition:all 0.2s">
           ⊞ Desktop
         </button>
-        <button id="btnMobile" onclick="setDeviceView('mobile')" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.04em;padding:0.3rem 0.75rem;border:none;cursor:pointer;background:transparent;color:#9ca3af;transition:all 0.2s">
+        <button id="btnMobile" onclick="setDeviceView('mobile')" style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.04em;padding:0.3rem 0.75rem;border:none;cursor:pointer;background:transparent;color:#D1D5DB;transition:all 0.2s">
           ☰ Mobile
         </button>
       </div>
@@ -870,11 +893,11 @@ body {
           </div>
           <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-            <span style="font-family:system-ui;font-size:0.6rem;color:#6b7280">Explore</span>
+            <span style="font-family:system-ui;font-size:0.6rem;color:#9CA3AF">Explore</span>
           </div>
           <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <span style="font-family:system-ui;font-size:0.6rem;color:#6b7280">Profile</span>
+            <span style="font-family:system-ui;font-size:0.6rem;color:#9CA3AF">Profile</span>
           </div>
         </div>
       </div>
@@ -1100,7 +1123,7 @@ function setDeviceView(view) {
     tableArea.style.display  = '';
     filterBar.style.display  = '';
     mobileFrame.style.display = 'none';
-    btnD.style.background = '#a3e635'; btnD.style.color = '#1a2000';
+    btnD.style.background = '#1D4ED8'; btnD.style.color = '#1a2000';
     btnM.style.background = 'transparent'; btnM.style.color = '#9ca3af';
     filterResults();
   }
@@ -1122,7 +1145,7 @@ function fitRingSVG(pct, color) {
 // Accessible (darkened) text version of a bright role accent color
 function accessibleColor(hex) {
   const map = {
-    '#a3e635': '#3a7a00',  // lime → dark green
+    '#1D4ED8': '#1E3A8A',  // lime → dark green
     '#a78bfa': '#5b21b6',  // lavender → dark purple
     '#38bdf8': '#0369a1',  // sky → dark blue
     '#34d399': '#065f46',  // emerald → dark teal
@@ -1137,7 +1160,7 @@ function dividerRow(cols, color, label) {
     <td colspan="${cols}" style="padding:0.5rem 1rem;background:#f4f4f6;border-bottom:1px solid #e2e4e9;border-top:2px solid ${color}33">
       <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
         <span style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.08em;color:${accessibleColor(color)};text-transform:uppercase">${label}</span>
-        <span style="font-family:'DM Mono',monospace;font-size:0.6rem;color:#6b7280">AI-surfaced non-obvious matches based on skills and coursework</span>
+        <span style="font-family:'DM Mono',monospace;font-size:0.6rem;color:#9CA3AF">AI-surfaced non-obvious matches based on skills and coursework</span>
       </div>
     </td>
   </tr>`;
@@ -1147,7 +1170,7 @@ function dividerRow(cols, color, label) {
 function scoreDims(dims, labels, color) {
   return labels.map((label, i) => `
     <div style="margin-bottom:0.45rem">
-      <div style="display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:0.62rem;color:#6b7280;margin-bottom:0.15rem">
+      <div style="display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:0.62rem;color:#9CA3AF;margin-bottom:0.15rem">
         <span>${label}</span><span>${dims[i]}%</span>
       </div>
       <div style="height:3px;background:#e2e4e9;border-radius:2px;overflow:hidden">
@@ -1158,7 +1181,7 @@ function scoreDims(dims, labels, color) {
 
 // ── UPDATE SUMMARY BAR ─────────────────────────────────────
 function updateSummaryBar(role, data) {
-  const roleColors = { college:'#a3e635', employer:'#a78bfa', student:'#38bdf8' };
+  const roleColors = { college:'#1D4ED8', employer:'#a78bfa', student:'#38bdf8' };
   const color = roleColors[role];
   let main = '', detail = '', tags = '';
 
@@ -1215,21 +1238,21 @@ function renderMobileCards() {
 
     const expandedContent = isExp ? `
       <div style="border-top:1px solid #e2e4e9;margin-top:0.75rem;padding-top:0.75rem">
-        <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.08em;text-transform:uppercase;color:#6b7280;margin-bottom:0.5rem">Score Dimensions</div>
+        <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.08em;text-transform:uppercase;color:#9CA3AF;margin-bottom:0.5rem">Score Dimensions</div>
         ${[['Major Alignment',r.dims[0]],['Availability',r.dims[1]],['Location Fit',r.dims[2]],['Credentials',r.dims[3]]].map(([label,val])=>`
           <div style="margin-bottom:0.4rem">
-            <div style="display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:0.6rem;color:#6b7280;margin-bottom:0.15rem"><span>${label}</span><span>${val}%</span></div>
+            <div style="display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:0.6rem;color:#9CA3AF;margin-bottom:0.15rem"><span>${label}</span><span>${val}%</span></div>
             <div style="height:3px;background:#e2e4e9;border-radius:2px"><div style="height:100%;width:${val}%;background:${color};border-radius:2px"></div></div>
           </div>`).join('')}
         <div style="margin-top:0.6rem">
-          <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.08em;text-transform:uppercase;color:#6b7280;margin-bottom:0.3rem">Why This Match</div>
+          <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.08em;text-transform:uppercase;color:#9CA3AF;margin-bottom:0.3rem">Why This Match</div>
           <div style="margin-bottom:0.35rem">${signalTag(r.signal)}</div>
           <div style="font-size:0.78rem;color:#374151;line-height:1.5">${r.note}</div>
         </div>
-        <div style="margin-top:0.6rem;font-size:0.78rem;color:#6b7280;line-height:1.6">
+        <div style="margin-top:0.6rem;font-size:0.78rem;color:#9CA3AF;line-height:1.6">
           <div><strong style="color:#0f1117">${r.type === 'Paid' ? r.comp : 'Unpaid'}</strong> · ${r.hours} hrs/wk</div>
           <div>${r.loc} · ${r.avail}</div>
-          <div style="font-size:0.72rem;color:#9ca3af">Via ${r.college}</div>
+          <div style="font-size:0.72rem;color:#D1D5DB">Via ${r.college}</div>
         </div>
       </div>` : '';
 
@@ -1263,7 +1286,7 @@ function renderMobileCards() {
               <span style="font-family:'DM Mono',monospace;font-size:0.58rem;padding:0.15rem 0.4rem;border-radius:10px;background:${r.type==='Paid'?'#f7fee7':'#f2f2f7'};color:${r.type==='Paid'?'#16a34a':'#6b7280'}">${r.type==='Paid'?r.comp:'Unpaid'}</span>
             </div>
           </div>
-          <div style="font-size:1rem;color:#9ca3af;flex-shrink:0">${isExp?'↑':'↓'}</div>
+          <div style="font-size:1rem;color:#D1D5DB;flex-shrink:0">${isExp?'↑':'↓'}</div>
         </div>
         ${expandedContent}
       </div>`;
@@ -1285,7 +1308,7 @@ function renderMobileCards() {
           <span style="font-family:'DM Mono',monospace;font-size:0.6rem;color:#0369a1;letter-spacing:0.04em;white-space:nowrap">You might also fit →</span>
           <div style="flex:1;height:1px;background:#e2e4e9"></div>
         </div>
-        <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:#9ca3af;text-align:center;margin-bottom:0.35rem">AI-surfaced non-obvious matches</div>
+        <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:#D1D5DB;text-align:center;margin-bottom:0.35rem">AI-surfaced non-obvious matches</div>
       </div>`;
 
     const showMoreBtn = !mobileSecondaryVisible ? `
@@ -1359,7 +1382,7 @@ function filterResults() {
 
 // ── COLLEGE TABLE ──────────────────────────────────────────
 function renderCollegeTable(body, data) {
-  const color = '#a3e635';
+  const color = '#1D4ED8';
   body.innerHTML = data.map((s, i) => {
     const fitClass   = s.fit >= 80 ? 'fit-high' : s.fit >= 65 ? 'fit-mid' : 'fit-low';
     const isExpanded = expandedRows.has(s.id);
@@ -1369,19 +1392,19 @@ function renderCollegeTable(body, data) {
       <tr style="background:#f7fee7">
         <td colspan="9" style="padding:0;border-bottom:2px solid #d9f99d">
           <div style="padding:1rem 1.25rem">
-            <div style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:#6b7280;margin-bottom:0.75rem">All Matched Roles — ${s.name}</div>
+            <div style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:#9CA3AF;margin-bottom:0.75rem">All Matched Roles — ${s.name}</div>
             <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0.75rem">
               ${s.allRoles.map(r => {
                 const cfg = SIGNAL_COLORS[r.signal];
                 const fc  = r.fit >= 80 ? 'fit-high' : r.fit >= 65 ? 'fit-mid' : 'fit-low';
-                const srcColor = r.src && r.src.includes('Consortium') ? '#5b21b6' : '#3a7a00';
+                const srcColor = r.src && r.src.includes('Consortium') ? '#5b21b6' : '#1E3A8A';
                 const srcBg    = r.src && r.src.includes('Consortium') ? '#f3f0ff' : '#f7fee7';
                 return `<div style="background:#fff;border:1px solid #e2e4e9;border-radius:4px;padding:0.875rem;border-left:3px solid ${cfg.color}">
                   <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem">
                     ${fitRingSVG(r.fit, cfg.color)}
                     <div>
                       <div style="font-weight:600;font-size:0.875rem;color:#0f1117">${r.role}</div>
-                      <div style="font-size:0.75rem;color:#6b7280">${r.org}</div>
+                      <div style="font-size:0.75rem;color:#9CA3AF">${r.org}</div>
                     </div>
                     <div style="margin-left:auto;font-family:'DM Mono',monospace;font-size:0.72rem;font-weight:600" class="${fc}">${r.fit}%</div>
                   </div>
@@ -1389,7 +1412,7 @@ function renderCollegeTable(body, data) {
                     ${signalTag(r.signal)}
                     ${r.src ? `<span style="font-family:'DM Mono',monospace;font-size:0.55rem;padding:0.15rem 0.4rem;border-radius:2px;background:${srcBg};color:${srcColor};border:1px solid ${srcColor}33">${r.src}</span>` : ''}
                   </div>
-                  <div style="font-size:0.775rem;color:#6b7280;line-height:1.5">${r.note}</div>
+                  <div style="font-size:0.775rem;color:#9CA3AF;line-height:1.5">${r.note}</div>
                 </div>`;
               }).join('')}
             </div>
@@ -1413,13 +1436,13 @@ function renderCollegeTable(body, data) {
         <td><span class="tag tag-major">${s.major}</span></td>
         <td>
           <div style="font-size:0.825rem;font-weight:500;color:#0f1117">${s.topRole}</div>
-          <div style="font-size:0.72rem;color:#6b7280">${s.topOrg}</div>
+          <div style="font-size:0.72rem;color:#9CA3AF">${s.topOrg}</div>
         </td>
         <td>${signalTag(s.topSignal)}</td>
         <td><span class="tag tag-avail">${s.avail}</span></td>
         <td>${typeTag}</td>
         <td style="text-align:center;white-space:nowrap">
-          <span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#6b7280">
+          <span style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#9CA3AF">
             ${isExpanded ? '▲' : '▼'} ${s.allRoles.length} roles
           </span>
         </td>
@@ -1443,18 +1466,18 @@ function renderEmployerTable(body, primary, secondary) {
             <div style="display:flex;flex-direction:column;align-items:center;gap:0.35rem">
               ${fitRingSVG(c.fit, color)}
               <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:${accessibleColor(color)};line-height:1">${c.fit}%</div>
-              <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:#6b7280;letter-spacing:0.06em;text-transform:uppercase">Role Fit</div>
+              <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:#9CA3AF;letter-spacing:0.06em;text-transform:uppercase">Role Fit</div>
             </div>
             <div>
-              <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:#6b7280;margin-bottom:0.5rem">Score Dimensions</div>
+              <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:#9CA3AF;margin-bottom:0.5rem">Score Dimensions</div>
               ${scoreDims(c.dims, ['Major Alignment','Availability','Location Fit','Credential Strength'], color)}
             </div>
             <div>
-              <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:#6b7280;margin-bottom:0.35rem">Why This Match</div>
+              <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:#9CA3AF;margin-bottom:0.35rem">Why This Match</div>
               <div style="margin-bottom:0.5rem">${signalTag(c.signal)}</div>
-              <div style="font-size:0.8rem;color:#6b7280;line-height:1.6;margin-bottom:0.75rem">${c.note}</div>
-              <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:#6b7280;margin-bottom:0.35rem">Candidate</div>
-              <div style="font-size:0.8rem;color:#6b7280;line-height:1.8">
+              <div style="font-size:0.8rem;color:#9CA3AF;line-height:1.6;margin-bottom:0.75rem">${c.note}</div>
+              <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:#9CA3AF;margin-bottom:0.35rem">Candidate</div>
+              <div style="font-size:0.8rem;color:#9CA3AF;line-height:1.8">
                 <div><strong style="color:#0f1117">${c.name}</strong></div>
                 <div>${c.school} · ${c.major}</div>
                 <div>${c.avail} · ${c.hours} hrs/wk · ${c.loc}</div>
@@ -1508,18 +1531,18 @@ function renderStudentTable(body, primary, secondary) {
             <div style="display:flex;flex-direction:column;align-items:center;gap:0.35rem">
               ${fitRingSVG(r.fit, color)}
               <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:${accessibleColor(color)};line-height:1">${r.fit}%</div>
-              <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:#6b7280;letter-spacing:0.06em;text-transform:uppercase">Match Score</div>
+              <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:#9CA3AF;letter-spacing:0.06em;text-transform:uppercase">Match Score</div>
             </div>
             <div>
-              <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:#6b7280;margin-bottom:0.5rem">Score Dimensions</div>
+              <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:#9CA3AF;margin-bottom:0.5rem">Score Dimensions</div>
               ${scoreDims(r.dims, ['Major Alignment','Availability','Location Fit','Credential Strength'], color)}
             </div>
             <div>
-              <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:#6b7280;margin-bottom:0.35rem">Why This Match</div>
+              <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:#9CA3AF;margin-bottom:0.35rem">Why This Match</div>
               <div style="margin-bottom:0.5rem">${signalTag(r.signal)}</div>
-              <div style="font-size:0.8rem;color:#6b7280;line-height:1.6;margin-bottom:0.75rem">${r.note}</div>
-              <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:#6b7280;margin-bottom:0.35rem">Role Details</div>
-              <div style="font-size:0.8rem;color:#6b7280;line-height:1.8">
+              <div style="font-size:0.8rem;color:#9CA3AF;line-height:1.6;margin-bottom:0.75rem">${r.note}</div>
+              <div style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:#9CA3AF;margin-bottom:0.35rem">Role Details</div>
+              <div style="font-size:0.8rem;color:#9CA3AF;line-height:1.8">
                 <div><strong style="color:#0f1117">${r.role}</strong></div>
                 <div>${r.org}</div>
                 <div>Sourced via ${r.college}</div>
@@ -1542,7 +1565,7 @@ function renderStudentTable(body, primary, secondary) {
         </td>
         <td><span class="candidate-name">${r.role}</span></td>
         <td><span class="tag tag-employer" style="font-size:0.72rem;padding:0.2rem 0.5rem">${r.org}</span></td>
-        <td><span style="font-size:0.775rem;color:#6b7280">${r.college}</span></td>
+        <td><span style="font-size:0.775rem;color:#9CA3AF">${r.college}</span></td>
         <td><div class="tag-row">${compTag}</div></td>
         <td><span class="tag tag-location">${r.loc}</span></td>
         <td><span class="tag tag-avail">${r.avail}</span></td>
@@ -1591,9 +1614,9 @@ function toggleExpand(id) {
 }
 
 function updateInspector(item, role) {
-  const roleColor = role === 'employer' ? '#a78bfa' : role === 'student' ? '#38bdf8' : '#a3e635';
+  const roleColor = role === 'employer' ? '#a78bfa' : role === 'student' ? '#38bdf8' : '#1D4ED8';
   // Accessible text version for bright accents on tinted backgrounds
-  const roleTextColor = role === 'college' ? '#3a7a00' : role === 'student' ? '#0369a1' : '#5b21b6';
+  const roleTextColor = role === 'college' ? '#1E3A8A' : role === 'student' ? '#0369a1' : '#5b21b6';
   const isRole    = role === 'student';
   const isCollege = role === 'college';
   const scoreLabel = isRole ? 'Match Score' : isCollege ? 'Placeability Score' : 'Role Fit Score';
@@ -1605,7 +1628,7 @@ function updateInspector(item, role) {
   const detailBlock = isCollege ? `
     <div style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:#4b5563;margin-bottom:0.35rem">Top Matched Role</div>
     <div style="font-size:0.875rem;font-weight:600;color:#0f1117;margin-bottom:0.1rem">${item.topRole}</div>
-    <div style="font-size:0.8rem;color:#6b7280;margin-bottom:0.75rem">${item.topOrg}</div>
+    <div style="font-size:0.8rem;color:#9CA3AF;margin-bottom:0.75rem">${item.topOrg}</div>
     <div style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:#4b5563;margin-bottom:0.4rem">All Matched Roles</div>
     ${(item.allRoles||[]).map(r => {
       const cfg = SIGNAL_COLORS[r.signal] || {color:'#6b7280'};
@@ -1615,7 +1638,7 @@ function updateInspector(item, role) {
       </div>`;
     }).join('')}
     <div style="margin-top:0.75rem;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:#4b5563;margin-bottom:0.35rem">Student Details</div>
-    <div style="font-size:0.8rem;color:#6b7280;line-height:1.8">
+    <div style="font-size:0.8rem;color:#9CA3AF;line-height:1.8">
       <div>${item.school} · ${item.major}</div>
       <div>${item.avail} · ${item.hours} hrs/wk · ${item.type}</div>
       <div>${item.loc}</div>
@@ -1623,9 +1646,9 @@ function updateInspector(item, role) {
   isRole ? `
     <div style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:#4b5563;margin-bottom:0.35rem">Why This Match</div>
     <div style="margin-bottom:0.5rem">${signalTag(item.signal)}</div>
-    <div style="font-size:0.8rem;color:#6b7280;line-height:1.6;margin-bottom:0.75rem">${item.note || ''}</div>
+    <div style="font-size:0.8rem;color:#9CA3AF;line-height:1.6;margin-bottom:0.75rem">${item.note || ''}</div>
     <div style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:#4b5563;margin-bottom:0.35rem">Role Details</div>
-    <div style="font-size:0.8rem;color:#6b7280;line-height:1.8">
+    <div style="font-size:0.8rem;color:#9CA3AF;line-height:1.8">
       <div><strong style="color:#0f1117">${item.role}</strong></div>
       <div>${item.org} · Via ${item.college}</div>
       <div>${item.avail} · ${item.hours} hrs/wk · ${item.type}${item.type==='Paid'?' · '+item.comp:''}</div>
@@ -1633,9 +1656,9 @@ function updateInspector(item, role) {
     </div>` :
   `<div style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:#4b5563;margin-bottom:0.35rem">Why This Match</div>
     <div style="margin-bottom:0.5rem">${signalTag(item.signal)}</div>
-    <div style="font-size:0.8rem;color:#6b7280;line-height:1.6;margin-bottom:0.75rem">${item.note || ''}</div>
+    <div style="font-size:0.8rem;color:#9CA3AF;line-height:1.6;margin-bottom:0.75rem">${item.note || ''}</div>
     <div style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:#4b5563;margin-bottom:0.35rem">Candidate</div>
-    <div style="font-size:0.8rem;color:#6b7280;line-height:1.8">
+    <div style="font-size:0.8rem;color:#9CA3AF;line-height:1.8">
       <div><strong style="color:#0f1117">${item.name}</strong></div>
       <div>${item.school} · ${item.major}</div>
       <div>${item.avail} · ${item.hours} hrs/wk · ${item.loc}</div>
@@ -1656,7 +1679,7 @@ function updateInspector(item, role) {
         <div style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:#4b5563;margin-bottom:0.5rem">Score Dimensions</div>
         ${dims.map((v,i) => `
           <div style="margin-bottom:0.45rem">
-            <div style="display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:0.62rem;color:#6b7280;margin-bottom:0.15rem">
+            <div style="display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:0.62rem;color:#9CA3AF;margin-bottom:0.15rem">
               <span>${dimLabels[i]}</span><span>${v}%</span>
             </div>
             <div style="height:3px;background:#e2e4e9;border-radius:2px;overflow:hidden">
@@ -1687,7 +1710,7 @@ function switchRole(role) {
   filterBar.style.display   = '';
   mobileFrame.style.display = 'none';
   toggle.style.display      = role === 'student' ? 'flex' : 'none';
-  btnD.style.background = '#a3e635'; btnD.style.color = '#1a2000';
+  btnD.style.background = '#1D4ED8'; btnD.style.color = '#1a2000';
   btnM.style.background = 'transparent'; btnM.style.color = '#9ca3af';
   document.body.className = 'role-' + role;
 
@@ -1744,7 +1767,7 @@ function selectComponent(el, component) {
   document.querySelectorAll('.component-item').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
 
-  const roleColor = { college:'#a3e635', employer:'#a78bfa', student:'#38bdf8' }[currentRole];
+  const roleColor = { college:'#1D4ED8', employer:'#a78bfa', student:'#38bdf8' }[currentRole];
   const tokenData = {
     'results-table': { name:'Results Table', groups:[
       { label:'Spacing', tokens:[{ name:'--cell-padding', value:'0.75rem 1rem' },{ name:'--header-height', value:'2.5rem' }]},
@@ -1753,7 +1776,7 @@ function selectComponent(el, component) {
     ]},
     'fit-ring': { name:'Fit Ring', groups:[
       { label:'Dimensions', tokens:[{ name:'--ring-size', value:'38px' },{ name:'--ring-stroke', value:'3px' },{ name:'--ring-track', value:'#e2e4e9', swatch:'#e2e4e9' }]},
-      { label:'Role Colors', tokens:[{ name:'--ring-college', value:'#a3e635', swatch:'#a3e635' },{ name:'--ring-employer', value:'#a78bfa', swatch:'#a78bfa' },{ name:'--ring-student', value:'#38bdf8', swatch:'#38bdf8' }]},
+      { label:'Role Colors', tokens:[{ name:'--ring-college', value:'#1D4ED8', swatch:'#1D4ED8' },{ name:'--ring-employer', value:'#a78bfa', swatch:'#a78bfa' },{ name:'--ring-student', value:'#38bdf8', swatch:'#38bdf8' }]},
     ]},
     'filter-bar': { name:'Filter Bar', groups:[
       { label:'Structure', tokens:[{ name:'--filter-padding', value:'0.875rem 1rem' },{ name:'--filter-bg', value:'#ffffff', swatch:'#ffffff' }]},
@@ -1767,7 +1790,7 @@ function selectComponent(el, component) {
       { label:'Tag Types', tokens:[{ name:'--tag-major', value:'→ role-primary-50', swatch:roleColor+'33' },{ name:'--tag-avail', value:'green-50', swatch:'#f7fee7' },{ name:'--tag-location', value:'purple-50', swatch:'#f3f0ff' },{ name:'--tag-salary', value:'amber-50', swatch:'#f5f3ff' }]},
     ]},
     'color-tokens': { name:'Color Tokens', groups:[
-      { label:'Primitive', tokens:[{ name:'--blue-600', value:'#a3e635', swatch:'#a3e635' },{ name:'--amber-600', value:'#a78bfa', swatch:'#a78bfa' },{ name:'--teal-600', value:'#38bdf8', swatch:'#38bdf8' },{ name:'--green-600', value:'#16a34a', swatch:'#16a34a' }]},
+      { label:'Primitive', tokens:[{ name:'--blue-600', value:'#1D4ED8', swatch:'#1D4ED8' },{ name:'--amber-600', value:'#a78bfa', swatch:'#a78bfa' },{ name:'--teal-600', value:'#38bdf8', swatch:'#38bdf8' },{ name:'--green-600', value:'#16a34a', swatch:'#16a34a' }]},
       { label:'Semantic', tokens:[{ name:'--role-primary', value:'→ active role color', swatch:roleColor },{ name:'--role-primary-50', value:'→ active role tint', swatch:roleColor+'22' }]},
     ]},
     'type-tokens': { name:'Typography Scale', groups:[

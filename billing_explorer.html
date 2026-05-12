@@ -192,7 +192,6 @@ body {
   min-width: 1rem;
 }
 .step-item.active .step-num { color: var(--accent); }
-.step-info {}
 .step-name {
   font-family: 'DM Mono', monospace;
   font-size: 0.68rem;
@@ -290,30 +289,6 @@ body {
   50% { transform: translateY(4px); }
 }
 
-/* Annotation cards — scroll-revealed */
-.annotation-strip {
-  padding: 1.25rem 1.5rem 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-.annotation {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 0.875rem 1rem;
-  background: #fff;
-  border-radius: 6px;
-  border-left: 3px solid transparent;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  opacity: 1;
-  transform: translateY(0);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.annotation.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
 .annotation.active-insight {
   border-left-color: #38bdf8 !important;
   box-shadow: 0 0 0 2px rgba(56,189,248,0.2), 0 1px 3px rgba(0,0,0,0.06) !important;
@@ -324,23 +299,6 @@ body {
   0%, 100% { box-shadow: 0 0 0 2px rgba(56,189,248,0.2), 0 1px 3px rgba(0,0,0,0.06); border-left-color: #38bdf8; }
   50% { box-shadow: 0 0 0 5px rgba(56,189,248,0.35), 0 1px 3px rgba(0,0,0,0.06); border-left-color: #7dd3fc; }
 }
-.annotation-icon {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.55rem;
-  color: var(--accent);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  margin-top: 2px;
-  min-width: 64px;
-}
-.annotation-text {
-  font-size: 0.72rem;
-  color: #334155;
-  line-height: 1.6;
-}
-.annotation-text strong { color: #0f172a; }
-
 /* Governance panel */
 .gov-card {
   background: var(--accent-dark);
@@ -396,7 +354,6 @@ body {
   justify-content: space-between;
   flex-shrink: 0;
 }
-.panel-header-left {}
 .panel-eyebrow {
   font-family: 'DM Mono', monospace;
   font-size: 0.58rem;
@@ -472,6 +429,8 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 0.6rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  transition: border-left-color 0.3s ease, box-shadow 0.3s ease;
 }
 .annotation-icon {
   font-family: 'DM Mono', monospace;
@@ -1140,8 +1099,11 @@ function goToStep(n) {
 
   current = n;
 
-  // Scroll content to top
+  // Reset all scroll containers on tab change
+  window.scrollTo({ top: 0, behavior: 'auto' });
   document.querySelector('.content').scrollTop = 0;
+  const panelEl = document.getElementById('panel' + n);
+  if (panelEl) { const sw = panelEl.querySelector('.screenshot-wrap'); if (sw) sw.scrollTop = 0; }
 
   // Reset and replay insight tour
   if (typeof clearTourTimers === 'function') {
@@ -1223,24 +1185,24 @@ function bssToggleAuto(){
 // ── Hotspot tour system ───────────────────────────────────────────────────
 
 const HOTSPOTS = {
-  0: [ // Tab 1: Calm Default (billing-draft.png) — sidebar ends ~17%
-    { top: 10, left: 17, h: 7,  w: 82, side: 'bottom', label: 'Design', text: '<strong>Calm by default.</strong> The dashboard surfaces the work queue and billing metrics without urgency signals. Attorneys can orient to their caseload without the system demanding attention.' },
-    { top: 46, left: 17, h: 24, w: 82, side: 'top',    label: 'System', text: '<strong>Continuous monitoring, silent aggregation.</strong> Signals from email threads, billing records, and matter status are being watched &#8212; but the interface stays quiet. The AI earns the right to interrupt.' },
+  0: [ // Tab 1: Calm Default (billing-draft.png) — sidebar ends ~13%
+    { top: 7,  left: 13, h: 13, w: 83, side: 'bottom', label: 'Design', text: '<strong>Calm by default.</strong> The dashboard surfaces the work queue and billing metrics without urgency signals. Attorneys can orient to their caseload without the system demanding attention.' },
+    { top: 48, left: 13, h: 30, w: 83, side: 'top',    label: 'System', text: '<strong>Continuous monitoring, silent aggregation.</strong> Signals from email threads, billing records, and matter status are being watched &#8212; but the interface stays quiet. The AI earns the right to interrupt.' },
   ],
-  1: [ // Tab 2: Signal Detected (billing-dashboard-alert.png) — sidebar ends ~16%
-    { top: 5,  left: 16, h: 15, w: 82, side: 'bottom', label: 'Design',     text: '<strong>Threshold-based intervention.</strong> The AI surfaces the alert only when signals converge &#8212; not on every data point. The banner reads as informational, not alarming. The attorney decides what to do next.' },
-    { top: 23, left: 16, h: 3,  w: 82, side: 'bottom', label: 'Hierarchy',  text: '<strong>Calm-by-default hierarchy preserved.</strong> The alert sits above the work queue without displacing it. Urgency is legible without being coercive &#8212; the attorney&#8217;s mental model of their caseload isn&#8217;t disrupted.' },
-    { top: 75, left: 16, h: 3,  w: 82, side: 'top',    label: 'Governance', text: '<strong>No automatic action.</strong> The system flagged 3 matters. It did not escalate them, reassign them, or send any communication. It surfaced context for the attorney to act on.' },
+  1: [ // Tab 2: Signal Detected (billing-dashboard-alert.png) — sidebar ends ~13%
+    { top: 4,  left: 13, h: 11, w: 84, side: 'bottom', label: 'Design',     text: '<strong>Threshold-based intervention.</strong> The AI surfaces the alert only when signals converge &#8212; not on every data point. The banner reads as informational, not alarming. The attorney decides what to do next.' },
+    { top: 55, left: 13, h: 27, w: 84, side: 'top',    label: 'Hierarchy',  text: '<strong>Calm-by-default hierarchy preserved.</strong> The alert sits above the work queue without displacing it. Urgency is legible without being coercive &#8212; the attorney&#8217;s mental model of their caseload isn&#8217;t disrupted.' },
+    { top: 66, left: 13, h: 8,  w: 84, side: 'top',    label: 'Governance', text: '<strong>No automatic action.</strong> The system flagged 3 matters. It did not escalate them, reassign them, or send any communication. It surfaced context for the attorney to act on.' },
   ],
   2: [ // Tab 3: Matter Detail (billing-matter-panel.png) — sidebar ~15%, right panel starts ~72%
-    { top: 17, left: 72, h: 32, w: 26, side: 'left',  label: 'Design',    text: '<strong>Compressed context in one view.</strong> Billing trend, invoice aging, communication gap, and matter timeline &#8212; previously requiring four separate systems to piece together.' },
-    { top: 93, left: 72, h: 8,  w: 26, side: 'top',   label: 'Action',    text: '<strong>&#8220;Prepare Communication&#8221; &#8212; not &#8220;Send.&#8221;</strong> The CTA initiates draft preparation, not delivery. A human step remains before any client-facing action.' },
-    { top: 47, left: 15, h: 9,  w: 57, side: 'right', label: 'Hierarchy', text: '<strong>Progressive disclosure.</strong> The detail panel opens alongside the work queue &#8212; the attorney never loses their place in the dashboard.' },
+    { top: 8,  left: 72, h: 43, w: 27, side: 'left',  label: 'Design',    text: '<strong>Compressed context in one view.</strong> Billing trend, invoice aging, communication gap, and matter timeline &#8212; previously requiring four separate systems to piece together.' },
+    { top: 90, left: 72, h: 7,  w: 27, side: 'top',   label: 'Action',    text: '<strong>&#8220;Prepare Communication&#8221; &#8212; not &#8220;Send.&#8221;</strong> The CTA initiates draft preparation, not delivery. A human step remains before any client-facing action.' },
+    { top: 46, left: 15, h: 8,  w: 56, side: 'right', label: 'Hierarchy', text: '<strong>Progressive disclosure.</strong> The detail panel opens alongside the work queue &#8212; the attorney never loses their place in the dashboard.' },
   ],
   3: [ // Tab 4: Draft Surfaced (billing-dashboard-calm.png) — sidebar ~15%
-    { top: 65, left: 15, h: 8,  w: 82, side: 'top', label: 'Governance', text: '<strong>Four equal paths.</strong> Dismiss &#183; Remind Later &#183; Edit Draft &#183; Send. No path is visually privileged. The attorney retains full authority over timing and delivery.' },
-    { top: 59, left: 15, h: 7,  w: 82, side: 'top', label: 'Design',     text: '<strong>Tone controls without autonomy.</strong> More Formal / Add Urgency / Softer Tone &#8212; but the system cannot select tone on its own. Tone is a human judgment.' },
-    { top: 73, left: 15, h: 6,  w: 82, side: 'top', label: 'System',     text: '<strong>The footer says it plainly.</strong> &#8220;AI prepares a draft, but never sends it.&#8221; This is the governance model made visible &#8212; not buried in documentation.' },
+    { top: 65, left: 15, h: 9,  w: 82, side: 'top', label: 'Governance', text: '<strong>Four equal paths.</strong> Dismiss &#183; Remind Later &#183; Edit Draft &#183; Send. No path is visually privileged. The attorney retains full authority over timing and delivery.' },
+    { top: 58, left: 15, h: 8,  w: 82, side: 'top', label: 'Design',     text: '<strong>Tone controls without autonomy.</strong> More Formal / Add Urgency / Softer Tone &#8212; but the system cannot select tone on its own. Tone is a human judgment.' },
+    { top: 73, left: 15, h: 7,  w: 82, side: 'top', label: 'System',     text: '<strong>The footer says it plainly.</strong> &#8220;AI prepares a draft, but never sends it.&#8221; This is the governance model made visible &#8212; not buried in documentation.' },
   ],
 };
 
@@ -1410,9 +1372,10 @@ function initInsightTour(panelIndex) {
       const item = document.getElementById('legend-' + panelIndex + '-' + i);
       if (item) { item.classList.remove('active'); item.classList.add('done'); }
     });
-    // Scroll content area back to top
-    const contentEl = document.querySelector('.content');
-    if (contentEl) contentEl.scrollTo({ top: 0, behavior: 'smooth' });
+    // Reset all scroll containers after tour completes
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const sw = document.getElementById('panel' + panelIndex)?.querySelector('.screenshot-wrap');
+    if (sw) sw.scrollTo({ top: 0, behavior: 'smooth' });
   }, finalDelay));
 }
 

@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>This is my life in one view — Case Study · Kirsten Duell</title>
+<style>
+
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root {
+  --page-gutter-x: 4rem;
+
+    --ink: #0f1117;
+    --paper: #ffffff;
+    --warm-mid: #f1f5f9;
+    --muted: #64748b;
+    --rule: #e2e8f0;
+    --tag-bg: #0f172a;
+    --tag-text: #f8fafc;
+    /* Default CS brand — overridden per section */
+    --cs-accent:      #2563eb;
+    --cs-accent-soft: #eff6ff;
+    --cs-accent-mid:  #bfdbfe;
+    --cs-accent-text: #1d4ed8;
+    --cs-accent-dark: #1e3a8a;
+  }
+
+  /* ── PER-CASE-STUDY BRAND COLORS ──────────────────────────── */
+  #cs1 {
+    --cs-accent:      #a3e635;
+    --cs-accent-soft: #f7fee7;
+    --cs-accent-mid:  #d9f99d;
+    --cs-accent-text: #3a7a00;
+    --cs-accent-dark: #1a2e05;
+  }
+  #cs2 {
+    --cs-accent:      #38bdf8;
+    --cs-accent-soft: #f0f9ff;
+    --cs-accent-mid:  #bae6fd;
+    --cs-accent-text: #0369a1;
+    --cs-accent-dark: #0c2a3d;
+  }
+  #cs3 {
+    --cs-accent:      #a78bfa;
+    --cs-accent-soft: #f5f3ff;
+    --cs-accent-mid:  #ddd6fe;
+    --cs-accent-text: #5b21b6;
+    --cs-accent-dark: #2e1065;
+  }
+  #cs4 {
+    --cs-accent:      #34d399;
+    --cs-accent-soft: #f0fdf9;
+    --cs-accent-mid:  #6ee7c7;
+    --cs-accent-text: #065f46;
+    --cs-accent-dark: #022c22;
+  }
+  #cs5 {
+    --cs-accent:      #f472b6;
+    --cs-accent-soft: #fdf2f8;
+    --cs-accent-mid:  #fbcfe8;
+    --cs-accent-text: #9d174d;
+    --cs-accent-dark: #500724;
+  }
+  #cs6 {
+    --cs-accent:      #f59e0b;
+    --cs-accent-soft: #fffbeb;
+    --cs-accent-mid:  #fde68a;
+    --cs-accent-text: #92400e;
+    --cs-accent-dark: #451a03;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: #ffffff;
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--rule);
+    padding: 3rem var(--page-gutter-x) 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .header-left h1 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  .header-left p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .role-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .role-tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  /* NAV */
+  nav {
+    padding: 1rem var(--page-gutter-x);
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+  }
+
+  nav a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: #3a7a00; }
+
+  /* MAIN */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 var(--page-gutter-x) 6rem;
+  }
+
+  /* CASE STUDY */
+  .case-study {
+    padding: 5rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .case-study:last-child { border-bottom: none; }
+
+  /* EYEBROW */
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .cs-number {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--cs-accent-text);
+    letter-spacing: 0.1em;
+  }
+
+  .cs-status {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+  }
+
+  /* TITLE */
+  .case-study h2 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  .case-study h2 em {
+    font-style: italic;
+    color: var(--cs-accent-text);
+  }
+
+  .cs-subtitle {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  /* META GRID */
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 3rem;
+  }
+
+  .meta-item {
+    padding: 1rem 1.25rem;
+    border-right: 1px solid var(--rule);
+  }
+
+  .meta-item:last-child { border-right: none; }
+
+  .meta-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+
+  .meta-value {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  /* ROLE LENS TAGS */
+  .role-lens {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .lens-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    padding: 0.3rem 0.7rem;
+    border-radius: 2px;
+    background: var(--cs-accent-soft);
+    color: var(--cs-accent-text);
+    border: 1px solid var(--cs-accent-mid);
+  }
+
+  .lens-tag.tag-primary {
+    background: var(--cs-accent-dark);
+    color: var(--cs-accent);
+    border-color: var(--cs-accent-mid);
+  }
+
+  .lens-tag.tag-secondary {
+    background: #ffffff;
+    color: #374151;
+    border-color: #e2e4e9;
+  }
+
+  /* CONTENT SECTIONS */
+  .cs-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .cs-section h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .cs-section p {
+    color: #2a2520;
+    font-size: 0.975rem;
+    line-height: 1.8;
+    margin-bottom: 0.75rem;
+  }
+
+  .cs-section p:last-child { margin-bottom: 0; }
+
+  /* TWO COLUMN */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  @media (max-width: 680px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--cs-accent-soft);
+    border-left: 3px solid var(--cs-accent);
+    padding: 1.25rem 1.5rem;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 2.5rem;
+  }
+
+  .callout p {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* OUTCOME METRICS */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+
+  .metric {
+    background: #ffffff;
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+
+  .metric-value {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 2rem;
+    color: var(--cs-accent-text);
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+
+  .metric-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  /* DESIGN DECISIONS LIST */
+  .decisions {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .decisions li {
+    display: grid;
+    grid-template-columns: 1.5rem 1fr;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #2a2520;
+  }
+
+  .decisions li::before {
+    content: '→';
+    color: var(--cs-accent-text);
+    font-family: 'IBM Plex Mono', monospace;
+    margin-top: 0.1rem;
+  }
+
+  /* ROLE LENS BREAKDOWN */
+  .lens-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .lens-item {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 1rem;
+    align-items: start;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .lens-label-pill {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 2px;
+    background: #1e2028;
+    color: #e2e8f0;
+    border: 1px solid #2e3139;
+    text-align: center;
+    letter-spacing: 0.04em;
+    align-self: start;
+    margin-top: 0.15rem;
+  }
+
+  .lens-label-pill.pill-primary {
+    background: var(--cs-accent-dark);
+    color: var(--cs-accent);
+    border-color: var(--cs-accent-text);
+  }
+
+  /* VISUAL PLACEHOLDER */
+  .visual-placeholder {
+    margin-bottom: 2.5rem;
+    border: 1.5px dashed var(--cs-accent-text);
+    border-radius: 4px;
+    background: var(--cs-accent-soft);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 200px;
+    text-align: center;
+    position: relative;
+  }
+
+  .visual-placeholder::before {
+    content: '↑ INSERT SCREENSHOT OR DIAGRAM HERE ↑';
+    position: absolute;
+    top: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    color: #3a7a00;
+    white-space: nowrap;
+    background: var(--cs-accent-mid);
+    padding: 0.15rem 0.5rem;
+    border-radius: 0 0 2px 2px;
+  }
+
+  .visual-placeholder-icon {
+    font-size: 1.75rem;
+    margin-bottom: 0.25rem;
+    opacity: 0.5;
+  }
+
+  .visual-placeholder-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cs-accent-text);
+    margin-bottom: 0.25rem;
+  }
+
+  .visual-placeholder-title {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1.05rem;
+    color: #1e2028;
+    margin-bottom: 0.35rem;
+  }
+
+  .visual-placeholder-desc {
+    font-size: 0.825rem;
+    color: #4b5563;
+    max-width: 500px;
+    line-height: 1.6;
+  }
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .principle-card {
+    background: #ffffff;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 1.25rem;
+    border-top: 3px solid var(--cs-accent);
+  }
+
+  .principle-card strong {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cs-accent-text);
+    margin-bottom: 0.5rem;
+  }
+
+  .principle-card p {
+    font-size: 0.9rem;
+    color: #374151;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .nda-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    padding: 0.25rem 0.6rem;
+    border: 1px dashed var(--rule);
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  /* INTERACTIVE ARTIFACT BLOCK */
+  .cs-interactive-block {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--ink);
+    border-radius: 4px;
+    border-left: 3px solid var(--cs-accent);
+  }
+
+  .cs-interactive-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cs-accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .cs-interactive-desc {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    max-width: 640px;
+  }
+
+  .cs-interactive-buttons {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .cs-interactive-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    padding: 0.55rem 1rem;
+    border-radius: 2px;
+    text-decoration: none;
+    border: 1px solid #2e3139;
+    color: #9ca3af;
+    background: transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .cs-interactive-btn:hover {
+    border-color: var(--cs-accent);
+    color: var(--cs-accent-text);
+  }
+
+  .cs-interactive-btn-primary {
+    background: var(--cs-accent);
+    border-color: var(--cs-accent);
+    color: #111827;
+  }
+
+  .cs-interactive-btn-primary:hover {
+    background: var(--cs-accent-mid);
+    border-color: var(--cs-accent-mid);
+    color: #111827;
+  }
+  @media (max-width: 768px) {
+    header, nav, main { padding-left: var(--page-gutter-x); padding-right: var(--page-gutter-x); }
+    .meta-grid { grid-template-columns: 1fr 1fr; }
+    .meta-item { border-bottom: 1px solid var(--rule); }
+    .lens-item { grid-template-columns: 1fr; }
+    .role-tags { justify-content: flex-start; }
+  }
+
+
+  .dd-header {
+    background: #111420;
+    border-bottom: 1px solid #2E3450;
+    padding: 1.1rem var(--page-gutter-x);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .dd-wordmark {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1rem;
+    color: #E8EAF2;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .dd-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    color: #9BA3BE;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
+  .dd-nav { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .dd-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: #9BA3BE;
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid #2E3450;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .dd-link:hover { color: #7B9AE8; border-color: #7B9AE8; }
+  .dd-link.primary { background: #7B9AE8; border-color: #7B9AE8; color: #111420; }
+  .dd-link.primary:hover { background: #9880E0; border-color: #9880E0; color: #111420; }
+  .dd-footer {
+    background: #111420;
+    border-top: 1px solid #2E3450;
+    padding: 1.5rem var(--page-gutter-x);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .dd-footer a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: #9BA3BE;
+    text-decoration: none;
+  }
+  .dd-footer a:hover { color: #7B9AE8; }
+  body { background: #ffffff; }
+  .case-study { padding-top: 3.5rem; }
+  @media (max-width: 768px) {
+    .dd-header, .dd-footer { padding-left: var(--page-gutter-x); padding-right: var(--page-gutter-x); }
+  }
+
+
+@media (max-width: 768px) {
+  :root { --page-gutter-x: 1.5rem !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="dd-header">
+  <div>
+    <a class="dd-wordmark" href="index.html">kirsten duell</a>
+    <div class="dd-meta">Case study deep dive · code.build · 05 — ThyroidTracker</div>
+  </div>
+  <div class="dd-nav">
+    <a class="dd-link" href="index.html">← portfolio home</a>
+    <a class="dd-link primary" href="thyroidtracker_explorer_sigform.html" target="_blank">Open explorer →</a>
+  </div>
+</header>
+
+<main>
+<section class="case-study" id="cs5">
+
+    <div class="eyebrow">
+      <span class="cs-number">05 / 05</span>
+      <span class="cs-status">Personal Project — Live Pre-Beta</span>
+    </div>
+
+    <h2><em>This is my life</em><br>in one view</h2>
+    <p class="cs-subtitle">ThyroidTracker — AI-Powered Chronic Care Management for Hypothyroid Patients</p>
+
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="meta-label">Role</div>
+        <div class="meta-value">Sole Designer & Developer</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Status</div>
+        <div class="meta-value">Live — Pre-Beta, Active Users</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Stack</div>
+        <div class="meta-value">Figma Make → Cursor.ai, Supabase, OpenAI</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Domain</div>
+        <div class="meta-value">Hypothyroid / Autoimmune Chronic Care</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Users</div>
+        <div class="meta-value">5 Active Testers</div>
+      </div>
+    </div>
+
+    <div class="role-lens">
+      <span class="lens-tag tag-primary">Design Engineer</span>
+      <span class="lens-tag tag-primary">Full-Stack Builder</span>
+      <span class="lens-tag tag-primary">AI Prompt Architect</span>
+      <span class="lens-tag tag-secondary">Supabase + OpenAI</span>
+      <span class="lens-tag tag-secondary">React + TypeScript</span>
+      <span class="lens-tag tag-secondary">Cursor AI + Figma Make</span>
+    </div>
+
+    <div class="cs-section">
+      <h3>The Problem — Personal, Clinical, and Systemic</h3>
+      <p>Hypothyroidism is one of the most common chronic conditions in the United States, yet it remains among the most poorly tracked. Patients manage a complex, shifting constellation of symptoms — fatigue, weight, temperature sensitivity, mood, hair loss, brain fog, heart rate — that interact with medications, lab values, diet, sleep, and life events in ways that are rarely visible to their care team at the time of a 15-minute appointment.</p>
+      <p>The deeper clinical reality is that no two hypothyroid patients track the same metrics. Autoimmune thyroid disease — particularly Hashimoto's thyroiditis — produces highly individual symptom profiles that change over time. Generic symptom trackers fail because they impose fixed categories on a condition that demands flexibility. Patients either under-track because the tool doesn't fit their reality, or over-track in a fragmented way that produces no usable signal.</p>
+      <p>This problem is personal. My background in biopsychology, medical product development at Abbott Laboratories, and close relationships with hypothyroid patients gave me both the clinical grounding and the human urgency to design a better tool.</p>
+      <p>But symptom tracking alone doesn't address the full scope of the problem. Hypothyroid patients - the majority of whom are women - face a steep asymmetry between their lived experience and what most physicians will acknowledge or act upon. The condition rarely presents in isolation. Perimenopause, cardiac, neurological, rheumatoid, and other endocrine conditions frequently flare concurrently, yet the medical system treats each in a separate specialist silo. Patients spend years collecting fragmented signals across appointments that never speak to each other. The asymmetry isn't just informational - it's relational. These patients often lack access to providers willing to hold the full picture. ThyroTracker was designed to close both gaps: surface the fragmented signal, and connect patients to care equipped to receive it.</p>
+    </div>
+
+    <div class="callout">
+      <p>"This is my life in one view." — Patient tester, after first session with the health timeline</p>
+    </div>
+
+    <div class="cs-section">
+      <h3>The AI Design Challenge</h3>
+      <p>The central design challenge was building an AI system flexible enough to accommodate every patient's unique tracking reality while structured enough to surface meaningful patterns over time. Two competing risks had to be balanced: too rigid, and patients would abandon the tool when their symptoms didn't fit the available categories; too open-ended, and the data would fragment into noise with no useful signal for the patient or their provider.</p>
+      <p>The solution was an AI-assisted category creation system. When a patient logs a new symptom or event, the AI suggests a small number of relevant categories based on what they've described — drawing on the patient's own prior entries and common hypothyroid symptom patterns. The patient can accept a suggestion, modify it, or create a completely custom category from scratch. Once created, that category becomes a persistent tracking dimension the patient can log against indefinitely.</p>
+      <p>This approach solves two problems simultaneously: it reduces the cognitive load of starting from a blank field, and it prevents the proliferation of near-duplicate custom categories that makes longitudinal data useless. The AI acts as a gentle organizing intelligence — not a gatekeeper.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="cs-section">
+        <h3>Key Design Decisions</h3>
+        <ul class="decisions">
+          <li>Designed multiple input modalities — sliders, free text, AI-assisted category creation, and photo attachment — so patients can log in the way that fits their energy level and cognitive state at the moment of logging</li>
+          <li>Built the health timeline view as the primary interface: a longitudinal display of symptom and event patterns over time that makes interactions visible that a patient would never notice entry-by-entry</li>
+          <li>Designed AI category suggestions as a conversation — the system offers 2–3 options, the patient responds, and the selected category becomes part of their permanent personal tracking vocabulary</li>
+          <li>Architected the data model in Supabase to support completely flexible per-patient category structures — no two users share the same schema, by design</li>
+          <li>Began building the provider connection layer — allowing patients to share their timeline data with qualified thyroid specialists to bridge the gap between self-tracking and clinical care</li>
+          <li>Designed the care matching layer to address the second failure mode directly - patient logging history is used to pre-validate provider matches, surfacing symptom patterns, comorbid conditions, and care priorities so both patient and provider enter the relationship with context rather than starting from zero. In a care landscape where thyroid patients routinely cycle through dismissive appointments before finding meaningful support, the matching layer is as much a design intervention as the symptom log itself.</li>
+        </ul>
+      </div>
+
+      <div class="cs-section">
+        <h3>Areas of Ownership</h3>
+        <div class="lens-breakdown">
+          <div class="lens-item">
+            <span class="lens-label-pill pill-primary">Design Engineer</span>
+            <span>Sole designer and developer — prototyped in Figma Make, migrated to Cursor.ai for production, integrated Supabase backend and OpenAI API, built flexible per-patient data architecture in React + TypeScript.</span>
+          </div>
+          <div class="lens-item">
+            <span class="lens-label-pill pill-primary">AI Prompt Architect</span>
+            <span>Designed the category suggestion prompt system — iteratively refined to surface 2–3 relevant options without over-prescribing, balanced between the patient's prior entries and clinical symptom patterns.</span>
+          </div>
+          <div class="lens-item">
+            <span class="lens-label-pill">Product Designer</span>
+            <span>Defined product strategy, user research, clinical domain constraints, and AI intervention philosophy — including the provider connection roadmap as a second-phase value layer. Sole decision-maker on all UX, architecture, and AI design choices.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-interactive-block">
+      <div class="cs-interactive-label">Interactive Artifacts</div>
+      <div class="cs-interactive-desc">Walk through the full care loop — AI-assisted logging, unified health timeline, symptom insights correlated with lab values, and the provider handoff dashboard. The full app is live on Vercel.</div>
+      <div class="cs-interactive-buttons">
+        <a class="cs-interactive-btn cs-interactive-btn-primary" href="https://design-system-starter-eta.vercel.app/" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Open Live App →
+        </a>
+        <a class="cs-interactive-btn" href="thyroidtracker_explorer_sigform.html" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Care Loop Explorer →
+        </a>
+      </div>
+    </div>
+
+    <div class="cs-section">
+      <h3>Domain Expertise Behind the Design</h3>
+      <p>ThyroidTracker is built on a clinical foundation most health app designers don't have. My biopsychology degree from UC Santa Barbara included rigorous clinical psychology research training and experiment design — directly applicable to understanding how to design for symptom variability and longitudinal data collection. My work in medical product development and digital transformation at Abbott Laboratories, which included global health communications and patient-facing content, gave me a working understanding of how health information needs to be structured to be actionable rather than overwhelming.</p>
+      <p>Personal proximity to hypothyroid patients gave me the qualitative signal that no amount of secondary research could replace: the frustration of describing a symptom that doesn't fit any existing category, the anxiety of not knowing whether today's fatigue is the disease or the medication or something else entirely, and the helplessness of arriving at a clinical appointment with months of undocumented experience and 15 minutes to communicate it.</p>
+    </div>
+
+    <div class="cs-section">
+      <h3>Governing Design Principles</h3>
+      <div class="principles">
+        <div class="principle-card">
+          <strong>Flexibility over structure</strong>
+          <p>The app accommodates the patient's reality, not the other way around. The AI helps organize; it never imposes</p>
+        </div>
+        <div class="principle-card">
+          <strong>Longitudinal signal over point-in-time</strong>
+          <p>Every entry is only valuable in relationship to every other entry — the timeline view is the product, not the log form</p>
+        </div>
+        <div class="principle-card">
+          <strong>Patient authority</strong>
+          <p>AI suggestions are always overridable. The patient's language and categories take precedence over any model inference</p>
+        </div>
+        <div class="principle-card">
+          <strong>Bridge to care</strong>
+          <p>The end goal is a patient arriving at a clinical appointment with a year of organized, legible data their provider can actually use</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-value">5</div>
+        <div class="metric-label">Active Pre-Beta Testers</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">Live</div>
+        <div class="metric-label">App Status — Real Users, Real Data</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">∞</div>
+        <div class="metric-label">Flexible Per-Patient Category Schemas</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">"My life<br>in one view"</div>
+              <div class="metric-label">Patient Tester Quote</div>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<footer class="dd-footer">
+  <a href="index.html">← kirsten duell</a>
+  <a href="case-studies.html">all case studies</a>
+  <a href="mailto:duellkirsten@gmail.com">duellkirsten@gmail.com</a>
+</footer>
+
+</body>
+</html>

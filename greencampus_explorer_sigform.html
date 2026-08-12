@@ -239,6 +239,14 @@ header.top-bar .wordmark,
   color: var(--cobalt-light) !important;
   border-color: var(--cobalt-light) !important;
 }
+
+.header-nav-links {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .step-nav, .role-bar, .fidelity-nav, .view-nav {
   background: var(--dark-surface) !important;
   border-bottom: 1px solid var(--dark-border) !important;
@@ -298,7 +306,10 @@ header.top-bar .wordmark,
     <div class="wordmark site-wordmark">kirsten duell</div>
     <div class="page-subtitle">GreenCampus — Job Lifecycle Explorer · interface.build</div>
   </div>
-  <a href="case-study-greencampus.html" class="back-link">← case study deep dive</a>
+  <div class="header-nav-links">
+    <a href="index.html" class="back-link">← portfolio home</a>
+    <a href="case-study-greencampus.html" class="back-link">← case study deep dive</a>
+  </div>
 </header>
 
 <div class="progress-bar">

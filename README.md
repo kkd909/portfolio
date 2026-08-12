@@ -43,23 +43,25 @@ I build governance into the system itself — so the right choice is the easy ch
 
 ## Case Studies
 
-[**01 — AI Career Matching**](https://kkd909.github.io/portfolio/)
-Seed-stage EdTech (Confidential). Translated a probabilistic AI scoring model into an interface legible to three user groups simultaneously. Research revealed the real problem wasn't visualization — it was surfacing non-obvious adjacent matches that a human recruiter would miss. Live data from day one — investor demos used real pilot data, not placeholders. Seed funding secured.
+Portfolio home: [kkd909.github.io/portfolio](https://kkd909.github.io/portfolio/newformat_index.html) · [all case studies](https://kkd909.github.io/portfolio/case-studies.html)
 
-[**02 — Billing Intelligence**](https://kkd909.github.io/portfolio/)
-Epiq Advisory. Attorney billing workflows across global law firms generate signal that gets buried in reporting dashboards. Research revealed the problem wasn't data — it was that nothing surfaced the right signal at the moment of decision. AI surfaces billing signals when they converge above threshold — never acts on them. Attorneys retain full authority. Token-driven motion system documents urgency through timing, not just color.
+[**01 — AI Career Matching**](https://kkd909.github.io/portfolio/case-study-internmatch.html)
+Seed-stage EdTech (Confidential). Translated a probabilistic AI scoring model into an interface legible to three user groups simultaneously. Research revealed the real problem wasn't visualization — it was surfacing non-obvious adjacent matches that a human recruiter would miss. Live data from day one — investor demos used real pilot data, not placeholders. Seed funding secured. · [Explorer](https://kkd909.github.io/portfolio/internmatch_explorer_sigform.html) · [Token explorer](https://kkd909.github.io/portfolio/internmatch_token_explorer_sigform.html)
 
-[**03 — Checkpoint**](https://kkd909.github.io/portfolio/)
-Figma plugin for pre-handoff readiness auditing. 13 rules, weighted scoring, spacing auto-fix, variable binding, spec annotation, TypeScript scaffold export. Built because the alternatives didn't do what I needed — and because design system integrity breaks at the handoff moment more than anywhere else.
+[**02 — Billing Intelligence**](https://kkd909.github.io/portfolio/case-study-billing.html)
+Epiq Advisory. Attorney billing workflows across global law firms generate signal that gets buried in reporting dashboards. Research revealed the problem wasn't data — it was that nothing surfaced the right signal at the moment of decision. AI surfaces billing signals when they converge above threshold — never acts on them. Attorneys retain full authority. Token-driven motion system documents urgency through timing, not just color. · [Explorer](https://kkd909.github.io/portfolio/billing_explorer_sigform.html)
 
-[**04 — GreenCampus**](https://kkd909.github.io/portfolio/)
-Compliance SaaS. Multi-role dashboard for environmental compliance tracking across enterprise facilities. Contextual inquiry research drove a redesign from a reporting tool to a decision-support system — task completion improved from 30% to 85%.
+[**03 — Checkpoint**](https://kkd909.github.io/portfolio/case-study-plugin.html)
+Figma plugin for pre-handoff readiness auditing. 13 rules, weighted scoring, spacing auto-fix, variable binding, spec annotation, TypeScript scaffold export. Built because the alternatives didn't do what I needed — and because design system integrity breaks at the handoff moment more than anywhere else. · [Explorer](https://kkd909.github.io/portfolio/plugin_explorer_sigform.html)
 
-[**05 — ThyroTracker**](https://kkd909.github.io/portfolio/)
-AI chronic care platform for patients managing hypothyroid conditions alongside hormonal and autoimmune comorbidities. Two weeks of social listening across patient communities plus six structured live interviews revealed the core problem: patients weren't missing a tracker — they were missing a translation layer that made their continuous experience legible to a clinician in 15 minutes. HIPAA-compliant architecture, FHIR-ready data model, Supabase + OpenAI, longitudinal symptom timeline, pre-visit summary engine. Six active pre-beta testers. Symptom model under clinical advisor review.
+[**04 — GreenCampus**](https://kkd909.github.io/portfolio/case-study-greencampus.html)
+Compliance SaaS. Multi-role dashboard for environmental compliance tracking across enterprise facilities. Contextual inquiry research drove a redesign from a reporting tool to a decision-support system — task completion improved from 30% to 85%. · [Explorer](https://kkd909.github.io/portfolio/greencampus_explorer_sigform.html)
 
-[**06 — Meridian Advisory**](https://kkd909.github.io/portfolio/)
-Internal design system for a global law firm intranet. Fidelity toggle architecture: one component, three states (lo/mid/hi), zero drift. Storybook with governance documentation. Iteration time reduction measured across the design team.
+[**05 — ThyroTracker**](https://kkd909.github.io/portfolio/case-study-thyroidtracker.html)
+AI chronic care platform for patients managing hypothyroid conditions alongside hormonal and autoimmune comorbidities. Two weeks of social listening across patient communities plus six structured live interviews revealed the core problem: patients weren't missing a tracker — they were missing a translation layer that made their continuous experience legible to a clinician in 15 minutes. HIPAA-compliant architecture, FHIR-ready data model, Supabase + OpenAI, longitudinal symptom timeline, pre-visit summary engine. Six active pre-beta testers. Symptom model under clinical advisor review. · [Explorer](https://kkd909.github.io/portfolio/thyroidtracker_explorer_sigform.html)
+
+[**06 — Meridian Advisory**](https://kkd909.github.io/portfolio/case-study-meridian.html)
+Internal design system for a global law firm intranet. Fidelity toggle architecture: one component, three states (lo/mid/hi), zero drift. Storybook with governance documentation. Iteration time reduction measured across the design team. · [Explorer](https://kkd909.github.io/portfolio/meridian_explorer_sigform.html)
 
 ---
 
